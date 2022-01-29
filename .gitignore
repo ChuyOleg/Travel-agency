@@ -24,3 +24,9 @@ hs_err_pid*
 
 # target folder
 target/
+
+# idea folder
+.idea/
+
+# drawio
+*.drawio

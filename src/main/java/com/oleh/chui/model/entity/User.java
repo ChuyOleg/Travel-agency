@@ -25,7 +25,7 @@ public class User {
     // Constructor for DAO
     public User(Long id,
                 String username,
-                char[] password,
+//                char[] password,
                 String firstName,
                 String lastName,
                 String email,
@@ -35,7 +35,7 @@ public class User {
 
         this.id = id;
         this.username = username;
-        this.password = password;
+//        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

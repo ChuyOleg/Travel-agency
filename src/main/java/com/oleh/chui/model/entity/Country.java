@@ -1,22 +1,22 @@
 package com.oleh.chui.model.entity;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Country {
 
     private Long id;
     private String country;
-    private List<City> cityList;
+    private Set<City> cityList;
 
     public Country() {}
 
-    public Country(String country, List<City> cityList) {
+    public Country(String country, Set<City> cityList) {
         this.country = country;
         this.cityList = cityList;
     }
 
-    public Country(Long id, String country, List<City> cityList) {
+    public Country(Long id, String country, Set<City> cityList) {
         this.id = id;
         this.country = country;
         this.cityList = cityList;
@@ -38,11 +38,11 @@ public class Country {
         this.country = country;
     }
 
-    public List<City> getCityList() {
+    public Set<City> getCityList() {
         return cityList;
     }
 
-    public void setCityList(List<City> cityList) {
+    public void setCityList(Set<City> cityList) {
         this.cityList = cityList;
     }
 

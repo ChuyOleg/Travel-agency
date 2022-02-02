@@ -166,6 +166,119 @@ public class Tour {
         isBurning = burning;
     }
 
+    public static TourBuilder builder() {
+        return new TourBuilder();
+    }
+
+    public static class TourBuilder {
+        private Long id;
+        private String name;
+        private BigDecimal price;
+        private Country country;
+        private String description;
+        private int maxDiscount;
+        private double discountStep;
+        private TourType tourType;
+        private HotelType hotelType;
+        private int personNumber;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private int nightsNumber;
+        private boolean isBurning;
+
+        TourBuilder() {}
+
+        public TourBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public TourBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public TourBuilder price(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public TourBuilder country(Country country) {
+            this.country = country;
+            return this;
+        }
+
+        public TourBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public TourBuilder maxDiscount(int maxDiscount) {
+            this.maxDiscount = maxDiscount;
+            return this;
+        }
+
+        public TourBuilder discountStep(double discountStep) {
+            this.discountStep = discountStep;
+            return this;
+        }
+
+        public TourBuilder tourType(TourType tourType) {
+            this.tourType = tourType;
+            return this;
+        }
+
+        public TourBuilder hotelType(HotelType hotelType) {
+            this.hotelType = hotelType;
+            return this;
+        }
+
+        public TourBuilder personNumber(int personNumber) {
+            this.personNumber = personNumber;
+            return this;
+        }
+
+        public TourBuilder startDate(LocalDate startDate) {
+            this.startDate = startDate;
+            return this;
+        }
+
+        public TourBuilder endDate(LocalDate endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public TourBuilder nightsNumber(int nightsNumber) {
+            this.nightsNumber = nightsNumber;
+            return this;
+        }
+
+        public TourBuilder isBurning(boolean isBurning) {
+            this.isBurning = isBurning;
+            return this;
+        }
+
+        public Tour build() {
+            return new Tour(
+                    this.id,
+                    this.name,
+                    this.price,
+                    this.country,
+                    this.description,
+                    this.maxDiscount,
+                    this.discountStep,
+                    this.tourType,
+                    this.hotelType,
+                    this.personNumber,
+                    this.startDate,
+                    this.endDate,
+                    this.nightsNumber,
+                    this.isBurning
+            );
+        }
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -12,7 +12,6 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    // TODO: Specify save money as just BigDecimal or BigDecimal(*, 2)
     private BigDecimal money;
     private Role role;
     private boolean blocked;
@@ -25,7 +24,6 @@ public class User {
     // Constructor for DAO
     public User(Long id,
                 String username,
-//                char[] password,
                 String firstName,
                 String lastName,
                 String email,
@@ -35,7 +33,6 @@ public class User {
 
         this.id = id;
         this.username = username;
-//        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

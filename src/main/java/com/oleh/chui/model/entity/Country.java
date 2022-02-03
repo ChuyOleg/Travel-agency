@@ -11,6 +11,11 @@ public class Country {
 
     public Country() {}
 
+    public Country(Long id, String country) {
+        this.id = id;
+        this.country = country;
+    }
+
     public Country(String country, Set<City> cityList) {
         this.country = country;
         this.cityList = cityList;
@@ -57,5 +62,13 @@ public class Country {
     @Override
     public int hashCode() {
         return Objects.hash(country);
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                '}';
     }
 }

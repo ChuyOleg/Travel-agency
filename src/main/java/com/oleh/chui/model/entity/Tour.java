@@ -291,4 +291,24 @@ public class Tour {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public String toString() {
+        return "Tour{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", city=" + city +
+                ", description='" + description + '\'' +
+                ", maxDiscount=" + maxDiscount +
+                ", discountStep=" + discountStep +
+                ", tourType=" + tourType +
+                ", hotelType=" + hotelType +
+                ", personNumber=" + personNumber +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", nightsNumber=" + nightsNumber +
+                ", burning=" + burning +
+                '}';
+    }
 }

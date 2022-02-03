@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS countries(
 CREATE TABLE IF NOT EXISTS cities(
     city_id SERIAL PRIMARY KEY ,
     city VARCHAR(128) NOT NULL ,
-    country_id INTEGER REFERENCES countries(country_id) NOT NULL
+    country_id INTEGER REFERENCES countries(country_id) NOT NULL,
+    UNIQUE (city, country_id)
 );
 
 CREATE TABLE IF NOT EXISTS tours(

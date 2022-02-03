@@ -9,7 +9,7 @@ public class Tour {
     private Long id;
     private String name;
     private BigDecimal price;
-    private Country country;
+    private City city;
     private String description;
     private int maxDiscount;
     private double discountStep;
@@ -26,7 +26,7 @@ public class Tour {
     public Tour(Long id,
                 String name,
                 BigDecimal price,
-                Country country,
+                City city,
                 String description,
                 int maxDiscount,
                 double discountStep,
@@ -41,7 +41,7 @@ public class Tour {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.country = country;
+        this.city = city;
         this.description = description;
         this.maxDiscount = maxDiscount;
         this.discountStep = discountStep;
@@ -78,12 +78,12 @@ public class Tour {
         this.price = price;
     }
 
-    public Country getCountry() {
-        return country;
+    public City getCity() {
+        return city;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getDescription() {
@@ -174,7 +174,7 @@ public class Tour {
         private Long id;
         private String name;
         private BigDecimal price;
-        private Country country;
+        private City city;
         private String description;
         private int maxDiscount;
         private double discountStep;
@@ -203,8 +203,8 @@ public class Tour {
             return this;
         }
 
-        public TourBuilder country(Country country) {
-            this.country = country;
+        public TourBuilder city(City city) {
+            this.city = city;
             return this;
         }
 
@@ -263,7 +263,7 @@ public class Tour {
                     this.id,
                     this.name,
                     this.price,
-                    this.country,
+                    this.city,
                     this.description,
                     this.maxDiscount,
                     this.discountStep,

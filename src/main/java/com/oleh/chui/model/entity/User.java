@@ -24,6 +24,7 @@ public class User {
     // Constructor for DAO
     public User(Long id,
                 String username,
+                char[] password,
                 String firstName,
                 String lastName,
                 String email,
@@ -33,6 +34,7 @@ public class User {
 
         this.id = id;
         this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -128,6 +130,83 @@ public class User {
         this.blocked = blocked;
     }
 
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
+
+    public static class UserBuilder {
+        private Long id;
+        private String username;
+        private char[] password;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private BigDecimal money;
+        private Role role;
+        private boolean blocked;
+
+        public UserBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder password(char[] password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder money(BigDecimal money) {
+            this.money = money;
+            return this;
+        }
+
+        public UserBuilder role(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public UserBuilder blocked(boolean blocked) {
+            this.blocked = blocked;
+            return this;
+        }
+
+        public User build() {
+            return new User(
+                    this.id,
+                    this.username,
+                    this.password,
+                    this.firstName,
+                    this.lastName,
+                    this.email,
+                    this.money,
+                    this.role,
+                    this.blocked
+            );
+        }
+
+        public UserBuilder() {}
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -144,7 +223,14 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", money=" + money +
+                ", role=" + role +
+                ", blocked=" + blocked +
                 '}';
     }
 }

@@ -19,7 +19,7 @@ public class Tour {
     private LocalDate startDate;
     private LocalDate endDate;
     private int nightsNumber;
-    private boolean isBurning;
+    private boolean burning;
 
     public Tour() {}
 
@@ -36,7 +36,7 @@ public class Tour {
                 LocalDate startDate,
                 LocalDate endDate,
                 int nightsNumber,
-                boolean isBurning) {
+                boolean burning) {
 
         this.id = id;
         this.name = name;
@@ -51,7 +51,7 @@ public class Tour {
         this.startDate = startDate;
         this.endDate = endDate;
         this.nightsNumber = nightsNumber;
-        this.isBurning = isBurning;
+        this.burning = burning;
     }
 
     public Long getId() {
@@ -159,11 +159,11 @@ public class Tour {
     }
 
     public boolean isBurning() {
-        return isBurning;
+        return burning;
     }
 
     public void setBurning(boolean burning) {
-        isBurning = burning;
+        this.burning = burning;
     }
 
     public static TourBuilder builder() {
@@ -184,7 +184,7 @@ public class Tour {
         private LocalDate startDate;
         private LocalDate endDate;
         private int nightsNumber;
-        private boolean isBurning;
+        private boolean burning;
 
         TourBuilder() {}
 
@@ -253,8 +253,8 @@ public class Tour {
             return this;
         }
 
-        public TourBuilder isBurning(boolean isBurning) {
-            this.isBurning = isBurning;
+        public TourBuilder burning(boolean burning) {
+            this.burning = burning;
             return this;
         }
 
@@ -273,7 +273,7 @@ public class Tour {
                     this.startDate,
                     this.endDate,
                     this.nightsNumber,
-                    this.isBurning
+                    this.burning
             );
         }
 

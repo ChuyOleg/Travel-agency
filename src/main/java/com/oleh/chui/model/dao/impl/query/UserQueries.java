@@ -11,8 +11,7 @@ public class UserQueries {
 
     public static final String FIND_BY_ID =
             "SELECT * FROM users u" +
-            " JOIN roles r" +
-            " ON u.role_id = r.role_id" +
+            " JOIN roles r ON u.role_id = r.role_id" +
             " WHERE u.user_id = ?";
 
     public static final String FIND_ALL =

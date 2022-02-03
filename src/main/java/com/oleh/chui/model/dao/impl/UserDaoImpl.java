@@ -2,8 +2,6 @@ package com.oleh.chui.model.dao.impl;
 
 import com.oleh.chui.model.dao.UserDao;
 import com.oleh.chui.model.dao.impl.query.UserQueries;
-import com.oleh.chui.model.dao.impl.tables_fields.RoleTableFields;
-import com.oleh.chui.model.dao.impl.tables_fields.UserTableFields;
 import com.oleh.chui.model.entity.Role;
 import com.oleh.chui.model.entity.User;
 import org.apache.logging.log4j.LogManager;
@@ -13,8 +11,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 public class UserDaoImpl implements UserDao {
 
@@ -22,6 +22,26 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void create(User entity) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.CREATE)) {
+            statement.setString(1, entity.getUsername());
+            statement.setString(2, String.valueOf(entity.getPassword()));
+            statement.setString(3, entity.getFirstName());
+            statement.setString(4, entity.getLastName());
+            statement.setString(5, entity.getEmail());
+            statement.setBigDecimal(6, entity.getMoney());
+            statement.setString(7, entity.getRole().name());
+            statement.setBoolean(8, entity.isBlocked());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            logger.error("{}, when trying to create new User", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
     }
 
     @Override
@@ -33,61 +53,87 @@ public class UserDaoImpl implements UserDao {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Optional<Role> role = findRoleById(resultSet.getLong(UserTableFields.ROLE_ID), connection);
-                return role.map(value -> buildUserFromResultSet(resultSet, value));
+                return Optional.of(buildUserFromResultSet(resultSet));
             } else {
                 return Optional.empty();
             }
         } catch (SQLException e) {
             logger.error("{}, when trying to find User by ID", e.getMessage());
             throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
         }
     }
 
     @Override
     public List<User> findAll() {
-        return null;
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.FIND_ALL)) {
+            List<User> userList = new ArrayList<>();
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = buildUserFromResultSet(resultSet);
+                userList.add(user);
+            }
+
+            return userList;
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find all Users", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
     }
 
     @Override
     public void update(User entity) {
+        Connection connection = ConnectionPoolHolder.getConnection();
 
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.UPDATE)) {
+            statement.setString(1, entity.getFirstName());
+            statement.setString(2, entity.getLastName());
+            statement.setString(3, entity.getEmail());
+            statement.setLong(4, entity.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to update User", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
     }
 
     @Override
     public void delete(long id) {
+        Connection connection = ConnectionPoolHolder.getConnection();
 
-    }
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.DELETE)) {
+            statement.setLong(1, id);
 
-    @Override
-    public Optional<Role> findRoleById(Long roleId, Connection connection) {
-        try (PreparedStatement statement = connection.prepareStatement(UserQueries.FIND_ROLE_BY_ROLE_ID)) {
-            statement.setLong(1, roleId);
-
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return Optional.of(Role.valueOf(resultSet.getString(RoleTableFields.ROLE)));
-            } else {
-                return Optional.empty();
-            }
+            statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("{}, when trying to find Role by ID", e.getMessage());
+            logger.error("{}, when trying to delete User", e.getMessage());
             throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
         }
     }
 
-    private User buildUserFromResultSet(ResultSet resultSet, Role role) {
+    private User buildUserFromResultSet(ResultSet resultSet) {
         try {
-            return new User(
-                resultSet.getLong(UserTableFields.ID),
-                resultSet.getString(UserTableFields.USERNAME),
-                resultSet.getString(UserTableFields.FIRST_NAME),
-                resultSet.getString(UserTableFields.LAST_NAME),
-                resultSet.getString(UserTableFields.EMAIL),
-                resultSet.getBigDecimal(UserTableFields.MONEY),
-                role,
-                resultSet.getBoolean(UserTableFields.IS_BLOCKED)
-            );
+            return User.builder()
+                    .id(resultSet.getLong("user_id"))
+                    .username(resultSet.getString("username"))
+                    .firstName(resultSet.getString("first_name"))
+                    .lastName(resultSet.getString("last_name"))
+                    .email(resultSet.getString("email"))
+                    .money(resultSet.getBigDecimal("money"))
+                    .role(Role.valueOf(resultSet.getString("role")))
+                    .blocked(resultSet.getBoolean("is_blocked"))
+                    .build();
         } catch (SQLException e) {
             logger.error("{}, when trying to build User from ResultSet", e.getMessage());
             throw new RuntimeException(e);

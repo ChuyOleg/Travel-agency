@@ -2,20 +2,31 @@ package com.oleh.chui.model.dao.impl.query;
 
 public class UserQueries {
 
-    // TODO: delete FIND_ROLE_BY_ROLE_ID and use Join for find methods
-
     private UserQueries() {}
 
-    public static final String CREATE = "";
+    public static final String CREATE =
+            "INSERT INTO users" +
+            "(username, password, first_name, last_name, email, money, role_id, is_blocked)" +
+            " VALUES(?, ?, ?, ?, ?, ?, (SELECT role_id FROM roles WHERE role = ?), ?)";
 
-    public static final String FIND_BY_ID = "SELECT * FROM users WHERE id = ?";
+    public static final String FIND_BY_ID =
+            "SELECT * FROM users u" +
+            " JOIN roles r" +
+            " ON u.role_id = r.role_id" +
+            " WHERE u.user_id = ?";
 
-    public static final String FIND_ALL = "SELECT * FROM users";
+    public static final String FIND_ALL =
+            "SELECT * FROM users u" +
+            " JOIN roles r ON u.role_id = r.role_id";
 
-    public static final String UPDATE = "";
+    public static final String UPDATE =
+            "UPDATE users SET" +
+            " first_name = ?," +
+            " last_name = ?," +
+            " email = ?" +
+            " WHERE user_id = ?";
 
-    public static final String DELETE = "";
-
-    public static final String FIND_ROLE_BY_ROLE_ID = "SELECT * FROM roles WHERE id = ?";
+    public static final String DELETE =
+            "DELETE FROM users WHERE user_id = ?";
 
 }

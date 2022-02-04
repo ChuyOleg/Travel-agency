@@ -22,12 +22,12 @@ CREATE TABLE IF NOT EXISTS status(
 
 CREATE TABLE IF NOT EXISTS tour_types(
     tour_type_id SERIAL PRIMARY KEY ,
-    type VARCHAR(64) NOT NULL UNIQUE
+    tour_type VARCHAR(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS hotel_types(
     hotel_type_id SERIAL PRIMARY KEY ,
-    type varchar(64) NOT NULL UNIQUE
+    hotel_type varchar(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS countries(
@@ -65,5 +65,6 @@ CREATE TABLE IF NOT EXISTS orders(
     tour_id INTEGER REFERENCES tours(tour_id) NOT NULL ,
     status_id INTEGER REFERENCES status(status_id) NOT NULL ,
     creation_date DATE NOT NULL ,
-    final_price numeric NOT NULL
+    final_price numeric NOT NULL ,
+    UNIQUE (user_id, tour_id)
 );

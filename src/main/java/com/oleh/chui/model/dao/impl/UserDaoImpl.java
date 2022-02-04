@@ -2,7 +2,7 @@ package com.oleh.chui.model.dao.impl;
 
 import com.oleh.chui.model.dao.UserDao;
 import com.oleh.chui.model.dao.impl.query.UserQueries;
-import com.oleh.chui.model.entity.Role;
+import com.oleh.chui.model.dao.mapper.UserMapper;
 import com.oleh.chui.model.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +18,7 @@ import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
 
+    private final UserMapper userMapper = new UserMapper();
     private final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
     @Override
@@ -31,7 +32,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(4, entity.getLastName());
             statement.setString(5, entity.getEmail());
             statement.setBigDecimal(6, entity.getMoney());
-            statement.setString(7, entity.getRole().name());
+            statement.setString(7, entity.getRole().getValue().name());
             statement.setBoolean(8, entity.isBlocked());
 
             statement.executeUpdate();
@@ -53,12 +54,12 @@ public class UserDaoImpl implements UserDao {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(buildUserFromResultSet(resultSet));
+                return Optional.of(userMapper.extractFromResultSet(resultSet));
             } else {
                 return Optional.empty();
             }
         } catch (SQLException e) {
-            logger.error("{}, when trying to find User by ID", e.getMessage());
+            logger.error("{}, when trying to find User by ID={}", e.getMessage(), id);
             throw new RuntimeException(e);
         } finally {
             ConnectionPoolHolder.closeConnection(connection);
@@ -74,7 +75,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                User user = buildUserFromResultSet(resultSet);
+                User user = userMapper.extractFromResultSet(resultSet);
                 userList.add(user);
             }
 
@@ -115,28 +116,11 @@ public class UserDaoImpl implements UserDao {
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("{}, when trying to delete User", e.getMessage());
+            logger.error("{}, when trying to delete User by ID={}", e.getMessage(), id);
             throw new RuntimeException(e);
         } finally {
             ConnectionPoolHolder.closeConnection(connection);
         }
     }
 
-    private User buildUserFromResultSet(ResultSet resultSet) {
-        try {
-            return User.builder()
-                    .id(resultSet.getLong("user_id"))
-                    .username(resultSet.getString("username"))
-                    .firstName(resultSet.getString("first_name"))
-                    .lastName(resultSet.getString("last_name"))
-                    .email(resultSet.getString("email"))
-                    .money(resultSet.getBigDecimal("money"))
-                    .role(Role.valueOf(resultSet.getString("role")))
-                    .blocked(resultSet.getBoolean("is_blocked"))
-                    .build();
-        } catch (SQLException e) {
-            logger.error("{}, when trying to build User from ResultSet", e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
 }

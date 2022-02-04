@@ -55,7 +55,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role = Role.USER;
+        this.role = new Role(Role.RoleEnum.USER);
     }
 
     public Long getId() {

@@ -78,6 +78,63 @@ public class Order {
         this.finalPrice = finalPrice;
     }
 
+    public static OrderBuilder builder() {
+        return new OrderBuilder();
+    }
+
+    public static class OrderBuilder {
+        private Long id;
+        private User user;
+        private Tour tour;
+        private Status status;
+        private LocalDate creationDate;
+        private BigDecimal finalPrice;
+
+        public OrderBuilder() {}
+
+        public OrderBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public OrderBuilder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public OrderBuilder tour(Tour tour) {
+            this.tour = tour;
+            return this;
+        }
+
+        public OrderBuilder status(Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public OrderBuilder creationDate(LocalDate creationDate) {
+            this.creationDate = creationDate;
+            return this;
+        }
+
+        public OrderBuilder finalPrice(BigDecimal finalPrice) {
+            this.finalPrice = finalPrice;
+            return this;
+        }
+
+        public Order build() {
+            return new Order(
+                    this.id,
+                    this.user,
+                    this.tour,
+                    this.status,
+                    this.creationDate,
+                    this.finalPrice
+            );
+        }
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,5 +146,17 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user=" + user +
+                ", tour=" + tour +
+                ", status=" + status +
+                ", creationDate=" + creationDate +
+                ", finalPrice=" + finalPrice +
+                '}';
     }
 }

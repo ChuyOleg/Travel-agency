@@ -34,7 +34,12 @@ public class TourQueries {
             " JOIN cities c ON c.city_id = tours.city_id" +
             " JOIN countries co ON co.country_id = c.country_id";
 
-    public static final String UPDATE = "";
+    // TODO: THINK WHAT FIELDS HAVE TO BE CHANGED
+    public static final String UPDATE =
+            "UPDATE tours SET" +
+            " name = ?," +
+            " price = ?" +
+            " WHERE tour_id = ?";
 
     public static final String DELETE = "DELETE FROM tours WHERE tour_id = ?";
 

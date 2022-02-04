@@ -6,9 +6,7 @@ import com.oleh.chui.model.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,14 +88,22 @@ public class TourDaoImpl implements TourDao {
         }
     }
 
-    public static void main(String[] args) {
-        TourDaoImpl dao = new TourDaoImpl();
-
-    }
-
     @Override
     public void update(Tour entity) {
+        Connection connection = ConnectionPoolHolder.getConnection();
 
+        try (PreparedStatement statement = connection.prepareStatement(TourQueries.UPDATE)) {
+            statement.setString(1, entity.getName());
+            statement.setBigDecimal(2, entity.getPrice());
+            statement.setLong(3, entity.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to update Tour" , e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
     }
 
     @Override

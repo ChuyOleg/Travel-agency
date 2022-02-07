@@ -11,13 +11,14 @@ public class UserQueries {
 
     public static final String FIND_BY_ID =
             "SELECT * FROM users u" +
-            " JOIN roles r ON u.role_id = r.role_id" +
+            " JOIN roles USING (role_id)" +
             " WHERE u.user_id = ?";
 
     public static final String FIND_ALL =
             "SELECT * FROM users u" +
-            " JOIN roles r ON u.role_id = r.role_id";
+            " JOIN roles USING (role_id)";
 
+    // TODO: THINK WHAT FIELDS HAVE TO BE CHANGED
     public static final String UPDATE =
             "UPDATE users SET" +
             " first_name = ?," +

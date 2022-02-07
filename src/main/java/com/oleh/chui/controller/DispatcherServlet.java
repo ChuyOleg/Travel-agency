@@ -1,0 +1,88 @@
+package com.oleh.chui.controller;
+
+import com.oleh.chui.controller.command.Command;
+import com.oleh.chui.controller.command.impl.GetLogInCommand;
+import com.oleh.chui.controller.command.impl.PostLogInCommand;
+import com.oleh.chui.controller.command.impl.GetRegistrationCommand;
+import com.oleh.chui.controller.command.impl.PostRegistrationCommand;
+import com.oleh.chui.controller.util.UriPath;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class DispatcherServlet extends HttpServlet {
+
+    private final Map<String, Command> getCommands = new ConcurrentHashMap<>();
+    private final Map<String, Command> postCommands = new ConcurrentHashMap<>();
+    private final String COMMAND_NOT_FOUND = "Command not found";
+    private final String REDIRECT = "redirect:";
+    Logger logger = LogManager.getLogger(DispatcherServlet.class);
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        putGetCommands();
+        putPostCommands();
+        logger.info("Dispatcher servlet has been initialized");
+    }
+
+    private void putGetCommands() {
+        getCommands.put(UriPath.LOGIN, new GetLogInCommand());
+        getCommands.put(UriPath.REGISTRATION, new GetRegistrationCommand());
+    }
+
+    private void putPostCommands() {
+        postCommands.put(UriPath.LOGIN, new PostLogInCommand());
+        postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand());
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp, getCommands);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp, postCommands);
+    }
+
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp, Map<String, Command> commands) throws IOException, ServletException {
+        final String URI = req.getRequestURI();
+
+        System.out.println(URI);
+
+
+        String commandKey = commands.keySet().stream()
+                .filter(key -> key.equals(URI))
+                .findFirst()
+                .orElse(COMMAND_NOT_FOUND);
+
+        if (commandKey.equals(COMMAND_NOT_FOUND)) {
+            logger.warn("page: {} not found", URI);
+            resp.sendError(404);
+            return;
+        }
+
+        Command command = commands.get(commandKey);
+        String result = command.execute(req);
+
+        renderPage(req, resp, result);
+    }
+
+    private void renderPage(HttpServletRequest req, HttpServletResponse resp, String pagePath) throws ServletException, IOException {
+        if (pagePath.startsWith(REDIRECT)) {
+            resp.sendRedirect(pagePath.replace(REDIRECT, ""));
+        } else {
+            req.getRequestDispatcher(pagePath).forward(req, resp);
+        }
+    }
+
+}

@@ -1,0 +1,17 @@
+#englishLanguageButton {
+    width: 50px;
+    height: 30px;
+    background-image: url("/../img/uk_flag.png");
+    background-size: cover;
+}
+
+#ukrainianLanguageButton {
+    width: 50px;
+    height: 30px;
+    background-image: url("/../img/ua_flag.png");
+    background-size: cover;
+}
+
+.error-message {
+    color: red;
+}

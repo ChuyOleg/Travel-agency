@@ -6,8 +6,8 @@ public class UserQueries {
 
     public static final String CREATE =
             "INSERT INTO users" +
-            "(username, password, first_name, last_name, email, money, role_id, is_blocked)" +
-            " VALUES(?, ?, ?, ?, ?, ?, (SELECT role_id FROM roles WHERE role = ?), ?)";
+            "(username, password, first_name, last_name, email, role_id)" +
+            " VALUES(?, ?, ?, ?, ?, (SELECT role_id FROM roles WHERE role = ?))";
 
     public static final String FIND_BY_ID =
             "SELECT * FROM users u" +
@@ -28,5 +28,8 @@ public class UserQueries {
 
     public static final String DELETE =
             "DELETE FROM users WHERE user_id = ?";
+
+    public static final String FIND_BY_USERNAME =
+            "SELECT * FROM users WHERE username = ?";
 
 }

@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="ua" />
+<fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="messages" />
 
 <html>
@@ -19,7 +19,7 @@
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
                     <form id="login-form" class="form" action="" method="post">
-                        <h3 class="text-center"><fmt:message key="loginPage.login" /></h3>
+                        <h3 class="text-center"><fmt:message key="loginPage.title" /></h3>
                         <div>
                             <label for="username"><fmt:message key="loginPage.username" />:</label><br>
                             <input type="text" name="username" id="username" class="form-control">
@@ -29,7 +29,7 @@
                             <input type="text" name="password" id="password" class="form-control">
                         </div>
                         <div class="text-center mt-3">
-                            <button type="button" class="btn btn-primary"><fmt:message key="loginPage.loginButton" /></button>
+                            <button type="submit" class="btn btn-primary"><fmt:message key="loginPage.loginButton" /></button>
                         </div>
 
                         <a class="login-guest" href="/catalog">Log in as a Guest</a>

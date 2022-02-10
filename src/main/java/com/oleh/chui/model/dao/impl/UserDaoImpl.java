@@ -31,9 +31,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(3, entity.getFirstName());
             statement.setString(4, entity.getLastName());
             statement.setString(5, entity.getEmail());
-            statement.setBigDecimal(6, entity.getMoney());
-            statement.setString(7, entity.getRole().getValue().name());
-            statement.setBoolean(8, entity.isBlocked());
+            statement.setString(6, entity.getRole().getValue().name());
 
             statement.executeUpdate();
 
@@ -123,4 +121,21 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public boolean usernameIsReserved(String username) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.FIND_BY_USERNAME)) {
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            return resultSet.next();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find User by username={}", e.getMessage(), username);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
 }

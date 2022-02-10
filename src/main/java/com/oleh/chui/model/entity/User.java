@@ -1,6 +1,8 @@
 package com.oleh.chui.model.entity;
 
 
+import com.oleh.chui.model.dto.UserDto;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -8,7 +10,7 @@ public class User {
 
     private Long id;
     private String username;
-    private char[] password;
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
@@ -24,7 +26,7 @@ public class User {
     // Constructor for DAO
     public User(Long id,
                 String username,
-                char[] password,
+                String password,
                 String firstName,
                 String lastName,
                 String email,
@@ -43,18 +45,12 @@ public class User {
         this.blocked = blocked;
     }
 
-    // Constructor for DTO
-    public User(String username,
-                char[] password,
-                String firstName,
-                String lastName,
-                String email) {
-
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+    public User(UserDto userDto) {
+        this.username = userDto.getUsername();
+        this.password = userDto.getPassword();
+        this.firstName = userDto.getFirstName();
+        this.lastName = userDto.getLastName();
+        this.email = userDto.getEmail();
         this.role = new Role(Role.RoleEnum.USER);
     }
 
@@ -74,11 +70,11 @@ public class User {
         this.username = username;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -137,7 +133,7 @@ public class User {
     public static class UserBuilder {
         private Long id;
         private String username;
-        private char[] password;
+        private String password;
         private String firstName;
         private String lastName;
         private String email;
@@ -155,7 +151,7 @@ public class User {
             return this;
         }
 
-        public UserBuilder password(char[] password) {
+        public UserBuilder password(String password) {
             this.password = password;
             return this;
         }

@@ -24,13 +24,13 @@ public class UserValidator {
             EmailNotMatchTemplateException {
 
         checkForUsernameSize(userDto.getUsername());
-        checkForPasswordSize(userDto.getPassword());
-        checkForPasswordMatchTemplate(userDto.getPassword());
-        checkForPasswordsMatching(userDto.getPassword(), userDto.getPasswordCopy());
         checkForFirstNameSize(userDto.getFirstName());
         checkForLastNameSize(userDto.getLastName());
         checkForEmailSize(userDto.getEmail());
         checkForEmailMatchingTemplate(userDto.getEmail());
+        checkForPasswordSize(userDto.getPassword());
+        checkForPasswordMatchTemplate(userDto.getPassword());
+        checkForPasswordsMatching(userDto.getPassword(), userDto.getPasswordCopy());
     }
 
     private static void checkForUsernameSize(String username) throws UsernameSizeOutOfBoundsException {

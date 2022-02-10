@@ -6,6 +6,7 @@ import com.oleh.chui.controller.command.impl.PostLogInCommand;
 import com.oleh.chui.controller.command.impl.GetRegistrationCommand;
 import com.oleh.chui.controller.command.impl.PostRegistrationCommand;
 import com.oleh.chui.controller.util.UriPath;
+import com.oleh.chui.model.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,19 +30,20 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        putGetCommands();
-        putPostCommands();
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        putGetCommands(serviceFactory);
+        putPostCommands(serviceFactory);
         logger.info("Dispatcher servlet has been initialized");
     }
 
-    private void putGetCommands() {
+    private void putGetCommands(ServiceFactory serviceFactory) {
         getCommands.put(UriPath.LOGIN, new GetLogInCommand());
         getCommands.put(UriPath.REGISTRATION, new GetRegistrationCommand());
     }
 
-    private void putPostCommands() {
-        postCommands.put(UriPath.LOGIN, new PostLogInCommand());
-        postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand());
+    private void putPostCommands(ServiceFactory serviceFactory) {
+        postCommands.put(UriPath.LOGIN, new PostLogInCommand(serviceFactory.createUserService()));
+        postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand(serviceFactory.createUserService()));
     }
 
     @Override
@@ -56,9 +58,6 @@ public class DispatcherServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp, Map<String, Command> commands) throws IOException, ServletException {
         final String URI = req.getRequestURI();
-
-        System.out.println(URI);
-
 
         String commandKey = commands.keySet().stream()
                 .filter(key -> key.equals(URI))

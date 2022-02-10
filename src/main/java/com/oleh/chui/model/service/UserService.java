@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
 
@@ -30,5 +31,9 @@ public class UserService {
 
         userDao.create(user);
         logger.info("New account {} has been created", user);
+    }
+
+    public Optional<User> findByUsernameAndPassword(String username, String password) {
+        return userDao.findByUsernameAndPassword(username, password);
     }
 }

@@ -3,6 +3,7 @@ package com.oleh.chui.controller.command.impl;
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.exception.user.*;
 import com.oleh.chui.controller.util.JspFilePath;
+import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.controller.validator.UserValidator;
 import com.oleh.chui.model.dto.UserDto;
 import com.oleh.chui.model.service.UserService;
@@ -33,7 +34,7 @@ public class PostRegistrationCommand implements Command {
                 request.setAttribute("usernameIsReserved", true);
             } else {
                 userService.registerNewAccount(userDto);
-                return "redirect:/login";
+                return UriPath.REDIRECT + UriPath.LOGIN;
             }
         }
 

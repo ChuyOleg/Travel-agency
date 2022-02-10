@@ -32,4 +32,9 @@ public class UserQueries {
     public static final String FIND_BY_USERNAME =
             "SELECT * FROM users WHERE username = ?";
 
+    public static final String FIND_BY_USERNAME_AND_PASSWORD =
+            "SELECT * FROM users" +
+            " JOIN roles USING (role_id)" +
+            " WHERE username = ? AND password = ?";
+
 }

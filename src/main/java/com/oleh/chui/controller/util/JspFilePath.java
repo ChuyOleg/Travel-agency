@@ -6,5 +6,6 @@ public class JspFilePath {
 
     public static final String LOGIN = "/logInPage.jsp";
     public static final String REGISTRATION = "/registrationPage.jsp";
+    public static final String CATALOG = "/catalog.jsp";
 
 }

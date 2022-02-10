@@ -1,11 +1,15 @@
 package com.oleh.chui.controller.command.impl;
 
 import com.oleh.chui.controller.command.Command;
+import com.oleh.chui.controller.util.JspFilePath;
+import com.oleh.chui.controller.util.UriPath;
+import com.oleh.chui.model.entity.User;
 import com.oleh.chui.model.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 public class PostLogInCommand implements Command {
 
@@ -21,11 +25,13 @@ public class PostLogInCommand implements Command {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        // TODO: do authentication
-
-        // TODO: put into Session
-
-        return "";
+        Optional<User> userOptional = userService.findByUsernameAndPassword(username, password);
+        if (userOptional.isPresent()) {
+            request.getSession().setAttribute("userId", userOptional.get().getId());
+            return UriPath.REDIRECT + UriPath.CATALOG;
+        } else {
+            request.setAttribute("authenticationException", true);
+            return JspFilePath.LOGIN;
+        }
     }
-
 }

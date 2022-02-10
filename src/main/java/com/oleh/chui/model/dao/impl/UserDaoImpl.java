@@ -138,4 +138,28 @@ public class UserDaoImpl implements UserDao {
             ConnectionPoolHolder.closeConnection(connection);
         }
     }
+
+    @Override
+    public Optional<User> findByUsernameAndPassword(String username, String password) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.FIND_BY_USERNAME_AND_PASSWORD)) {
+            statement.setString(1, username);
+            statement.setString(2, password);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return Optional.of(userMapper.extractFromResultSet(resultSet));
+            } else {
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            logger.warn("User with (username = {} and password = {}) doesn't exist", username, password);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
 }

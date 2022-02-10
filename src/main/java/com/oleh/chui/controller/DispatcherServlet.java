@@ -1,10 +1,7 @@
 package com.oleh.chui.controller;
 
 import com.oleh.chui.controller.command.Command;
-import com.oleh.chui.controller.command.impl.GetLogInCommand;
-import com.oleh.chui.controller.command.impl.PostLogInCommand;
-import com.oleh.chui.controller.command.impl.GetRegistrationCommand;
-import com.oleh.chui.controller.command.impl.PostRegistrationCommand;
+import com.oleh.chui.controller.command.impl.*;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.model.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -39,6 +36,7 @@ public class DispatcherServlet extends HttpServlet {
     private void putGetCommands(ServiceFactory serviceFactory) {
         getCommands.put(UriPath.LOGIN, new GetLogInCommand());
         getCommands.put(UriPath.REGISTRATION, new GetRegistrationCommand());
+        getCommands.put(UriPath.CATALOG, new GetCatalogCommand());
     }
 
     private void putPostCommands(ServiceFactory serviceFactory) {

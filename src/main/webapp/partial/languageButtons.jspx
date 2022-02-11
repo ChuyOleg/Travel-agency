@@ -1,0 +1,4 @@
+<div class="language-buttons">
+    <a class="btn language-button" href="?lang=ea" id="englishLanguageButton">.</a>
+    <a class="btn language-button" href="?lang=ua" id="ukrainianLanguageButton">.</a>
+</div>

@@ -34,7 +34,7 @@ public class UserValidator {
     }
 
     private static void checkForUsernameSize(String username) throws UsernameSizeOutOfBoundsException {
-        if (isEmpty(username)) throw new UsernameSizeOutOfBoundsException();
+        if (fieldIsEmpty(username)) throw new UsernameSizeOutOfBoundsException();
 
         final int SIZE = username.length();
 
@@ -44,7 +44,7 @@ public class UserValidator {
     }
 
     private static void checkForPasswordSize(String password) throws PasswordSizeOutOfBoundsException {
-        if (isEmpty(password)) throw new PasswordSizeOutOfBoundsException();
+        if (fieldIsEmpty(password)) throw new PasswordSizeOutOfBoundsException();
 
         final int SIZE = password.length();
 
@@ -69,7 +69,7 @@ public class UserValidator {
     }
 
     private static void checkForFirstNameSize(String firstName) throws FirstNameSizeOutOfBoundsException {
-        if (isEmpty(firstName)) throw new FirstNameSizeOutOfBoundsException();
+        if (fieldIsEmpty(firstName)) throw new FirstNameSizeOutOfBoundsException();
 
         final int SIZE = firstName.length();
 
@@ -79,7 +79,7 @@ public class UserValidator {
     }
 
     private static void checkForLastNameSize(String lastName) throws LastNameSizeOutOfBoundsException {
-        if (isEmpty(lastName)) throw new LastNameSizeOutOfBoundsException();
+        if (fieldIsEmpty(lastName)) throw new LastNameSizeOutOfBoundsException();
 
         final int SIZE = lastName.length();
 
@@ -89,7 +89,7 @@ public class UserValidator {
     }
 
     private static void checkForEmailSize(String email) throws EmailSizeOutOfBoundsException {
-        if (isEmpty(email)) throw new EmailSizeOutOfBoundsException();
+        if (fieldIsEmpty(email)) throw new EmailSizeOutOfBoundsException();
 
         final int SIZE = email.length();
 
@@ -107,8 +107,8 @@ public class UserValidator {
         }
     }
 
-    private static boolean isEmpty(String value) {
-        return value == null || value.trim().isEmpty();
+    private static boolean fieldIsEmpty(String field) {
+        return field == null || field.trim().isEmpty();
     }
 
 }

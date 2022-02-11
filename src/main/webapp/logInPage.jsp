@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="messages" />
@@ -15,15 +16,15 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+
 <div id="login">
     <div class="container">
         <div id="login-row" class="row justify-content-center align-items-center mt-4">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
                     <form id="login-form" class="form" action="" method="post">
-                        <div class="text-center language-buttons">
-                            <a class="btn language-button" href="?lang=ea" id="englishLanguageButton"></a>
-                            <a class="btn language-button" href="?lang=ua" id="ukrainianLanguageButton"></a>
+                        <div class="text-center">
+                            <jsp:include page="partial/languageButtons.jspx" />
                         </div>
 
                         <h3 class="text-center mt-4"><fmt:message key="loginPage.title" /></h3>

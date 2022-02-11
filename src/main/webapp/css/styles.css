@@ -1,17 +1,30 @@
-#englishLanguageButton {
+.language-button {
     width: 50px;
     height: 30px;
-    background-image: url("/../img/uk_flag.png");
     background-size: cover;
 }
 
+#englishLanguageButton {
+    background-image: url("/../img/uk_flag.png");
+    font-size: 0;
+    border: 2px solid black;
+}
+
 #ukrainianLanguageButton {
-    width: 50px;
-    height: 30px;
     background-image: url("/../img/ua_flag.png");
-    background-size: cover;
+    font-size: 0;
+    border: 2px solid black;
 }
 
 .error-message {
     color: red;
 }
+
+.tour-block div {
+    border: 2px solid black;
+}
+
+.tour-burning-true div {
+    background: orange;
+}
+

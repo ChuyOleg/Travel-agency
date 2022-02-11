@@ -2,6 +2,8 @@ package com.oleh.chui.controller;
 
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.command.impl.*;
+import com.oleh.chui.controller.command.impl.manager.GetCreateTourCommand;
+import com.oleh.chui.controller.command.impl.manager.PostCreateTourCommand;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.model.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +23,6 @@ public class DispatcherServlet extends HttpServlet {
     private final Map<String, Command> getCommands = new ConcurrentHashMap<>();
     private final Map<String, Command> postCommands = new ConcurrentHashMap<>();
     private final String COMMAND_NOT_FOUND = "Command not found";
-    private final String REDIRECT = "redirect:";
     Logger logger = LogManager.getLogger(DispatcherServlet.class);
 
     @Override
@@ -36,12 +37,14 @@ public class DispatcherServlet extends HttpServlet {
     private void putGetCommands(ServiceFactory serviceFactory) {
         getCommands.put(UriPath.LOGIN, new GetLogInCommand());
         getCommands.put(UriPath.REGISTRATION, new GetRegistrationCommand());
-        getCommands.put(UriPath.CATALOG, new GetCatalogCommand());
+        getCommands.put(UriPath.CATALOG, new GetCatalogCommand(serviceFactory.createTourService()));
+        getCommands.put(UriPath.MANAGER_CREATE_TOUR, new GetCreateTourCommand());
     }
 
     private void putPostCommands(ServiceFactory serviceFactory) {
         postCommands.put(UriPath.LOGIN, new PostLogInCommand(serviceFactory.createUserService()));
         postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand(serviceFactory.createUserService()));
+        postCommands.put(UriPath.MANAGER_CREATE_TOUR, new PostCreateTourCommand());
     }
 
     @Override
@@ -75,8 +78,8 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void renderPage(HttpServletRequest req, HttpServletResponse resp, String pagePath) throws ServletException, IOException {
-        if (pagePath.startsWith(REDIRECT)) {
-            resp.sendRedirect(pagePath.replace(REDIRECT, ""));
+        if (pagePath.startsWith(UriPath.REDIRECT)) {
+            resp.sendRedirect(pagePath.replace(UriPath.REDIRECT, ""));
         } else {
             req.getRequestDispatcher(pagePath).forward(req, resp);
         }

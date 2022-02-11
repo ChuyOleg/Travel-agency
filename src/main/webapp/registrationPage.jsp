@@ -22,9 +22,9 @@
                 <div id="registration-box" class="col-md-12">
                     <form id="registration-form" autocomplete="off" class="form" action="${pageContext.request.contextPath}/registration" method="post">
                         <div class="text-center">
-                            <a class="btn language-button" href="?lang=ea" id="englishLanguageButton"></a>
-                            <a class="btn language-button" href="?lang=ua" id="ukrainianLanguageButton"></a>
+                            <jsp:include page="partial/languageButtons.jspx" />
                         </div>
+
                         <h3 class="text-center mt-3"><fmt:message key="registrationPage.title" /></h3>
 
                         <div class="form-group">

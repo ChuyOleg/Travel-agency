@@ -1,9 +1,6 @@
 package com.oleh.chui.model.dao.impl;
 
-import com.oleh.chui.model.dao.DaoFactory;
-import com.oleh.chui.model.dao.OrderDao;
-import com.oleh.chui.model.dao.TourDao;
-import com.oleh.chui.model.dao.UserDao;
+import com.oleh.chui.model.dao.*;
 
 public class DaoFactoryImpl extends DaoFactory {
 
@@ -22,5 +19,10 @@ public class DaoFactoryImpl extends DaoFactory {
     @Override
     public OrderDao createOrderDao() {
         return new OrderDaoImpl();
+    }
+
+    @Override
+    public CountryDao createCountryDao() {
+        return new CountryDaoImpl();
     }
 }

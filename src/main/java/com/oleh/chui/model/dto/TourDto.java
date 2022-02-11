@@ -166,4 +166,23 @@ public class TourDto {
     public int hashCode() {
         return Objects.hash(name, price, country, city, description, maxDiscount, discountStep, tourType, hotelType, personNumber, startDate, endDate, burning);
     }
+
+    @Override
+    public String toString() {
+        return "TourDto{" +
+                "name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", description='" + description + '\'' +
+                ", maxDiscount='" + maxDiscount + '\'' +
+                ", discountStep='" + discountStep + '\'' +
+                ", tourType='" + tourType + '\'' +
+                ", hotelType='" + hotelType + '\'' +
+                ", personNumber='" + personNumber + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", burning='" + burning + '\'' +
+                '}';
+    }
 }

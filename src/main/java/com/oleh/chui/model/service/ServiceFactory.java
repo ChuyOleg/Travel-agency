@@ -9,6 +9,7 @@ public abstract class ServiceFactory {
     public abstract UserService createUserService();
     public abstract TourService createTourService();
     public abstract OrderService createOrderService();
+    public abstract CountryService createCountryService();
 
     public static ServiceFactory getInstance() {
         if (serviceFactory == null) {

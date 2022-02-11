@@ -119,7 +119,7 @@ public class TourValidator {
         }
 
         LocalDate startDate = LocalDate.parse(startDateString);
-        if (startDate.isBefore(LocalDate.now())) {
+        if (!startDate.isAfter(LocalDate.now())) {
             throw new StartDateIsNotValidException();
         }
     }

@@ -44,7 +44,7 @@ public class DispatcherServlet extends HttpServlet {
     private void putPostCommands(ServiceFactory serviceFactory) {
         postCommands.put(UriPath.LOGIN, new PostLogInCommand(serviceFactory.createUserService()));
         postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand(serviceFactory.createUserService()));
-        postCommands.put(UriPath.MANAGER_CREATE_TOUR, new PostCreateTourCommand());
+        postCommands.put(UriPath.MANAGER_CREATE_TOUR, new PostCreateTourCommand(serviceFactory.createTourService(), serviceFactory.createCountryService()));
     }
 
     @Override

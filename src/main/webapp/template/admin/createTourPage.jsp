@@ -10,7 +10,7 @@
 <head>
     <title>Title</title>
 
-    <link rel="stylesheet" href="<c:url value="/css/styles.css" />">
+    <link rel="stylesheet" href="<c:url value="/static/css/styles.css" />">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -30,6 +30,9 @@
                         </div>
                         <c:if test="${requestScope.nameIsEmptyException}">
                             <p class="error-message"><fmt:message key="createTourPage.exception.nameIsEmptyException" /></p>
+                        </c:if>
+                        <c:if test="${requestScope.nameIsReserved}">
+                            <p class="error-message"><fmt:message key="createTourPage.exception.nameIsReserved" /></p>
                         </c:if>
 
                         <div>

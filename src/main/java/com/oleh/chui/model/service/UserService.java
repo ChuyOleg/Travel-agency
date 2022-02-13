@@ -22,6 +22,10 @@ public class UserService {
         return userDao.findAll();
     }
 
+    public List<User> findAllUsers() {
+        return userDao.findAllUsers();
+    }
+
     public boolean usernameIsReserved(String username) {
         return userDao.usernameIsReserved(username);
     }
@@ -35,5 +39,13 @@ public class UserService {
 
     public Optional<User> findByUsernameAndPassword(String username, String password) {
         return userDao.findByUsernameAndPassword(username, password);
+    }
+
+    public void blockById(Long id) {
+        userDao.blockById(id);
+    }
+
+    public void unblockById(Long id) {
+        userDao.unblockById(id);
     }
 }

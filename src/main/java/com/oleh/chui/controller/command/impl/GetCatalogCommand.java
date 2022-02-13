@@ -20,6 +20,8 @@ public class GetCatalogCommand implements Command {
     public String execute(HttpServletRequest request) {
         List<Tour> tourList = tourService.findAll();
 
+        tourList.forEach(System.out::println);
+
         request.setAttribute("tourList", tourList);
         return JspFilePath.CATALOG;
     }

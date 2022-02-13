@@ -7,11 +7,16 @@ import com.oleh.chui.model.entity.Country;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.Optional;
 
 public class CountryMapper {
 
-    private final CityMapper cityMapper = new CityMapper();
+    private CityMapper cityMapper;
+
+    public CountryMapper() {}
+
+    public CountryMapper(CityMapper cityMapper) {
+        this.cityMapper = cityMapper;
+    }
 
     public Country extractFromResultSet(ResultSet rs) throws SQLException {
         return new Country(
@@ -26,9 +31,8 @@ public class CountryMapper {
             country = extractFromResultSet(rs);
         }
 
-        City city = cityMapper.extractFromResultSet(rs);
+        City city = cityMapper.extractWithoutRelationsFromResultSet(rs);
         country.getCityList().add(city);
         return country;
     }
-
 }

@@ -2,6 +2,7 @@ package com.oleh.chui.model.dao.impl;
 
 import com.oleh.chui.model.dao.CountryDao;
 import com.oleh.chui.model.dao.impl.query.CountryQueries;
+import com.oleh.chui.model.dao.mapper.CityMapper;
 import com.oleh.chui.model.dao.mapper.CountryMapper;
 import com.oleh.chui.model.entity.Country;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class CountryDaoImpl implements CountryDao {
 
     Logger logger = LogManager.getLogger(CountryDaoImpl.class);
-    CountryMapper countryMapper = new CountryMapper();
+    CountryMapper countryMapper = new CountryMapper(new CityMapper());
 
     @Override
     public Optional<Country> findByName(String countryName) {

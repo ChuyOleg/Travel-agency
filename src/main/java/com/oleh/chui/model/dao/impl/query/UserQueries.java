@@ -18,12 +18,27 @@ public class UserQueries {
             "SELECT * FROM users u" +
             " JOIN roles USING (role_id)";
 
+    public static final String FIND_ALL_USERS =
+            "SELECT * FROM users u" +
+            " JOIN roles USING (role_id)" +
+            " WHERE role = 'USER'";
+
     // TODO: THINK WHAT FIELDS HAVE TO BE CHANGED
     public static final String UPDATE =
             "UPDATE users SET" +
             " first_name = ?," +
             " last_name = ?," +
             " email = ?" +
+            " WHERE user_id = ?";
+
+    public static final String BLOCK_BY_ID =
+            "UPDATE users" +
+            " SET is_blocked = true" +
+            " WHERE user_id = ?";
+
+    public static final String UNBLOCK_BY_ID =
+            "UPDATE users" +
+            " SET is_blocked = false" +
             " WHERE user_id = ?";
 
     public static final String DELETE =

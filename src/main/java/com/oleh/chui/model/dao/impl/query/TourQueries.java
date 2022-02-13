@@ -21,6 +21,14 @@ public class TourQueries {
             " JOIN countries USING (country_id)" +
             " WHERE tour_id = ?";
 
+    public static final String FIND_BY_NAME =
+            "SELECT * FROM tours" +
+                    " JOIN hotel_types USING (hotel_type_id)" +
+                    " JOIN tour_types USING (tour_type_id)" +
+                    " JOIN cities USING (city_id)" +
+                    " JOIN countries USING (country_id)" +
+                    " WHERE name = ?";
+
     public static final String FIND_ALL =
             "SELECT * FROM tours" +
             " JOIN hotel_types USING (hotel_type_id)" +

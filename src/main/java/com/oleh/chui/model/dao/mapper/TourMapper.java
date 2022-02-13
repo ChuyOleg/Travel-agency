@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class TourMapper {
 
-    private final CityMapper cityMapper = new CityMapper();
+    private final CityMapper cityMapper = new CityMapper(new CountryMapper());
     private final TourTypeMapper tourTypeMapper = new TourTypeMapper();
     private final HotelTypeMapper hotelTypeMapper = new HotelTypeMapper();
 
@@ -17,7 +17,7 @@ public class TourMapper {
                 .id(rs.getLong(Fields.TOUR_ID))
                 .name(rs.getString(Fields.NAME))
                 .price(rs.getBigDecimal(Fields.PRICE))
-                .city(cityMapper.extractFromResultSet(rs))
+                .city(cityMapper.extractWithRelationsFromResultSet(rs))
                 .description(rs.getString(Fields.DESCRIPTION))
                 .maxDiscount(rs.getInt(Fields.MAX_DISCOUNT))
                 .discountStep(rs.getDouble(Fields.DISCOUNT_STEP))

@@ -27,11 +27,16 @@ public class PostLogInCommand implements Command {
 
         Optional<User> userOptional = userService.findByUsernameAndPassword(username, password);
         if (userOptional.isPresent()) {
-            request.getSession().setAttribute("userId", userOptional.get().getId());
-            return UriPath.REDIRECT + UriPath.CATALOG;
+            if (!userOptional.get().isBlocked()) {
+                request.getSession().setAttribute("userId", userOptional.get().getId());
+                return UriPath.REDIRECT + UriPath.CATALOG;
+            } else {
+                request.setAttribute("accountIsBlocked", true);
+            }
         } else {
             request.setAttribute("authenticationException", true);
-            return JspFilePath.LOGIN;
         }
+
+        return JspFilePath.LOGIN;
     }
 }

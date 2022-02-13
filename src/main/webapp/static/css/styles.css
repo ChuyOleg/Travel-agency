@@ -5,13 +5,13 @@
 }
 
 #englishLanguageButton {
-    background-image: url("/../img/uk_flag.png");
+    background-image: url("/static/img/uk_flag.png");
     font-size: 0;
     border: 2px solid black;
 }
 
 #ukrainianLanguageButton {
-    background-image: url("/../img/ua_flag.png");
+    background-image: url("/static/img/ua_flag.png");
     font-size: 0;
     border: 2px solid black;
 }
@@ -28,3 +28,15 @@
     background: orange;
 }
 
+/* USERS PAGE (block | unblock) */
+.user-field {
+    border: 2px solid black;
+}
+
+.blocked-true {
+    background: #ff8d75;
+}
+
+.blocked-false {
+    background: limegreen;
+}

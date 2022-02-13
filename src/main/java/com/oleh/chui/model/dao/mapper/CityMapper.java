@@ -8,11 +8,27 @@ import java.sql.SQLException;
 
 public class CityMapper {
 
-    public City extractFromResultSet(ResultSet rs) throws SQLException {
+    private CountryMapper countryMapper;
+
+    public CityMapper() {}
+
+    public CityMapper(CountryMapper countryMapper) {
+        this.countryMapper = countryMapper;
+    }
+
+    public City extractWithoutRelationsFromResultSet(ResultSet rs) throws SQLException {
         return new City(
                 rs.getLong(Fields.CITY_ID),
                 rs.getString(Fields.CITY),
                 null
+        );
+    }
+
+    public City extractWithRelationsFromResultSet(ResultSet rs) throws SQLException {
+        return new City(
+                rs.getLong(Fields.CITY_ID),
+                rs.getString(Fields.CITY),
+                countryMapper.extractFromResultSet(rs)
         );
     }
 

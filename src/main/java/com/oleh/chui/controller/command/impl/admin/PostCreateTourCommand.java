@@ -1,4 +1,4 @@
-package com.oleh.chui.controller.command.impl.manager;
+package com.oleh.chui.controller.command.impl.admin;
 
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.exception.tour.*;
@@ -32,33 +32,55 @@ public class PostCreateTourCommand implements Command {
     public String execute(HttpServletRequest request) {
         TourDto tourDto = fetchTourDtoFromRequest(request);
 
-        // TODO: check if discount step less than discountMax
         boolean tourDtoIsValid = validateTourDto(tourDto, request);
 
         if (tourDtoIsValid) {
-            Optional<Country> countryOptional = countryService.findByName(tourDto.getCountry());
+            boolean isTourNameUnique = checkTourNameIsUnique(tourDto.getName(), request);
 
-            if (countryOptional.isPresent()) {
-                boolean cityExists = countryOptional.get().getCityList()
-                        .stream()
-                        .anyMatch(city -> city.getCity().equals(tourDto.getCity()));
+            if (isTourNameUnique) {
+                boolean countryAndCityExist = checkCountryAndCityExist(tourDto.getCountry(), tourDto.getCity(), request);
 
-                if (cityExists) {
+                if (countryAndCityExist) {
+                    tourService.create(tourDto);
+
                     return UriPath.REDIRECT + UriPath.CATALOG;
-                } else {
-                    request.setAttribute("cityIsUndefined", true);
                 }
-            } else {
-                request.setAttribute("countryIsUndefined", true);
             }
         }
 
-        // TODO: check if tour with the same name already exists
-
-        // TODO: create tour and redirect
-
         insertTourDtoIntoRequest(tourDto, request);
-        return JspFilePath.MANAGER_CREATE_TOUR;
+        return JspFilePath.ADMIN_CREATE_TOUR;
+    }
+
+    private boolean checkTourNameIsUnique(String tourName, HttpServletRequest req) {
+        boolean isTourNameReserved = tourService.isTourWithThisNameAlreadyExists(tourName);
+
+        if (isTourNameReserved) {
+            req.setAttribute("nameIsReserved", true);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean checkCountryAndCityExist(String country, String city, HttpServletRequest req) {
+        Optional<Country> countryOptional = countryService.findByName(country);
+
+        if (countryOptional.isPresent()) {
+            boolean cityNotExists = countryOptional.get().getCityList()
+                    .stream()
+                    .noneMatch(cityObj -> cityObj.getCity().equals(city));
+
+            if (cityNotExists) {
+                req.setAttribute("cityIsUndefined", true);
+                return false;
+            }
+        } else {
+            req.setAttribute("countryIsUndefined", true);
+            return false;
+        }
+
+        return true;
     }
 
     private TourDto fetchTourDtoFromRequest(HttpServletRequest req) {

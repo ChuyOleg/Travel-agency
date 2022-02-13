@@ -124,4 +124,25 @@ public class TourDaoImpl implements TourDao {
         }
     }
 
+    @Override
+    public Optional<Tour> findByName(String name) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(TourQueries.FIND_BY_NAME)) {
+            statement.setString(1, name);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return Optional.of(tourMapper.extractFromResultSet(resultSet));
+            } else {
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find Tour by name ({})", e.getMessage(), name);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
 }

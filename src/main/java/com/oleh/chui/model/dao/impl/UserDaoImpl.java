@@ -79,7 +79,61 @@ public class UserDaoImpl implements UserDao {
 
             return userList;
         } catch (SQLException e) {
-            logger.error("{}, when trying to find all Users", e.getMessage());
+            logger.error("{}, when trying to find all from table users", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.FIND_ALL_USERS)) {
+            List<User> userList = new ArrayList<>();
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = userMapper.extractFromResultSet(resultSet);
+                userList.add(user);
+            }
+
+            return userList;
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find all users (role = 'USER')", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public void blockById(Long id) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.BLOCK_BY_ID)) {
+            statement.setLong(1, id);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to block User by id ({})", e.getMessage(), id);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public void unblockById(Long id) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(UserQueries.UNBLOCK_BY_ID)) {
+            statement.setLong(1, id);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to unblock User by id ({})", e.getMessage(), id);
             throw new RuntimeException(e);
         } finally {
             ConnectionPoolHolder.closeConnection(connection);

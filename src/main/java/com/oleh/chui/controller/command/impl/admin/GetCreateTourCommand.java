@@ -1,4 +1,4 @@
-package com.oleh.chui.controller.command.impl.manager;
+package com.oleh.chui.controller.command.impl.admin;
 
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.util.JspFilePath;
@@ -16,6 +16,6 @@ public class GetCreateTourCommand implements Command {
         request.setAttribute("tourTypeList", tourTypeEnums);
         request.setAttribute("hotelTypeList", hotelTypeEnums);
 
-        return JspFilePath.MANAGER_CREATE_TOUR;
+        return JspFilePath.ADMIN_CREATE_TOUR;
     }
 }

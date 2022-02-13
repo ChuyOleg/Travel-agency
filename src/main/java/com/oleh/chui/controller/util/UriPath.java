@@ -10,6 +10,7 @@ public class UriPath {
     public static final String REGISTRATION = "/registration";
     public static final String CATALOG = "/catalog";
 
-    public static final String MANAGER_CREATE_TOUR = "/tour/create";
+    public static final String ADMIN_CREATE_TOUR = "/tour/create";
+    public static final String ADMIN_USERS = "/users";
 
 }

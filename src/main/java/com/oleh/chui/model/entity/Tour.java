@@ -1,7 +1,11 @@
 package com.oleh.chui.model.entity;
 
+import com.oleh.chui.model.dto.TourDto;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class Tour {
@@ -52,6 +56,27 @@ public class Tour {
         this.endDate = endDate;
         this.nightsNumber = nightsNumber;
         this.burning = burning;
+    }
+
+    public Tour(TourDto tourDto) {
+        Country country = new Country(tourDto.getCountry(), new HashSet<>());
+        City city = new City(tourDto.getCity(), country);
+        TourType tourType = new TourType(TourType.TourTypeEnum.valueOf(tourDto.getTourType()));
+        HotelType hotelType = new HotelType(HotelType.HotelTypeEnum.valueOf(tourDto.getHotelType()));
+
+        this.name = tourDto.getName();
+        this.price = new BigDecimal(tourDto.getPrice());
+        this.city = city;
+        this.description = tourDto.getDescription();
+        this.maxDiscount = Integer.parseInt(tourDto.getMaxDiscount());
+        this.discountStep = Double.parseDouble(tourDto.getDiscountStep());
+        this.tourType = tourType;
+        this.hotelType = hotelType;
+        this.personNumber = Integer.parseInt(tourDto.getPersonNumber());
+        this.startDate = LocalDate.parse(tourDto.getStartDate());
+        this.endDate = LocalDate.parse(tourDto.getEndDate());
+        this.nightsNumber = (int) ChronoUnit.DAYS.between(this.startDate, this.endDate);
+        this.burning = tourDto.isBurning() != null;
     }
 
     public Long getId() {

@@ -2,8 +2,10 @@ package com.oleh.chui.controller;
 
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.command.impl.*;
-import com.oleh.chui.controller.command.impl.manager.GetCreateTourCommand;
-import com.oleh.chui.controller.command.impl.manager.PostCreateTourCommand;
+import com.oleh.chui.controller.command.impl.admin.GetCreateTourCommand;
+import com.oleh.chui.controller.command.impl.admin.GetUsersCommand;
+import com.oleh.chui.controller.command.impl.admin.PostBlockUnblockUserCommand;
+import com.oleh.chui.controller.command.impl.admin.PostCreateTourCommand;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.model.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -38,13 +40,15 @@ public class DispatcherServlet extends HttpServlet {
         getCommands.put(UriPath.LOGIN, new GetLogInCommand());
         getCommands.put(UriPath.REGISTRATION, new GetRegistrationCommand());
         getCommands.put(UriPath.CATALOG, new GetCatalogCommand(serviceFactory.createTourService()));
-        getCommands.put(UriPath.MANAGER_CREATE_TOUR, new GetCreateTourCommand());
+        getCommands.put(UriPath.ADMIN_CREATE_TOUR, new GetCreateTourCommand());
+        getCommands.put(UriPath.ADMIN_USERS, new GetUsersCommand(serviceFactory.createUserService()));
     }
 
     private void putPostCommands(ServiceFactory serviceFactory) {
         postCommands.put(UriPath.LOGIN, new PostLogInCommand(serviceFactory.createUserService()));
         postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand(serviceFactory.createUserService()));
-        postCommands.put(UriPath.MANAGER_CREATE_TOUR, new PostCreateTourCommand(serviceFactory.createTourService(), serviceFactory.createCountryService()));
+        postCommands.put(UriPath.ADMIN_CREATE_TOUR, new PostCreateTourCommand(serviceFactory.createTourService(), serviceFactory.createCountryService()));
+        postCommands.put(UriPath.ADMIN_USERS, new PostBlockUnblockUserCommand(serviceFactory.createUserService()));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.oleh.chui.controller.command.impl;
 
 import com.oleh.chui.controller.command.Command;
+import com.oleh.chui.controller.command.impl.mapper.CatalogMapper;
 import com.oleh.chui.controller.util.JspFilePath;
 import com.oleh.chui.model.entity.Tour;
 import com.oleh.chui.model.service.TourService;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class GetCatalogCommand implements Command {
 
+    private final CatalogMapper catalogMapper = new CatalogMapper();
     private final TourService tourService;
 
     public GetCatalogCommand(TourService tourService) {
@@ -20,9 +22,9 @@ public class GetCatalogCommand implements Command {
     public String execute(HttpServletRequest request) {
         List<Tour> tourList = tourService.findAll();
 
-        tourList.forEach(System.out::println);
-
         request.setAttribute("tourList", tourList);
+
+        catalogMapper.insertInfoIntoRequest(request);
         return JspFilePath.CATALOG;
     }
 }

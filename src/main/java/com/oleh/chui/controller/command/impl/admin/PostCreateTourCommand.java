@@ -1,14 +1,13 @@
 package com.oleh.chui.controller.command.impl.admin;
 
 import com.oleh.chui.controller.command.Command;
+import com.oleh.chui.controller.command.impl.mapper.TourInfoMapper;
 import com.oleh.chui.controller.exception.tour.*;
 import com.oleh.chui.controller.util.JspFilePath;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.controller.validator.TourValidator;
 import com.oleh.chui.model.dto.TourDto;
 import com.oleh.chui.model.entity.Country;
-import com.oleh.chui.model.entity.HotelType;
-import com.oleh.chui.model.entity.TourType;
 import com.oleh.chui.model.service.CountryService;
 import com.oleh.chui.model.service.TourService;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +19,7 @@ import java.util.Optional;
 public class PostCreateTourCommand implements Command {
 
     private final Logger logger = LogManager.getLogger(PostCreateTourCommand.class);
+    private final TourInfoMapper tourInfoMapper = new TourInfoMapper();
     private final TourService tourService;
     private final CountryService countryService;
 
@@ -30,7 +30,7 @@ public class PostCreateTourCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        TourDto tourDto = fetchTourDtoFromRequest(request);
+        TourDto tourDto = tourInfoMapper.fetchTourDtoFromRequest(request);
 
         boolean tourDtoIsValid = validateTourDto(tourDto, request);
 
@@ -48,7 +48,7 @@ public class PostCreateTourCommand implements Command {
             }
         }
 
-        insertTourDtoIntoRequest(tourDto, request);
+        tourInfoMapper.insertTourDtoIntoRequest(tourDto, request);
         return JspFilePath.ADMIN_CREATE_TOUR;
     }
 
@@ -81,24 +81,6 @@ public class PostCreateTourCommand implements Command {
         }
 
         return true;
-    }
-
-    private TourDto fetchTourDtoFromRequest(HttpServletRequest req) {
-        return new TourDto(
-                req.getParameter("name"),
-                req.getParameter("price"),
-                req.getParameter("country"),
-                req.getParameter("city"),
-                req.getParameter("description"),
-                req.getParameter("maxDiscount"),
-                req.getParameter("discountStep"),
-                req.getParameter("tourType"),
-                req.getParameter("hotelType"),
-                req.getParameter("personNumber"),
-                req.getParameter("startDate"),
-                req.getParameter("endDate"),
-                req.getParameter("isBurning")
-        );
     }
 
     private boolean validateTourDto(TourDto tourDto, HttpServletRequest req) {
@@ -144,28 +126,6 @@ public class PostCreateTourCommand implements Command {
         }
 
         return false;
-    }
-
-    private void insertTourDtoIntoRequest(TourDto tourDto, HttpServletRequest req) {
-        req.setAttribute("name", tourDto.getName());
-        req.setAttribute("price", tourDto.getPrice());
-        req.setAttribute("country", tourDto.getCountry());
-        req.setAttribute("city", tourDto.getCity());
-        req.setAttribute("description", tourDto.getDescription());
-        req.setAttribute("maxDiscount", tourDto.getMaxDiscount());
-        req.setAttribute("discountStep", tourDto.getDiscountStep());
-        req.setAttribute("tourType", tourDto.getTourType());
-        req.setAttribute("hotelType", tourDto.getHotelType());
-        req.setAttribute("personNumber", tourDto.getPersonNumber());
-        req.setAttribute("startDate", tourDto.getStartDate());
-        req.setAttribute("endDate", tourDto.getEndDate());
-        req.setAttribute("isBurning", tourDto.isBurning());
-
-        TourType.TourTypeEnum[] tourTypeEnums = TourType.TourTypeEnum.values();
-        HotelType.HotelTypeEnum[] hotelTypeEnums = HotelType.HotelTypeEnum.values();
-
-        req.setAttribute("tourTypeList", tourTypeEnums);
-        req.setAttribute("hotelTypeList", hotelTypeEnums);
     }
 
 }

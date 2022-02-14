@@ -13,9 +13,6 @@ public class FieldValidator {
     }
 
     public static boolean fieldIsValidInteger(String field) {
-        if (fieldIsEmpty(field)) {
-            return false;
-        }
         try {
             Integer.parseInt(field);
         } catch (NumberFormatException e) {
@@ -25,9 +22,6 @@ public class FieldValidator {
     }
 
     public static boolean fieldIsValidDouble(String field) {
-        if (fieldIsEmpty(field)) {
-            return false;
-        }
         try {
             Double.parseDouble(field);
         } catch (NumberFormatException e) {
@@ -37,9 +31,6 @@ public class FieldValidator {
     }
 
     public static boolean fieldIsValidBigDecimal(String field) {
-        if (fieldIsEmpty(field)) {
-            return false;
-        }
         try {
             new BigDecimal(field);
         } catch (NumberFormatException e) {

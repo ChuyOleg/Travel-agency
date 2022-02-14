@@ -46,7 +46,7 @@ public class TourValidator {
     }
 
     private static void checkForValidPrice(String priceString) throws PriceIsNotValidException {
-        if (!FieldValidator.fieldIsValidBigDecimal(priceString)) {
+        if (FieldValidator.fieldIsEmpty(priceString) || !FieldValidator.fieldIsValidBigDecimal(priceString)) {
             throw new PriceIsNotValidException();
         }
 
@@ -69,7 +69,7 @@ public class TourValidator {
     }
 
     private static void checkForValidMaxDiscount(String maxDiscountString) throws MaxDiscountIsNotValidException {
-        if (!FieldValidator.fieldIsValidInteger(maxDiscountString)) {
+        if (FieldValidator.fieldIsEmpty(maxDiscountString) || !FieldValidator.fieldIsValidInteger(maxDiscountString)) {
             throw new MaxDiscountIsNotValidException();
         }
 
@@ -80,7 +80,7 @@ public class TourValidator {
     }
 
     private static void checkForValidDiscountStep(String discountStepString) throws DiscountStepIsNotValidException {
-        if (!FieldValidator.fieldIsValidDouble(discountStepString)) {
+        if (FieldValidator.fieldIsEmpty(discountStepString) || !FieldValidator.fieldIsValidDouble(discountStepString)) {
             throw new DiscountStepIsNotValidException();
         }
 
@@ -103,7 +103,7 @@ public class TourValidator {
     }
 
     private static void checkForValidPersonNumber(String personNumberString) throws PersonNumberIsNotValidException {
-        if (!FieldValidator.fieldIsValidInteger(personNumberString)) {
+        if (FieldValidator.fieldIsEmpty(personNumberString) || !FieldValidator.fieldIsValidInteger(personNumberString)) {
             throw new PersonNumberIsNotValidException();
         }
 

@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class TourService {
@@ -19,7 +20,19 @@ public class TourService {
     }
 
     public List<Tour> findAll() {
-        return tourDao.findAll();
+        List<Tour> tourList = tourDao.findAll();
+
+        sortBurningFirst(tourList);
+
+        return tourList;
+    }
+
+    public List<Tour> findAllUsingFilters(Map<String, String> filterParameters) {
+        List<Tour> tourList = tourDao.findAllUsingFilter(filterParameters);
+
+        sortBurningFirst(tourList);
+
+        return tourList;
     }
 
     public boolean isTourWithThisNameAlreadyExists(String name) {
@@ -33,4 +46,9 @@ public class TourService {
 
         tourDao.create(tour);
     }
+
+    private void sortBurningFirst(List<Tour> tourList) {
+        tourList.sort((o1, o2) -> Boolean.compare(o2.isBurning(), o1.isBurning()));
+    }
+
 }

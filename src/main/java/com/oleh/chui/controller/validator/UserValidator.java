@@ -2,6 +2,7 @@ package com.oleh.chui.controller.validator;
 
 import com.oleh.chui.controller.exception.user.*;
 import com.oleh.chui.controller.validator.regexp.UserRegExp;
+import com.oleh.chui.controller.validator.util.FieldValidator;
 import com.oleh.chui.model.dto.UserDto;
 
 import java.util.regex.Matcher;
@@ -34,7 +35,7 @@ public class UserValidator {
     }
 
     private static void checkForUsernameSize(String username) throws UsernameSizeOutOfBoundsException {
-        if (fieldIsEmpty(username)) throw new UsernameSizeOutOfBoundsException();
+        if (FieldValidator.fieldIsEmpty(username)) throw new UsernameSizeOutOfBoundsException();
 
         final int SIZE = username.length();
 
@@ -44,7 +45,7 @@ public class UserValidator {
     }
 
     private static void checkForPasswordSize(String password) throws PasswordSizeOutOfBoundsException {
-        if (fieldIsEmpty(password)) throw new PasswordSizeOutOfBoundsException();
+        if (FieldValidator.fieldIsEmpty(password)) throw new PasswordSizeOutOfBoundsException();
 
         final int SIZE = password.length();
 
@@ -69,7 +70,7 @@ public class UserValidator {
     }
 
     private static void checkForFirstNameSize(String firstName) throws FirstNameSizeOutOfBoundsException {
-        if (fieldIsEmpty(firstName)) throw new FirstNameSizeOutOfBoundsException();
+        if (FieldValidator.fieldIsEmpty(firstName)) throw new FirstNameSizeOutOfBoundsException();
 
         final int SIZE = firstName.length();
 
@@ -79,7 +80,7 @@ public class UserValidator {
     }
 
     private static void checkForLastNameSize(String lastName) throws LastNameSizeOutOfBoundsException {
-        if (fieldIsEmpty(lastName)) throw new LastNameSizeOutOfBoundsException();
+        if (FieldValidator.fieldIsEmpty(lastName)) throw new LastNameSizeOutOfBoundsException();
 
         final int SIZE = lastName.length();
 
@@ -89,7 +90,7 @@ public class UserValidator {
     }
 
     private static void checkForEmailSize(String email) throws EmailSizeOutOfBoundsException {
-        if (fieldIsEmpty(email)) throw new EmailSizeOutOfBoundsException();
+        if (FieldValidator.fieldIsEmpty(email)) throw new EmailSizeOutOfBoundsException();
 
         final int SIZE = email.length();
 
@@ -105,10 +106,6 @@ public class UserValidator {
         if (!matcher.matches()) {
             throw new EmailNotMatchTemplateException();
         }
-    }
-
-    private static boolean fieldIsEmpty(String field) {
-        return field == null || field.trim().isEmpty();
     }
 
 }

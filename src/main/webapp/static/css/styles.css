@@ -22,10 +22,11 @@
 
 .tour-block div {
     border: 2px solid black;
+    background: #e5ffea;
 }
 
 .tour-burning-true div {
-    background: orange;
+    background: #fff381;
 }
 
 /* USERS PAGE (block | unblock) */

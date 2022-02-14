@@ -40,6 +40,7 @@ public class DispatcherServlet extends HttpServlet {
         getCommands.put(UriPath.LOGIN, new GetLogInCommand());
         getCommands.put(UriPath.REGISTRATION, new GetRegistrationCommand());
         getCommands.put(UriPath.CATALOG, new GetCatalogCommand(serviceFactory.createTourService()));
+        getCommands.put(UriPath.CATALOG_FILTER, new GetCatalogFilterCommand(serviceFactory.createTourService()));
         getCommands.put(UriPath.ADMIN_CREATE_TOUR, new GetCreateTourCommand());
         getCommands.put(UriPath.ADMIN_USERS, new GetUsersCommand(serviceFactory.createUserService()));
     }

@@ -2,14 +2,17 @@ package com.oleh.chui.model.dao.impl;
 
 import com.oleh.chui.model.dao.TourDao;
 import com.oleh.chui.model.dao.impl.query.TourQueries;
+import com.oleh.chui.model.dao.impl.query.TourQueryFilterBuilder;
 import com.oleh.chui.model.dao.mapper.TourMapper;
 import com.oleh.chui.model.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class TourDaoImpl implements TourDao {
@@ -145,4 +148,41 @@ public class TourDaoImpl implements TourDao {
             ConnectionPoolHolder.closeConnection(connection);
         }
     }
+
+    @Override
+    public List<Tour> findAllUsingFilter(Map<String, String> filterFieldMap) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+        String query = TourQueryFilterBuilder.buildTourQueryFilter(filterFieldMap);
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            List<Tour> tourList = new ArrayList<>();
+            setParametersIntoStatementForFilterQuery(filterFieldMap, statement);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Tour tour = tourMapper.extractFromResultSet(resultSet);
+                tourList.add(tour);
+            }
+
+            return tourList;
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find all tours using filters", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    private void setParametersIntoStatementForFilterQuery(Map<String, String> filterFieldMap, PreparedStatement statement) throws SQLException {
+        int indexCounter = 1;
+        for (Map.Entry<String, String> entry : filterFieldMap.entrySet()) {
+            if (entry.getKey().equals("minPrice") || entry.getKey().equals("maxPrice")) {
+                statement.setBigDecimal(indexCounter++, BigDecimal.valueOf(Double.parseDouble(entry.getValue())));
+            } else if (entry.getKey().equals("personNumber")) {
+                statement.setInt(indexCounter++, Integer.parseInt(entry.getValue()));
+            }
+        }
+    }
+
 }

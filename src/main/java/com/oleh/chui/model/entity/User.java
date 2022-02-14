@@ -22,8 +22,6 @@ public class User {
 
     }
 
-    // TODO: think about appropriation of password
-    // Constructor for DAO
     public User(Long id,
                 String username,
                 String password,

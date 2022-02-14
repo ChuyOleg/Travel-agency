@@ -1,6 +1,7 @@
 package com.oleh.chui.controller.command.impl;
 
 import com.oleh.chui.controller.command.Command;
+import com.oleh.chui.controller.command.impl.mapper.UserInfoMapper;
 import com.oleh.chui.controller.exception.user.*;
 import com.oleh.chui.controller.util.JspFilePath;
 import com.oleh.chui.controller.util.UriPath;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PostRegistrationCommand implements Command {
 
     private final Logger logger = LogManager.getLogger(PostRegistrationCommand.class);
+    private final UserInfoMapper userInfoMapper = new UserInfoMapper();
     private final UserService userService;
 
     public PostRegistrationCommand(UserService userService) {
@@ -23,7 +25,7 @@ public class PostRegistrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        UserDto userDto = fetchUserDtoFromRequest(request);
+        UserDto userDto = userInfoMapper.fetchUserDtoFromRequest(request);
 
         boolean userDtoIsValid = validateUserDto(userDto,request);
 
@@ -38,20 +40,11 @@ public class PostRegistrationCommand implements Command {
             }
         }
 
-        insertUserDtoIntoRequest(userDto, request);
+        userInfoMapper.insertUserDtoIntoRequest(userDto, request);
         return JspFilePath.REGISTRATION;
     }
 
-    private UserDto fetchUserDtoFromRequest(HttpServletRequest req) {
-        return new UserDto(
-                req.getParameter("username"),
-                req.getParameter("password"),
-                req.getParameter("passwordCopy"),
-                req.getParameter("firstName"),
-                req.getParameter("lastName"),
-                req.getParameter("email")
-        );
-    }
+
 
     private boolean validateUserDto(UserDto userDto, HttpServletRequest req) {
         try {
@@ -86,10 +79,4 @@ public class PostRegistrationCommand implements Command {
         return false;
     }
 
-    private void insertUserDtoIntoRequest(UserDto userDto, HttpServletRequest req) {
-        req.setAttribute("username", userDto.getUsername());
-        req.setAttribute("firstName", userDto.getFirstName());
-        req.setAttribute("lastName", userDto.getLastName());
-        req.setAttribute("email", userDto.getEmail());
-    }
 }

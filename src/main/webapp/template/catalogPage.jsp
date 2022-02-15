@@ -37,6 +37,7 @@
 
                 <div class="filter-block pe-4 ps-4">
                     <form class="row filter-form" autocomplete="off" method="get" action="/catalog/filter">
+                        <input name="page" value="1" hidden>
 
                         <div class="mb-2">
                             <p class="text-center mt-2 mb-0">Tour types</p>
@@ -98,45 +99,58 @@
 
 
             <div class="col-6 col-lg-8 offset-1">
-                <%--                <c:forEach begin="1" end="${requestScope.pagesNumber}" varStatus="loop">--%>
-                <%--                    <input name="page" value="${loop.index}">--%>
-                <%--                    <button class="btn btn-primary">${loop.index}</button>--%>
-                <%--                </c:forEach>--%>
+
+                <ul class="pagination-list text-center justify-content-center">
+                    <c:if test="${requestScope.activePageNumber == 1}">
+                        <li><button type="button" class="btn btn-primary" disabled id="prevPageButton"><</button> </li>
+                    </c:if>
+                    <c:if test="${!(requestScope.activePageNumber == 1)}">
+                        <li><button type="button" class="btn btn-primary" id="prevPageButton"><</button> </li>
+                    </c:if>
+
+
+                    <li value="${requestScope.activePageNumber}" class="pageNumber" id="pageNumber">${requestScope.activePageNumber}</li>
+                    <li class="next-page"><button type="button" class="btn btn-primary" id="nextPageButton">></button> </li>
+                </ul>
 
                 <c:forEach var="tour" items="${requestScope.tourList}">
-                    <div class="tour-block tour-burning-${tour.burning} mt-4 text-center">
-                        <h2><c:out value="${tour.name}" /></h2>
+                    <div class="tour-wrapper justify-content-center mb-5">
+                        <div class="tour-block tour-burning-${tour.burning} text-center">
+                            <h3 class="text-center tour-name pt-2 pb-2"><c:out value="${tour.name}" /></h3>
 
-                        <div class="row">
-                            <div class="col-2">Country</div>
-                            <div class="col-2">City</div>
-                            <div class="col-1">Price</div>
-                            <div class="col-3">Tour type</div>
-                            <div class="col-3">Hotel stars</div>
-                            <div class="col-1">Persons</div>
+                            <div class="row justify-content-center">
+                                <div class="col-2">Country</div>
+                                <div class="col-2">City</div>
+                                <div class="col-1">Price</div>
+                                <div class="col-3">Tour type</div>
+                                <div class="col-2">Hotel stars</div>
+                                <div class="col-2">Persons</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-2"><c:out value="${tour.city.country.country}" /></div>
+                                <div class="col-2"><c:out value="${tour.city.city}" /></div>
+                                <div class="col-1"><c:out value="${tour.price}$" /></div>
+                                <div class="col-3"><c:out value="${tour.tourType.value}" /></div>
+                                <div class="col-2"><myTg:stars hotelType="${tour.hotelType.value}" /></div>
+                                <div class="col-2"><c:out value="${tour.personNumber}" /></div>
+                            </div>
+
+                            <div class="row justify-content-center mt-4 mb-2">
+                                <div class="col-8 tour-date"><c:out value="${tour.startDate}  :  ${tour.endDate}" /></div>
+                            </div>
+
                         </div>
 
-                        <div class="row">
-                            <div class="col-2"><c:out value="${tour.city.country.country}" /></div>
-                            <div class="col-2"><c:out value="${tour.city.city}" /></div>
-                            <div class="col-1"><c:out value="${tour.price}$" /></div>
-                            <div class="col-3"><c:out value="${tour.tourType.value}" /></div>
-                            <div class="col-3"><myTg:stars hotelType="${tour.hotelType.value}" /></div>
-                            <div class="col-1"><c:out value="${tour.personNumber}" /></div>
-                        </div>
-
-                        <div class="row justify-content-center mt-4">
-                            <div class="col-8"><c:out value="${tour.startDate}  :  ${tour.endDate}" /></div>
-                        </div>
-
-                        <div class="justify-content-center">
+                        <div class="text-center">
                             <button class="btn btn-primary" type="button">See details</button>
                         </div>
-
                     </div>
                 </c:forEach>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/pagination.js"></script>
 </body>
 </html>

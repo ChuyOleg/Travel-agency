@@ -8,15 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 
 public class CatalogMapper {
 
-    private final Integer PAGE_SIZE = 6;
-
     public void insertInfoIntoRequest(TourService tourService, HttpServletRequest req) {
         // TODO: delete method tourService.getToursQuantity
         // TODO: get number if tours based of tourService.findAll() or tourService.findAllWithFilters()
-        int tourQuantity = tourService.getToursQuantity();
-        int pagesNumber = (int) Math.ceil((double) tourQuantity / PAGE_SIZE);
 
-        req.setAttribute("pagesNumber", pagesNumber);
+        String pageNumber = req.getParameter("page");
+
+        if (pageNumber != null && !pageNumber.isEmpty()) {
+            req.setAttribute("activePageNumber", Integer.parseInt(pageNumber));
+        } else {
+            req.setAttribute("activePageNumber", 1);
+        }
+//        req.setAttribute("pagesNumber", pagesNumber);
         req.setAttribute("tourTypeList", TourType.TourTypeEnum.values());
         req.setAttribute("hotelTypeList", HotelType.HotelTypeEnum.values());
     }

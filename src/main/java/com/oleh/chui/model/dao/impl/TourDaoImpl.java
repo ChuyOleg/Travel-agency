@@ -154,8 +154,6 @@ public class TourDaoImpl implements TourDao {
         Connection connection = ConnectionPoolHolder.getConnection();
         String query = TourQueryFilterBuilder.buildTourQueryFilter(filterFieldMap);
 
-        System.out.println(query);
-
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             List<Tour> tourList = new ArrayList<>();
             setParametersIntoStatementForFilterQuery(filterFieldMap, statement);

@@ -24,6 +24,11 @@ public class GetCatalogCommand implements Command {
 
         request.setAttribute("tourList", tourList);
 
+        String pageNumber = request.getParameter("page");
+
+        if (pageNumber != null && !pageNumber.isEmpty()) {
+            request.setAttribute("activePageNumber", pageNumber);
+        }
         catalogMapper.insertInfoIntoRequest(tourService, request);
         return JspFilePath.CATALOG;
     }

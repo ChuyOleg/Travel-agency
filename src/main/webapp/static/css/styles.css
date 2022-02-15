@@ -43,12 +43,42 @@
 /************* CATALOG PAGE ***************/
 /******************************************/
 
+.tour-name {
+    border-bottom: 3px solid #3a763f;
+    font-style: italic;
+}
+
 .filter-block {
     border: 2px solid black;
 }
 
-.tour-block div {
+.tour-block {
     border: 2px solid black;
+    box-shadow: 0 0 5px 1px black;
+}
+
+.tour-burning-true {
+    border: 5px solid orange;
+    box-shadow: 0 0 5px 1px orange;
+}
+
+.tour-date {
+    font-weight: bold;
+}
+
+.pagination-list li {
+    display: inline-block;
+    list-style-type: none;
+}
+
+.pagination-list .pageNumber {
+    background: #ebd9df;
+    width: 40px;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-weight: bold;
+    line-height: 1.5;
 }
 
 /******************************************/

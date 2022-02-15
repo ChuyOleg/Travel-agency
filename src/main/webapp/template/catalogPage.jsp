@@ -36,7 +36,7 @@
             <div class="col-5 col-lg-3">
 
                 <div class="filter-block pe-4 ps-4">
-                    <form class="row filter-form" autocomplete="off" method="get" action="/catalog/filter">
+                    <form class="row filter-form" autocomplete="off" method="get" action="/catalog">
                         <input name="page" value="1" hidden>
 
                         <div class="mb-2">
@@ -101,15 +101,10 @@
             <div class="col-6 col-lg-8 offset-1">
 
                 <ul class="pagination-list text-center justify-content-center">
-                    <c:if test="${requestScope.activePageNumber == 1}">
-                        <li><button type="button" class="btn btn-primary" disabled id="prevPageButton"><</button> </li>
-                    </c:if>
-                    <c:if test="${!(requestScope.activePageNumber == 1)}">
-                        <li><button type="button" class="btn btn-primary" id="prevPageButton"><</button> </li>
-                    </c:if>
-
+                    <li><button type="button" class="btn btn-primary" <c:if test="${requestScope.activePageNumber == 1}">disabled</c:if> id="prevPageButton"><</button> </li>
 
                     <li value="${requestScope.activePageNumber}" class="pageNumber" id="pageNumber">${requestScope.activePageNumber}</li>
+
                     <li class="next-page"><button type="button" class="btn btn-primary" id="nextPageButton">></button> </li>
                 </ul>
 

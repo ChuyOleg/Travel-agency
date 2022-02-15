@@ -12,4 +12,6 @@ public interface TourDao extends GenericDao<Tour> {
 
     List<Tour> findAllUsingFilter(Map<String, String> filterFieldMap);
 
+    int findToursQuantity();
+
 }

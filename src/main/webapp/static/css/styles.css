@@ -17,27 +17,66 @@
 }
 
 .error-message {
+    font-weight: bold;
     color: red;
+}
+
+/******************************************/
+/************* LOGIN PAGE *****************/
+/******************************************/
+
+.login-form {
+    border: 2px solid black;
+    box-shadow: 0 0 5px 1px black;
+}
+
+/******************************************/
+/********** REGISTRATION PAGE *************/
+/******************************************/
+
+.registration-form {
+    border: 2px solid black;
+    box-shadow: 0 0 5px 1px black;
+}
+
+/******************************************/
+/************* CATALOG PAGE ***************/
+/******************************************/
+
+.filter-block {
+    border: 2px solid black;
 }
 
 .tour-block div {
     border: 2px solid black;
-    background: #e5ffea;
 }
 
-.tour-burning-true div {
-    background: #fff381;
+/******************************************/
+/********** TOUR CREATION PAGE ************/
+/******************************************/
+
+.tour-creation-block {
+    border: 2px solid black;
+    box-shadow: 0 0 5px 1px black;
+    background: #ebe9e9;
 }
 
-/* USERS PAGE (block | unblock) */
+/******************************************/
+/****** USERS PAGE (block | unblock) ******/
+/******************************************/
+
+.user-block-header div {
+    border: 2px solid black;
+    font-weight: bold;
+    background: #acd78b;
+}
+
 .user-field {
     border: 2px solid black;
+    font-weight: bold;
 }
 
-.blocked-true {
-    background: #ff8d75;
-}
-
-.blocked-false {
-    background: limegreen;
+.blocked-true div {
+    font-weight: bold;
+    color: red;
 }

@@ -43,5 +43,4 @@ public class TourInfoMapper {
         req.setAttribute("tourTypeList", TourType.TourTypeEnum.values());
         req.setAttribute("hotelTypeList", HotelType.HotelTypeEnum.values());
     }
-
 }

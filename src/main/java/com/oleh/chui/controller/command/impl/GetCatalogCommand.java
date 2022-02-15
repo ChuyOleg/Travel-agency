@@ -24,7 +24,7 @@ public class GetCatalogCommand implements Command {
 
         request.setAttribute("tourList", tourList);
 
-        catalogMapper.insertInfoIntoRequest(request);
+        catalogMapper.insertInfoIntoRequest(tourService, request);
         return JspFilePath.CATALOG;
     }
 }

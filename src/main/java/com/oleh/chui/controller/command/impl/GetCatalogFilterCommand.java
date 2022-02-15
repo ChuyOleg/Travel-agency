@@ -33,7 +33,7 @@ public class GetCatalogFilterCommand implements Command {
             request.setAttribute("tourList", tourList);
         }
 
-        catalogMapper.insertInfoIntoRequest(request);
+        catalogMapper.insertInfoIntoRequest(tourService, request);
         catalogFilterMapper.insertFilterParametersIntoRequest(filterParameters, request);
         return JspFilePath.CATALOG;
     }
@@ -43,13 +43,13 @@ public class GetCatalogFilterCommand implements Command {
         String minPrice = filterParameters.get("minPrice");
         String maxPrice = filterParameters.get("maxPrice");
 
-        if (personNumber != null && !FieldValidator.fieldIsValidInteger(personNumber)) {
+        if (!FieldValidator.fieldIsEmpty(personNumber) && !FieldValidator.fieldIsValidInteger(personNumber)) {
             req.setAttribute("invalidPersonNumber", true);
             return false;
-        } else if (minPrice != null && !FieldValidator.fieldIsValidBigDecimal(minPrice)) {
+        } else if (!FieldValidator.fieldIsEmpty(minPrice) && !FieldValidator.fieldIsValidBigDecimal(minPrice)) {
             req.setAttribute("invalidMinPrice", true);
             return false;
-        } else if (maxPrice != null && !FieldValidator.fieldIsValidBigDecimal(maxPrice)) {
+        } else if (!FieldValidator.fieldIsEmpty(maxPrice) && !FieldValidator.fieldIsValidBigDecimal(maxPrice)) {
             req.setAttribute("invalidMaxPrice", true);
             return false;
         }

@@ -12,8 +12,8 @@ public class TourQueryFilterBuilder {
     private static final String OR = " OR";
     private static final String TOUR_TYPE = " tour_type_id = (SELECT tour_type_id FROM tour_types WHERE tour_type = '%s')";
     private static final String HOTEL_TYPE = " hotel_type_id = (SELECT hotel_type_id FROM hotel_types WHERE hotel_type = '%s')";
-    private static final String PRICE_GREATER_THAN = " price > ?";
-    private static final String PRICE_LESS_THAN = " price < ?";
+    private static final String PRICE_GREATER_THAN = " price >= ?";
+    private static final String PRICE_LESS_THAN = " price <= ?";
     private static final String PERSON_NUMBER = " person_number = ?";
 
     private static final String MIN_PRICE_KEY = "minPrice";
@@ -46,7 +46,7 @@ public class TourQueryFilterBuilder {
         }
 
         if (conditionIsNotEmpty(condition)) {
-            appendConditionAND(conditions, condition.toString());
+            appendConditionAND(conditions,"(" + condition + ")");
         }
     }
 
@@ -60,7 +60,7 @@ public class TourQueryFilterBuilder {
         }
 
         if (conditionIsNotEmpty(condition)) {
-            appendConditionAND(conditions, condition.toString());
+            appendConditionAND(conditions, "(" + condition + ")");
         }
     }
 

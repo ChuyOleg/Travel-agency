@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>myTg</short-name>
+    <uri>myTagLib</uri>
+    <tag>
+        <name>stars</name>
+        <tag-class>com.oleh.chui.model.tag_handler.HotelStarsHandler</tag-class>
+        <attribute>
+            <name>hotelType</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

@@ -1,5 +1,6 @@
 package com.oleh.chui.controller.command.impl.mapper;
 
+import com.oleh.chui.controller.validator.util.FieldValidator;
 import com.oleh.chui.model.entity.HotelType;
 import com.oleh.chui.model.entity.TourType;
 
@@ -12,9 +13,9 @@ public class CatalogFilterMapper {
     public Map<String, String> fetchFilterParametersFromRequest(HttpServletRequest req) {
         Map<String, String> filterParameters = new HashMap<>();
 
-        if (!req.getParameter("minPrice").isEmpty()) filterParameters.put("minPrice", req.getParameter("minPrice"));
-        if (!req.getParameter("maxPrice").isEmpty()) filterParameters.put("maxPrice", req.getParameter("maxPrice"));
-        if (!req.getParameter("personNumber").isEmpty()) filterParameters.put("personNumber", req.getParameter("personNumber"));
+        if (!FieldValidator.fieldIsEmpty(req.getParameter("minPrice"))) filterParameters.put("minPrice", req.getParameter("minPrice"));
+        if (!FieldValidator.fieldIsEmpty(req.getParameter("maxPrice"))) filterParameters.put("maxPrice", req.getParameter("maxPrice"));
+        if (!FieldValidator.fieldIsEmpty(req.getParameter("personNumber"))) filterParameters.put("personNumber", req.getParameter("personNumber"));
 
         for (TourType.TourTypeEnum tourTypeEnum : TourType.TourTypeEnum.values()) {
             String tourTypeisChecked = req.getParameter(tourTypeEnum.name());

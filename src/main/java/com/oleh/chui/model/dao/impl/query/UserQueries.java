@@ -21,7 +21,8 @@ public class UserQueries {
     public static final String FIND_ALL_USERS =
             "SELECT * FROM users u" +
             " JOIN roles USING (role_id)" +
-            " WHERE role = 'USER'";
+            " WHERE role = 'USER'" +
+            " ORDER BY username";
 
     // TODO: THINK WHAT FIELDS HAVE TO BE CHANGED
     public static final String UPDATE =

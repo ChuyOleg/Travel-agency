@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class ConnectionPoolHolder {
 
-        private static final String DB_PROPERTIES_PATH = "C:/Users/User/IdeaProjects/epamPractice/Travel-agency/src/main/resources/db.properties";
+    private static final String DB_PROPERTIES_PATH = "C:/Users/User/IdeaProjects/epamPractice/Travel-agency/src/main/resources/db.properties";
     private static volatile DataSource dataSource;
     private static final Logger logger = LogManager.getLogger(ConnectionPoolHolder.class);
 

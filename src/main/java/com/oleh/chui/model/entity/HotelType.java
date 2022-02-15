@@ -55,11 +55,21 @@ public class HotelType {
     }
 
     public enum HotelTypeEnum {
-        ONE_STAR,
-        TWO_STARS,
-        THREE_STARS,
-        FOUR_STARS,
-        FIVE_STARS
+        ONE_STAR(1),
+        TWO_STARS(2),
+        THREE_STARS(3),
+        FOUR_STARS(4),
+        FIVE_STARS(5);
+
+        private final int starNumber;
+
+        HotelTypeEnum(int starNumber) {
+            this.starNumber = starNumber;
+        }
+
+        public int getStarNumber() {
+            return starNumber;
+        }
     }
 
 }

@@ -154,6 +154,8 @@ public class TourDaoImpl implements TourDao {
         Connection connection = ConnectionPoolHolder.getConnection();
         String query = TourQueryFilterBuilder.buildTourQueryFilter(filterFieldMap);
 
+        System.out.println(query);
+
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             List<Tour> tourList = new ArrayList<>();
             setParametersIntoStatementForFilterQuery(filterFieldMap, statement);
@@ -168,6 +170,26 @@ public class TourDaoImpl implements TourDao {
             return tourList;
         } catch (SQLException e) {
             logger.error("{}, when trying to find all tours using filters", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public int findToursQuantity() {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(TourQueries.FIND_TOURS_QUANTITY)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find tours quantity", e.getMessage());
             throw new RuntimeException(e);
         } finally {
             ConnectionPoolHolder.closeConnection(connection);

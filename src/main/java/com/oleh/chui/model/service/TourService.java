@@ -35,6 +35,10 @@ public class TourService {
         return tourList;
     }
 
+    public int getToursQuantity() {
+        return tourDao.findToursQuantity();
+    }
+
     public boolean isTourWithThisNameAlreadyExists(String name) {
         Optional<Tour> optionalTour = tourDao.findByName(name);
 
@@ -50,5 +54,4 @@ public class TourService {
     private void sortBurningFirst(List<Tour> tourList) {
         tourList.sort((o1, o2) -> Boolean.compare(o2.isBurning(), o1.isBurning()));
     }
-
 }

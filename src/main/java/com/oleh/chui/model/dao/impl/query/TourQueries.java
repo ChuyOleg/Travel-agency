@@ -36,6 +36,8 @@ public class TourQueries {
             " JOIN cities USING (city_id)" +
             " JOIN countries USING (country_id)";
 
+    public static final String FIND_TOURS_QUANTITY = "SELECT count(*) FROM tours";
+
     // TODO: THINK WHAT FIELDS HAVE TO BE CHANGED
     public static final String UPDATE =
             "UPDATE tours SET" +

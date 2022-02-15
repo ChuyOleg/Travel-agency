@@ -22,18 +22,34 @@ public class TourQueryFilterBuilder {
 
     private TourQueryFilterBuilder() {}
 
-    public static String buildTourQueryFilter(Map<String, String> filterFieldMap) {
+    public static String buildTourQueryFilterForFindAll(Map<String, String> filterFieldMap) {
         if (filterFieldMap.isEmpty()) {
-            return TourQueries.FIND_ALL;
+            return TourQueries.FIND_ALL_ORDER_BURNING_FIRST;
         } else {
-            StringBuilder conditions = new StringBuilder();
+            String condition = buildFullCondition(filterFieldMap);
 
-            buildTourTypeCondition(conditions, filterFieldMap);
-            buildHotelTypeCondition(conditions, filterFieldMap);
-            buildPriceAndPersonNumberCondition(conditions, filterFieldMap);
-
-            return TourQueries.FIND_ALL + WHERE + conditions;
+            return TourQueries.FIND_ALL + WHERE + condition + TourQueries.ORDER_BURNING_FIRST;
         }
+    }
+
+    public static String buildTourQueryFilterForFindCount(Map<String, String> filterFieldMap) {
+        if (filterFieldMap.isEmpty()) {
+            return TourQueries.FIND_ALL_COUNT;
+        } else {
+            String condition = buildFullCondition(filterFieldMap);
+
+            return TourQueries.FIND_ALL_COUNT + WHERE + condition;
+        }
+    }
+
+    private static String buildFullCondition(Map<String, String> filterFieldMap) {
+        StringBuilder conditions = new StringBuilder();
+
+        buildTourTypeCondition(conditions, filterFieldMap);
+        buildHotelTypeCondition(conditions, filterFieldMap);
+        buildPriceAndPersonNumberCondition(conditions, filterFieldMap);
+
+        return conditions.toString();
     }
 
     private static void buildTourTypeCondition(StringBuilder conditions, Map<String, String> filterFieldMap) {

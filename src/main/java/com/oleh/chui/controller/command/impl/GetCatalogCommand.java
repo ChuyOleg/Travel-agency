@@ -15,6 +15,8 @@ public class GetCatalogCommand implements Command {
 
     private final CatalogMapper catalogMapper = new CatalogMapper();
     private final TourService tourService;
+    private final Integer PAGE_SIZE = 4;
+    private final Integer START_PAGE_NUMBER = 1;
 
     public GetCatalogCommand(TourService tourService) {
         this.tourService = tourService;
@@ -27,7 +29,12 @@ public class GetCatalogCommand implements Command {
         boolean fieldsAreValid = validateFields(filterParameters, request);
 
         if (fieldsAreValid) {
-            List<Tour> tourList = tourService.findAllUsingFilters(filterParameters);
+            int activePageNumber = getActivePageNumber(request);
+
+            List<Tour> tourList = tourService.findAllUsingFiltersAndPagination(filterParameters, PAGE_SIZE, activePageNumber);
+            int pagesNumber = tourService.getPagesNumber(filterParameters, PAGE_SIZE);
+
+            request.setAttribute("pagesNumber", pagesNumber);
             request.setAttribute("tourList", tourList);
         }
 
@@ -52,5 +59,15 @@ public class GetCatalogCommand implements Command {
         }
 
         return true;
+    }
+
+    private int getActivePageNumber(HttpServletRequest request) {
+        String pageNumberString = request.getParameter("page");
+
+        if (pageNumberString != null && !pageNumberString.isEmpty()) {
+            return Integer.parseInt(pageNumberString);
+        } else {
+            return START_PAGE_NUMBER;
+        }
     }
 }

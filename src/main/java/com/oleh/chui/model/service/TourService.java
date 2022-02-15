@@ -19,24 +19,16 @@ public class TourService {
         this.tourDao = tourDao;
     }
 
-    public List<Tour> findAll() {
-        List<Tour> tourList = tourDao.findAll();
+    public List<Tour> findAllUsingFiltersAndPagination(Map<String, String> filterParameters, int pageSize, int pageNum) {
+        int offSet = pageSize * (pageNum - 1);
 
-        sortBurningFirst(tourList);
-
-        return tourList;
+        return tourDao.findAllUsingFilterAndPagination(filterParameters, pageSize, offSet);
     }
 
-    public List<Tour> findAllUsingFilters(Map<String, String> filterParameters) {
-        List<Tour> tourList = tourDao.findAllUsingFilter(filterParameters);
+    public int getPagesNumber(Map<String, String> filterParameters, int pageSize) {
+        int toursNumber = tourDao.findFilteredToursQuantity(filterParameters);
 
-        sortBurningFirst(tourList);
-
-        return tourList;
-    }
-
-    public int getToursQuantity() {
-        return tourDao.findToursQuantity();
+        return (int) Math.ceil((double) toursNumber / pageSize);
     }
 
     public boolean isTourWithThisNameAlreadyExists(String name) {
@@ -51,7 +43,4 @@ public class TourService {
         tourDao.create(tour);
     }
 
-    private void sortBurningFirst(List<Tour> tourList) {
-        tourList.sort((o1, o2) -> Boolean.compare(o2.isBurning(), o1.isBurning()));
-    }
 }

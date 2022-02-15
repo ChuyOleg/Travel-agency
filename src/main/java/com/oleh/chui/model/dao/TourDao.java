@@ -10,8 +10,8 @@ public interface TourDao extends GenericDao<Tour> {
 
     Optional<Tour> findByName(String name);
 
-    List<Tour> findAllUsingFilter(Map<String, String> filterFieldMap);
+    List<Tour> findAllUsingFilterAndPagination(Map<String, String> filterFieldMap, int limit, int offSet);
 
-    int findToursQuantity();
+    int findFilteredToursQuantity(Map<String, String> filterFieldMap);
 
 }

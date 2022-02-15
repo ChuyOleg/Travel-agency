@@ -100,13 +100,20 @@
 
             <div class="col-6 col-lg-8 offset-1">
 
-                <ul class="pagination-list text-center justify-content-center">
-                    <li><button type="button" class="btn btn-primary" <c:if test="${requestScope.activePageNumber == 1}">disabled</c:if> id="prevPageButton"><</button> </li>
+                <c:if test="${requestScope.pagesNumber > 0}">
+                    <ul class="pagination-list text-center justify-content-center">
+                        <li><button type="button" class="btn btn-primary" <c:if test="${requestScope.activePageNumber <= 1}">disabled</c:if> id="prevPageButton"><</button> </li>
 
-                    <li value="${requestScope.activePageNumber}" class="pageNumber" id="pageNumber">${requestScope.activePageNumber}</li>
+                        <li value="${requestScope.activePageNumber}" class="pageNumber" id="pageNumber">${requestScope.activePageNumber}</li>
 
-                    <li class="next-page"><button type="button" class="btn btn-primary" id="nextPageButton">></button> </li>
-                </ul>
+                        <li><button type="button" class="btn btn-primary" <c:if test="${requestScope.activePageNumber >= requestScope.pagesNumber}">disabled</c:if> id="nextPageButton">></button> </li>
+                    </ul>
+                </c:if>
+                <c:if test="${requestScope.pagesNumber <= 0}">
+                    <h2 class="text-center">There are no tours according to your criteria</h2>
+                </c:if>
+
+
 
                 <c:forEach var="tour" items="${requestScope.tourList}">
                     <div class="tour-wrapper justify-content-center mb-5">

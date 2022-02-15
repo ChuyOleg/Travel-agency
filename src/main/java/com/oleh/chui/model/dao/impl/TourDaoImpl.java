@@ -75,7 +75,7 @@ public class TourDaoImpl implements TourDao {
     public List<Tour> findAll() {
         Connection connection = ConnectionPoolHolder.getConnection();
 
-        try (PreparedStatement statement = connection.prepareStatement(TourQueries.FIND_ALL)) {
+        try (PreparedStatement statement = connection.prepareStatement(TourQueries.FIND_ALL_ORDER_BURNING_FIRST)) {
             List<Tour> tourList = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery();
 
@@ -150,13 +150,14 @@ public class TourDaoImpl implements TourDao {
     }
 
     @Override
-    public List<Tour> findAllUsingFilter(Map<String, String> filterFieldMap) {
+    public List<Tour> findAllUsingFilterAndPagination(Map<String, String> filterFieldMap, int limit, int offSet) {
         Connection connection = ConnectionPoolHolder.getConnection();
-        String query = TourQueryFilterBuilder.buildTourQueryFilter(filterFieldMap);
+        String QUERY_WITH_FILTERS = TourQueryFilterBuilder.buildTourQueryFilterForFindAll(filterFieldMap);
+        String QUERY_WITH_FILTERS_AND_PAGINATION = QUERY_WITH_FILTERS + TourQueries.LIMIT_OFFSET;
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(QUERY_WITH_FILTERS_AND_PAGINATION)) {
             List<Tour> tourList = new ArrayList<>();
-            setParametersIntoStatementForFilterQuery(filterFieldMap, statement);
+            setFilterAndPaginationParametersIntoStatement(filterFieldMap, limit, offSet, statement);
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -175,10 +176,12 @@ public class TourDaoImpl implements TourDao {
     }
 
     @Override
-    public int findToursQuantity() {
+    public int findFilteredToursQuantity(Map<String, String> filterFieldMap) {
         Connection connection = ConnectionPoolHolder.getConnection();
+        String FIND_ALL_WITH_FILTERS_COUNT = TourQueryFilterBuilder.buildTourQueryFilterForFindCount(filterFieldMap);
 
-        try (PreparedStatement statement = connection.prepareStatement(TourQueries.FIND_TOURS_QUANTITY)) {
+        try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_WITH_FILTERS_COUNT)) {
+            setFilerParametersIntoStatementAndGetIndex(filterFieldMap, statement);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -194,7 +197,7 @@ public class TourDaoImpl implements TourDao {
         }
     }
 
-    private void setParametersIntoStatementForFilterQuery(Map<String, String> filterFieldMap, PreparedStatement statement) throws SQLException {
+    private int setFilerParametersIntoStatementAndGetIndex(Map<String, String> filterFieldMap, PreparedStatement statement) throws SQLException {
         int indexCounter = 1;
         for (Map.Entry<String, String> entry : filterFieldMap.entrySet()) {
             if (entry.getKey().equals("minPrice") || entry.getKey().equals("maxPrice")) {
@@ -203,6 +206,13 @@ public class TourDaoImpl implements TourDao {
                 statement.setInt(indexCounter++, Integer.parseInt(entry.getValue()));
             }
         }
+        return indexCounter;
+    }
+
+    private void setFilterAndPaginationParametersIntoStatement(Map<String, String> filterFieldMap, int limit, int offSet, PreparedStatement statement) throws SQLException {
+        int indexCounter = setFilerParametersIntoStatementAndGetIndex(filterFieldMap, statement);
+        statement.setInt(indexCounter++, limit);
+        statement.setInt(indexCounter, offSet);
     }
 
 }

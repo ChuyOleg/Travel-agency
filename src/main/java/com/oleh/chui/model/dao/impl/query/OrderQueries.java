@@ -20,6 +20,9 @@ public class OrderQueries {
             " JOIN (SELECT * FROM users JOIN roles USING (role_id)) as user_info USING (user_id)" +
             " WHERE order_id = ?";
 
+    public static final String FIND_BY_USER_ID_COUNT =
+            "SELECT count(*) FROM orders WHERE user_id = ?";
+
     public static final String FIND_ALL =
             "SELECT * FROM orders" +
             " JOIN status USING (status_id)" +
@@ -29,6 +32,9 @@ public class OrderQueries {
                 " JOIN cities USING (city_id)" +
                 " JOIN countries USING (country_id)) as tour_info USING (tour_id)" +
             " JOIN (SELECT * FROM users JOIN roles USING (role_id)) as user_info USING (user_id)";
+
+    public static final String IS_EXISTED_BY_USER_ID_AND_TOUR_ID =
+            "SELECT count(*) FROM orders WHERE user_id = ? AND tour_id = ?";
 
     // TODO: Update object in java When update object in DB !!! THINK
     public static final String UPDATE = "";

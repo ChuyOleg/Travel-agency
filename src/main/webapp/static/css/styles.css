@@ -66,6 +66,10 @@
     font-weight: bold;
 }
 
+.tour-nights {
+    font-weight: bold;
+}
+
 .pagination-list li {
     display: inline-block;
     list-style-type: none;

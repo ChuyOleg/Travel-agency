@@ -29,6 +29,7 @@ public class PostLogInCommand implements Command {
         if (userOptional.isPresent()) {
             if (!userOptional.get().isBlocked()) {
                 request.getSession().setAttribute("userId", userOptional.get().getId());
+                request.getSession().setAttribute("role", userOptional.get().getRole().getValue().toString());
                 return UriPath.REDIRECT + UriPath.CATALOG;
             } else {
                 request.setAttribute("accountIsBlocked", true);

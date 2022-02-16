@@ -12,6 +12,7 @@ public class TourQueryFilterBuilder {
     private static final String OR = " OR";
     private static final String TOUR_TYPE = " tour_type_id = (SELECT tour_type_id FROM tour_types WHERE tour_type = '%s')";
     private static final String HOTEL_TYPE = " hotel_type_id = (SELECT hotel_type_id FROM hotel_types WHERE hotel_type = '%s')";
+    private static final String START_DATE_GREATER_THAN_TODAY = " start_date > now()";
     private static final String PRICE_GREATER_THAN = " price >= ?";
     private static final String PRICE_LESS_THAN = " price <= ?";
     private static final String PERSON_NUMBER = " person_number = ?";
@@ -24,21 +25,21 @@ public class TourQueryFilterBuilder {
 
     public static String buildTourQueryFilterForFindAll(Map<String, String> filterFieldMap) {
         if (filterFieldMap.isEmpty()) {
-            return TourQueries.FIND_ALL_ORDER_BURNING_FIRST;
+            return TourQueries.FIND_ALL + WHERE + START_DATE_GREATER_THAN_TODAY + TourQueries.ORDER_BURNING_FIRST;
         } else {
             String condition = buildFullCondition(filterFieldMap);
 
-            return TourQueries.FIND_ALL + WHERE + condition + TourQueries.ORDER_BURNING_FIRST;
+            return TourQueries.FIND_ALL + WHERE + condition + AND + START_DATE_GREATER_THAN_TODAY + TourQueries.ORDER_BURNING_FIRST;
         }
     }
 
     public static String buildTourQueryFilterForFindCount(Map<String, String> filterFieldMap) {
         if (filterFieldMap.isEmpty()) {
-            return TourQueries.FIND_ALL_COUNT;
+            return TourQueries.FIND_ALL_COUNT + WHERE + START_DATE_GREATER_THAN_TODAY;
         } else {
             String condition = buildFullCondition(filterFieldMap);
 
-            return TourQueries.FIND_ALL_COUNT + WHERE + condition;
+            return TourQueries.FIND_ALL_COUNT + WHERE + condition + AND + START_DATE_GREATER_THAN_TODAY;
         }
     }
 

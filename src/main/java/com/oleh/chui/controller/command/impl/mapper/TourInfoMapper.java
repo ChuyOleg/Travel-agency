@@ -2,6 +2,7 @@ package com.oleh.chui.controller.command.impl.mapper;
 
 import com.oleh.chui.model.dto.TourDto;
 import com.oleh.chui.model.entity.HotelType;
+import com.oleh.chui.model.entity.Tour;
 import com.oleh.chui.model.entity.TourType;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,4 +44,5 @@ public class TourInfoMapper {
         req.setAttribute("tourTypeList", TourType.TourTypeEnum.values());
         req.setAttribute("hotelTypeList", HotelType.HotelTypeEnum.values());
     }
+
 }

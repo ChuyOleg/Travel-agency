@@ -74,8 +74,9 @@ public class TourDaoImpl implements TourDao {
     @Override
     public List<Tour> findAll() {
         Connection connection = ConnectionPoolHolder.getConnection();
+        String QUERY = TourQueries.FIND_ALL + TourQueries.ORDER_BURNING_FIRST;
 
-        try (PreparedStatement statement = connection.prepareStatement(TourQueries.FIND_ALL_ORDER_BURNING_FIRST)) {
+        try (PreparedStatement statement = connection.prepareStatement(QUERY)) {
             List<Tour> tourList = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery();
 

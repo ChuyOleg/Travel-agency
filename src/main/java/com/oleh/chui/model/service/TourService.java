@@ -19,6 +19,10 @@ public class TourService {
         this.tourDao = tourDao;
     }
 
+    public Optional<Tour> findById(Long id) {
+        return tourDao.findById(id);
+    }
+
     public List<Tour> findAllUsingFiltersAndPagination(Map<String, String> filterParameters, int pageSize, int pageNum) {
         int offSet = pageSize * (pageNum - 1);
 

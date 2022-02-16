@@ -39,14 +39,7 @@ public class TourQueries {
             " JOIN cities USING (city_id)" +
             " JOIN countries USING (country_id)";
 
-    public static final String FIND_ALL_COUNT =
-            "SELECT count(*) FROM tours" +
-            " JOIN hotel_types USING (hotel_type_id)" +
-            " JOIN tour_types USING (tour_type_id)" +
-            " JOIN cities USING (city_id)" +
-            " JOIN countries USING (country_id)";
-
-    public static final String FIND_ALL_ORDER_BURNING_FIRST = FIND_ALL + ORDER_BURNING_FIRST;
+    public static final String FIND_ALL_COUNT = "SELECT count(*) FROM tours";
 
     // TODO: THINK WHAT FIELDS HAVE TO BE CHANGED
     public static final String UPDATE =

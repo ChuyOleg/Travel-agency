@@ -102,4 +102,49 @@ public class OrderDaoImpl implements OrderDao {
             ConnectionPoolHolder.closeConnection(connection);
         }
     }
+
+    @Override
+    public boolean isExistedByUserIdAndTourId(Long userId, Long tourId) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(OrderQueries.IS_EXISTED_BY_USER_ID_AND_TOUR_ID)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, tourId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("count") > 0;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.error("{}, when trying to check if order exists by user_id=({}) and tour_id=({})", e.getMessage(), userId, tourId);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public int findByUserIdCount(Long userId) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try(PreparedStatement statement = connection.prepareStatement(OrderQueries.FIND_BY_USER_ID_COUNT)) {
+            statement.setLong(1, userId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find count of orders by user_id=({})", e.getMessage(), userId);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
 }

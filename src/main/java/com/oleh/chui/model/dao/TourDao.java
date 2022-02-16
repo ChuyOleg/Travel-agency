@@ -14,4 +14,6 @@ public interface TourDao extends GenericDao<Tour> {
 
     int findFilteredToursQuantity(Map<String, String> filterFieldMap);
 
+    void changeBurningStateById(Long id);
+
 }

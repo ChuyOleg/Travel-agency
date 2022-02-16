@@ -1,24 +1,53 @@
 package com.oleh.chui.model.service;
 
 import com.oleh.chui.model.dao.OrderDao;
+import com.oleh.chui.model.entity.Order;
+import com.oleh.chui.model.entity.Status;
 import com.oleh.chui.model.entity.Tour;
+import com.oleh.chui.model.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.Optional;
 
 public class OrderService {
 
     private final Logger logger = LogManager.getLogger(OrderService.class);
+    private final UserService userService;
+    private final TourService tourService;
     private final OrderDao orderDao;
 
-    public OrderService(OrderDao orderDao) {
+    public OrderService(UserService userService, TourService tourService, OrderDao orderDao) {
+        this.userService = userService;
+        this.tourService = tourService;
         this.orderDao = orderDao;
     }
 
     public boolean isExistedByUserIdAndTourId(Long userId, Long tourId) {
         return orderDao.isExistedByUserIdAndTourId(userId, tourId);
+    }
+
+    public void createOrder(Long userId, Long tourId) {
+        Optional<User> userOptional = userService.findById(userId);
+        Optional<Tour> tourOptional = tourService.findById(tourId);
+
+        if (userOptional.isPresent() && tourOptional.isPresent()) {
+            BigDecimal finalPrice = calculateFinalPrice(userId, tourOptional.get());
+            Status status = new Status(Status.StatusEnum.REGISTERED);
+
+            Order order = Order.builder()
+                    .user(userOptional.get())
+                    .tour(tourOptional.get())
+                    .status(status)
+                    .creationDate(LocalDate.now())
+                    .finalPrice(finalPrice)
+                    .build();
+
+            orderDao.create(order);
+        }
     }
 
     public BigDecimal calculateFinalPrice(Long userId, Tour tour) {

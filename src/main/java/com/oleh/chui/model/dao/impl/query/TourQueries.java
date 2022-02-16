@@ -49,4 +49,10 @@ public class TourQueries {
             " WHERE tour_id = ?";
 
     public static final String DELETE = "DELETE FROM tours WHERE tour_id = ?";
+
+    public static final String CHANGE_BURNING_STATUS_BY_ID =
+            "UPDATE tours SET" +
+            " is_burning = NOT is_burning" +
+            " WHERE tour_id = ?";
+
 }

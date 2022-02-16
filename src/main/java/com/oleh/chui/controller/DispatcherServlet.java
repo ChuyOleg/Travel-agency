@@ -6,6 +6,8 @@ import com.oleh.chui.controller.command.impl.admin.GetCreateTourCommand;
 import com.oleh.chui.controller.command.impl.admin.GetUsersCommand;
 import com.oleh.chui.controller.command.impl.admin.PostBlockUnblockUserCommand;
 import com.oleh.chui.controller.command.impl.admin.PostCreateTourCommand;
+import com.oleh.chui.controller.command.impl.manager.PostChangeBurningStateCommand;
+import com.oleh.chui.controller.command.impl.user.PostBuyTourCommand;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.model.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -50,6 +52,8 @@ public class DispatcherServlet extends HttpServlet {
         postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand(serviceFactory.createUserService()));
         postCommands.put(UriPath.ADMIN_CREATE_TOUR, new PostCreateTourCommand(serviceFactory.createTourService(), serviceFactory.createCountryService()));
         postCommands.put(UriPath.ADMIN_USERS, new PostBlockUnblockUserCommand(serviceFactory.createUserService()));
+        postCommands.put(UriPath.USER_BUY_TOUR, new PostBuyTourCommand(serviceFactory.createOrderService()));
+        postCommands.put(UriPath.MANAGER_CHANGE_TOUR_BURNING_STATE, new PostChangeBurningStateCommand(serviceFactory.createTourService()));
     }
 
     @Override

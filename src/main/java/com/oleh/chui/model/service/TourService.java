@@ -47,4 +47,8 @@ public class TourService {
         tourDao.create(tour);
     }
 
+    public void changeBurningState(Long id) {
+        tourDao.changeBurningStateById(id);
+    }
+
 }

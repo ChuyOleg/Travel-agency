@@ -62,13 +62,26 @@
 
                 <c:if test="${sessionScope.role.equals('USER') && !requestScope.tourIsBought}">
                     <form class="text-center" method="post" action="/tour/buy">
-                        <input type="text" name="id" value="${requestScope.tour.id}" hidden>
+                        <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
                         <button class="btn btn-primary pe-4 ps-4">Buy</button>
                     </form>
                 </c:if>
 
                 <c:if test="${sessionScope.role.equals('UNKNOWN')}">
                     <h3 class="text-center mt-3">Login to buy tour</h3>
+                </c:if>
+
+                <c:if test="${sessionScope.role.equals('MANAGER') || sessionScope.role.equals('ADMIN')}">
+                    <form class="text-center" method="post" action="/tour/changeBurningState">
+                        <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
+
+                        <c:if test="${requestScope.tour.burning}">
+                            <button class="btn btn-primary pe-4 ps-4">Make non-burning</button>
+                        </c:if>
+                        <c:if test="${!requestScope.tour.burning}">
+                            <button class="btn btn-primary pe-4 ps-4">Make burning</button>
+                        </c:if>
+                    </form>
                 </c:if>
 
             </div>

@@ -198,6 +198,22 @@ public class TourDaoImpl implements TourDao {
         }
     }
 
+    @Override
+    public void changeBurningStateById(Long id) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(TourQueries.CHANGE_BURNING_STATUS_BY_ID)) {
+            statement.setLong(1, id);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to change tour's burning state by id=({})", e.getMessage(), id);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
     private int setFilerParametersIntoStatementAndGetIndex(Map<String, String> filterFieldMap, PreparedStatement statement) throws SQLException {
         int indexCounter = 1;
         for (Map.Entry<String, String> entry : filterFieldMap.entrySet()) {

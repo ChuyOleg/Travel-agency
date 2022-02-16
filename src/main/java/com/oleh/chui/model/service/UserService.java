@@ -18,8 +18,8 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public List<User> findAll() {
-        return userDao.findAll();
+    public Optional<User> findById(Long id) {
+        return userDao.findById(id);
     }
 
     public List<User> findAllUsers() {

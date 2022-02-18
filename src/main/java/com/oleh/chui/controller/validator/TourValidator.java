@@ -3,7 +3,10 @@ package com.oleh.chui.controller.validator;
 import com.oleh.chui.controller.exception.tour.*;
 import com.oleh.chui.controller.validator.util.FieldValidator;
 import com.oleh.chui.model.dto.TourDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -11,34 +14,64 @@ import static com.oleh.chui.controller.validator.restriction.TourRestriction.*;
 
 public class TourValidator {
 
+    private static final Logger logger = LogManager.getLogger(TourValidator.class);
+
     private TourValidator() {}
 
-    public static void validate(TourDto tourDto) throws
-            NameIsEmptyException,
-            PriceIsNotValidException,
-            CountryIsEmptyException,
-            CityIsEmptyException,
-            DescriptionIsEmptyException,
-            MaxDiscountIsNotValidException,
-            DiscountStepIsNotValidException,
-            TourTypeIsEmptyException,
-            HotelTypeIsEmptyException,
-            PersonNumberIsNotValidException,
-            StartDateIsNotValidException,
-            EndDateIsNotValidException {
+    public static boolean validate(TourDto tourDto, HttpServletRequest request) {
+        try {
+            checkForNameIsNotEmpty(tourDto.getName());
+            checkForValidPrice(tourDto.getPrice());
+            checkForCountryIsNotEmpty(tourDto.getCountry());
+            checkForCityIsNotEmpty(tourDto.getCity());
+            checkForDescriptionIsNotEmpty(tourDto.getDescription());
+            checkForValidMaxDiscount(tourDto.getMaxDiscount());
+            checkForValidDiscountStep(tourDto.getDiscountStep());
+            checkForTourTypeisNotEmpty(tourDto.getTourType());
+            checkForHotelTypeIsNotEmpty(tourDto.getHotelType());
+            checkForValidPersonNumber(tourDto.getPersonNumber());
+            checkForValidStartDate(tourDto.getStartDate());
+            checkForValidEndDate(tourDto.getStartDate(), tourDto.getEndDate());
+            return true;
+        } catch (NameIsEmptyException e) {
+            logger.warn("<tour creating> name is empty");
+            request.setAttribute("nameIsEmptyException", true);
+        } catch (PriceIsNotValidException e) {
+            logger.warn("<tour creating> price is not valid ({})", tourDto.getPrice());
+            request.setAttribute("priceIsNotValidException", true);
+        } catch (CountryIsEmptyException e) {
+            logger.warn("<tour creating> country is empty");
+            request.setAttribute("countryIsEmptyException", true);
+        } catch (CityIsEmptyException e) {
+            logger.warn("<tour creating> city is empty");
+            request.setAttribute("cityIsEmptyException", true);
+        } catch (DescriptionIsEmptyException e) {
+            logger.warn("<tour creating> description is empty");
+            request.setAttribute("descriptionIsEmptyException", true);
+        } catch (MaxDiscountIsNotValidException e) {
+            logger.warn("<tour creating> max discount value is not valid ({})", tourDto.getMaxDiscount());
+            request.setAttribute("maxDiscountIsNotValidException", true);
+        } catch (DiscountStepIsNotValidException e) {
+            logger.warn("<tour creating> discount step is not valid ({})", tourDto.getDiscountStep());
+            request.setAttribute("discountStepIsNotValidException", true);
+        } catch (TourTypeIsEmptyException e) {
+            logger.warn("<tour creating> tour type is empty");
+            request.setAttribute("tourTypeIsEmptyException", true);
+        } catch (HotelTypeIsEmptyException e) {
+            logger.warn("<tour creating> hotel type is empty");
+            request.setAttribute("hotelTypeIsEmptyException", true);
+        } catch (PersonNumberIsNotValidException e) {
+            logger.warn("<tour creating> person number is not valid ({})", tourDto.getPersonNumber());
+            request.setAttribute("personNumberIsNotValidException", true);
+        } catch (StartDateIsNotValidException e) {
+            logger.warn("<tour creating> start date is not valid ({})", tourDto.getStartDate());
+            request.setAttribute("startDateIsNotValidException", true);
+        } catch (EndDateIsNotValidException e) {
+            logger.warn("<tour creating> end date is not valid ({})", tourDto.getEndDate());
+            request.setAttribute("endDateIsNotValidException", true);
+        }
 
-        checkForNameIsNotEmpty(tourDto.getName());
-        checkForValidPrice(tourDto.getPrice());
-        checkForCountryIsNotEmpty(tourDto.getCountry());
-        checkForCityIsNotEmpty(tourDto.getCity());
-        checkForDescriptionIsNotEmpty(tourDto.getDescription());
-        checkForValidMaxDiscount(tourDto.getMaxDiscount());
-        checkForValidDiscountStep(tourDto.getDiscountStep());
-        checkForTourTypeisNotEmpty(tourDto.getTourType());
-        checkForHotelTypeIsNotEmpty(tourDto.getHotelType());
-        checkForValidPersonNumber(tourDto.getPersonNumber());
-        checkForValidStartDate(tourDto.getStartDate());
-        checkForValidEndDate(tourDto.getStartDate(), tourDto.getEndDate());
+        return false;
     }
 
     private static void checkForNameIsNotEmpty(String name) throws NameIsEmptyException {

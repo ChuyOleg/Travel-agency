@@ -127,6 +127,28 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public boolean isExistedByTourId(Long tourId) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(OrderQueries.IS_EXISTED_BY_TOUR_ID)) {
+            statement.setLong(1, tourId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("count") > 0;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.error("{}, when trying to check if order exists by tour_id=({})", e.getMessage(), tourId);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    @Override
     public int findByUserIdCount(Long userId) {
         Connection connection = ConnectionPoolHolder.getConnection();
 

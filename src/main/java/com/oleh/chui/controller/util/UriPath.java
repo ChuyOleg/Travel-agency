@@ -16,6 +16,7 @@ public class UriPath {
     public static final String MANAGER_CHANGE_TOUR_BURNING_STATE = "/tour/changeBurningState";
 
     public static final String ADMIN_CREATE_TOUR = "/tour/create";
+    public static final String ADMIN_DELETE_TOUR = "/tour/delete";
     public static final String ADMIN_USERS = "/users";
 
 }

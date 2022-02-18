@@ -2,10 +2,7 @@ package com.oleh.chui.controller;
 
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.command.impl.*;
-import com.oleh.chui.controller.command.impl.admin.GetCreateTourCommand;
-import com.oleh.chui.controller.command.impl.admin.GetUsersCommand;
-import com.oleh.chui.controller.command.impl.admin.PostBlockUnblockUserCommand;
-import com.oleh.chui.controller.command.impl.admin.PostCreateTourCommand;
+import com.oleh.chui.controller.command.impl.admin.*;
 import com.oleh.chui.controller.command.impl.manager.PostChangeBurningStateCommand;
 import com.oleh.chui.controller.command.impl.user.PostBuyTourCommand;
 import com.oleh.chui.controller.util.UriPath;
@@ -23,6 +20,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DispatcherServlet extends HttpServlet {
+
+    // TODO: transfer business logic from controllers to services
+    // TODO: Validator set parameters into HttpServletRequest
 
     private final Map<String, Command> getCommands = new ConcurrentHashMap<>();
     private final Map<String, Command> postCommands = new ConcurrentHashMap<>();
@@ -54,6 +54,7 @@ public class DispatcherServlet extends HttpServlet {
         postCommands.put(UriPath.ADMIN_USERS, new PostBlockUnblockUserCommand(serviceFactory.createUserService()));
         postCommands.put(UriPath.USER_BUY_TOUR, new PostBuyTourCommand(serviceFactory.createOrderService()));
         postCommands.put(UriPath.MANAGER_CHANGE_TOUR_BURNING_STATE, new PostChangeBurningStateCommand(serviceFactory.createTourService()));
+        postCommands.put(UriPath.ADMIN_DELETE_TOUR, new PostDeleteTourCommand(serviceFactory.createTourService(), serviceFactory.createOrderService()));
     }
 
     @Override

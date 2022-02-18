@@ -30,6 +30,10 @@ public class OrderService {
         return orderDao.isExistedByUserIdAndTourId(userId, tourId);
     }
 
+    public boolean isExistedByTourId(Long tourId) {
+        return orderDao.isExistedByTourId(tourId);
+    }
+
     public void createOrder(Long userId, Long tourId) {
         Optional<User> userOptional = userService.findById(userId);
         Optional<Tour> tourOptional = tourService.findById(tourId);

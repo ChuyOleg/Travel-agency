@@ -25,6 +25,10 @@
             <h3 class="text-center mt-4">You have already bought this tour</h3>
         </c:if>
 
+        <c:if test="${sessionScope.role.equals('ADMIN') && param.error != null}">
+            <p class="text-center error-message mt-4">Cannot delete tour, it is already ordered</p>
+        </c:if>
+
         <div class="col-10 col-lg-10 offset-1">
 
             <div class="tour-wrapper justify-content-center mt-4 mb-5">
@@ -76,11 +80,25 @@
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
                         <c:if test="${requestScope.tour.burning}">
-                            <button class="btn btn-primary pe-4 ps-4">Make non-burning</button>
+                            <button type="submit" class="btn btn-primary pe-4 ps-4">Make non-burning</button>
                         </c:if>
                         <c:if test="${!requestScope.tour.burning}">
-                            <button class="btn btn-primary pe-4 ps-4">Make burning</button>
+                            <button type="submit" class="btn btn-primary pe-4 ps-4">Make burning</button>
                         </c:if>
+                    </form>
+                </c:if>
+
+                <c:if test="${sessionScope.role.equals('ADMIN')}">
+                    <form class="text-center" method="post" action="/tour/delete">
+                        <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
+
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+
+                    <form class="text-center" method="get" action="/tour/update">
+                        <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
+
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </c:if>
 

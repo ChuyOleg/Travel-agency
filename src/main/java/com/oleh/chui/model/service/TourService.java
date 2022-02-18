@@ -51,4 +51,8 @@ public class TourService {
         tourDao.changeBurningStateById(id);
     }
 
+    public void deleteTour(Long id) {
+        tourDao.delete(id);
+    }
+
 }

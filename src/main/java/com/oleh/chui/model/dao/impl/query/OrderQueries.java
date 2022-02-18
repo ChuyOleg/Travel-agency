@@ -36,6 +36,9 @@ public class OrderQueries {
     public static final String IS_EXISTED_BY_USER_ID_AND_TOUR_ID =
             "SELECT count(*) FROM orders WHERE user_id = ? AND tour_id = ?";
 
+    public static final String IS_EXISTED_BY_TOUR_ID =
+            "SELECT count(*) FROM orders WHERE tour_id = ?";
+
     // TODO: Update object in java When update object in DB !!! THINK
     public static final String UPDATE = "";
 

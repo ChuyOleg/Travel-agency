@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class OrderService {
@@ -28,6 +29,10 @@ public class OrderService {
 
     public boolean isExistedByUserIdAndTourId(Long userId, Long tourId) {
         return orderDao.isExistedByUserIdAndTourId(userId, tourId);
+    }
+
+    public List<Order> findAllByUserId(Long userId) {
+        return orderDao.findAllByUserId(userId);
     }
 
     public boolean isExistedByTourId(Long tourId) {

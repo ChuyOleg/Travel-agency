@@ -149,6 +149,30 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> findAllByUserId(Long userId) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(OrderQueries.FIND_ALL_BY_USER_ID)) {
+            statement.setLong(1, userId);
+            List<Order> orders = new ArrayList<>();
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Order order = orderMapper.extractFromResultSet(resultSet);
+
+                orders.add(order);
+            }
+
+            return orders;
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find all orders by user_id = ({})", e.getMessage(), userId);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    @Override
     public int findByUserIdCount(Long userId) {
         Connection connection = ConnectionPoolHolder.getConnection();
 

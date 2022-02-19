@@ -4,6 +4,7 @@ import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.command.impl.*;
 import com.oleh.chui.controller.command.impl.admin.*;
 import com.oleh.chui.controller.command.impl.manager.PostChangeBurningStateCommand;
+import com.oleh.chui.controller.command.impl.user.GetAccountPageCommand;
 import com.oleh.chui.controller.command.impl.user.PostBuyTourCommand;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.model.service.ServiceFactory;
@@ -27,6 +28,8 @@ public class DispatcherServlet extends HttpServlet {
 
     // TODO: think about FilterValidator instead of GetCatalogCommand.validateFields
 
+    // TODO: add description in tourDetailsPage
+
     private final Map<String, Command> getCommands = new ConcurrentHashMap<>();
     private final Map<String, Command> postCommands = new ConcurrentHashMap<>();
     private final String COMMAND_NOT_FOUND = "Command not found";
@@ -49,6 +52,7 @@ public class DispatcherServlet extends HttpServlet {
         getCommands.put(UriPath.ADMIN_USERS, new GetUsersCommand(serviceFactory.createUserService()));
         getCommands.put(UriPath.TOUR_DETAILS, new GetTourDetailsCommand(serviceFactory.createOrderService(), serviceFactory.createTourService()));
         getCommands.put(UriPath.ADMIN_UPDATE_TOUR, new GetUpdateTourCommand(serviceFactory.createTourService()));
+        getCommands.put(UriPath.USER_ACCOUNT, new GetAccountPageCommand(serviceFactory.createUserService(), serviceFactory.createOrderService()));
     }
 
     private void putPostCommands(ServiceFactory serviceFactory) {

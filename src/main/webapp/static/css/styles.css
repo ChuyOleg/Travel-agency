@@ -86,6 +86,25 @@
 }
 
 /******************************************/
+/*********** ACCOUNT PAGE *****************/
+/******************************************/
+
+.user-info-cell {
+    border: 2px solid black;
+    font-weight: bold;
+}
+
+.tour-status-CANCELED {
+    border: 2px solid red;
+    box-shadow: 0 0 5px 1px red;
+}
+
+.tour-status-PAID {
+    border: 2px solid green;
+    box-shadow: 0 0 5px 1px green;
+}
+
+/******************************************/
 /********** TOUR CREATION PAGE ************/
 /******************************************/
 

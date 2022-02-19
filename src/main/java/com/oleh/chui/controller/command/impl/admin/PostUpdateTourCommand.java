@@ -10,31 +10,33 @@ import com.oleh.chui.model.exception.city.CityNotExistException;
 import com.oleh.chui.model.exception.country.CountryNotExistException;
 import com.oleh.chui.model.exception.tour.TourNameIsReservedException;
 import com.oleh.chui.model.service.TourService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class PostCreateTourCommand implements Command {
+public class PostUpdateTourCommand implements Command {
 
-    private final Logger logger = LogManager.getLogger(PostCreateTourCommand.class);
+    private final String URL_ID_PARAMETER = "?tourId=";
+    private final String URL_SUCCESS_PARAMETER = "&success";
+
     private final TourInfoMapper tourInfoMapper = new TourInfoMapper();
     private final TourService tourService;
 
-    public PostCreateTourCommand(TourService tourService) {
+    public PostUpdateTourCommand(TourService tourService) {
         this.tourService = tourService;
     }
 
     @Override
     public String execute(HttpServletRequest request) {
+        Long tourId = Long.valueOf(request.getParameter("tourId"));
+
         TourDto tourDto = tourInfoMapper.fetchTourDtoFromRequest(request);
 
         boolean tourDtoIsValid = TourValidator.validate(tourDto, request);
 
         if (tourDtoIsValid) {
             try {
-                tourService.create(tourDto);
-                return UriPath.REDIRECT + UriPath.CATALOG;
+                tourService.update(tourDto, tourId);
+                return UriPath.REDIRECT + UriPath.ADMIN_UPDATE_TOUR + URL_ID_PARAMETER + tourId + URL_SUCCESS_PARAMETER;
             } catch (TourNameIsReservedException e) {
                 request.setAttribute("nameIsReserved", true);
             } catch (CityNotExistException e) {
@@ -47,7 +49,6 @@ public class PostCreateTourCommand implements Command {
         tourInfoMapper.insertTourDtoIntoRequest(tourDto, request);
         tourInfoMapper.insertTourAndHotelTypesIntoRequest(request);
 
-        return JspFilePath.ADMIN_CREATE_TOUR;
+        return JspFilePath.ADMIN_UPDATE_TOUR;
     }
-
 }

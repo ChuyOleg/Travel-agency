@@ -11,7 +11,10 @@ public class ServiceFactoryImpl extends ServiceFactory {
 
     @Override
     public TourService createTourService() {
-        return new TourService(DaoFactory.getInstance().createTourDao());
+        return new TourService(
+                createCountryService(),
+                DaoFactory.getInstance().createTourDao()
+        );
     }
 
     @Override

@@ -41,11 +41,20 @@ public class TourQueries {
 
     public static final String FIND_ALL_COUNT = "SELECT count(*) FROM tours";
 
-    // TODO: THINK WHAT FIELDS HAVE TO BE CHANGED
     public static final String UPDATE =
             "UPDATE tours SET" +
-            " name = ?," +
-            " price = ?" +
+            " price = ?," +
+            " city_id = (SELECT city_id FROM cities JOIN countries USING (country_id) WHERE city = ? AND country = ?)," +
+            " description = ?," +
+            " max_discount = ?," +
+            " discount_step = ?," +
+            " tour_type_id = (SELECT tour_type_id FROM tour_types WHERE tour_type = ?)," +
+            " hotel_type_id = (SELECT hotel_type_id FROM hotel_types WHERE hotel_type = ?)," +
+            " person_number = ?," +
+            " start_date = ?," +
+            " end_date = ?," +
+            " nights_number = ?," +
+            " is_burning = ? " +
             " WHERE tour_id = ?";
 
     public static final String DELETE = "DELETE FROM tours WHERE tour_id = ?";

@@ -1,7 +1,6 @@
 package com.oleh.chui.controller.command.impl.admin;
 
 import com.oleh.chui.controller.command.Command;
-import com.oleh.chui.controller.util.JspFilePath;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.model.service.OrderService;
 import com.oleh.chui.model.service.TourService;

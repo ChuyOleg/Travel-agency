@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class CatalogMapper {
 
+    private final TourInfoMapper tourInfoMapper = new TourInfoMapper();
+
     public Map<String, String> fetchFilterParametersFromRequest(HttpServletRequest req) {
         Map<String, String> filterParameters = new HashMap<>();
 
@@ -35,9 +37,6 @@ public class CatalogMapper {
     }
 
     public void insertInfoIntoRequest(Map<String, String> filterParameters, HttpServletRequest req) {
-        // TODO: delete method tourService.getToursQuantity
-        // TODO: get number if tours based of tourService.findAll() or tourService.findAllWithFilters()
-
         String pageNumber = req.getParameter("page");
 
         if (pageNumber != null && !pageNumber.isEmpty()) {
@@ -50,8 +49,7 @@ public class CatalogMapper {
             req.setAttribute(entry.getKey(), entry.getValue());
         }
 
-        req.setAttribute("tourTypeList", TourType.TourTypeEnum.values());
-        req.setAttribute("hotelTypeList", HotelType.HotelTypeEnum.values());
+        tourInfoMapper.insertTourAndHotelTypesIntoRequest(req);
     }
 
 }

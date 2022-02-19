@@ -22,7 +22,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DispatcherServlet extends HttpServlet {
 
     // TODO: transfer business logic from controllers to services
-    // TODO: Validator set parameters into HttpServletRequest
+
+    // TODO: controller mappers change logic (instead parameter set just object)
+
+    // TODO: think about FilterValidator instead of GetCatalogCommand.validateFields
 
     private final Map<String, Command> getCommands = new ConcurrentHashMap<>();
     private final Map<String, Command> postCommands = new ConcurrentHashMap<>();
@@ -45,16 +48,18 @@ public class DispatcherServlet extends HttpServlet {
         getCommands.put(UriPath.ADMIN_CREATE_TOUR, new GetCreateTourCommand());
         getCommands.put(UriPath.ADMIN_USERS, new GetUsersCommand(serviceFactory.createUserService()));
         getCommands.put(UriPath.TOUR_DETAILS, new GetTourDetailsCommand(serviceFactory.createOrderService(), serviceFactory.createTourService()));
+        getCommands.put(UriPath.ADMIN_UPDATE_TOUR, new GetUpdateTourCommand(serviceFactory.createTourService()));
     }
 
     private void putPostCommands(ServiceFactory serviceFactory) {
         postCommands.put(UriPath.LOGIN, new PostLogInCommand(serviceFactory.createUserService()));
         postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand(serviceFactory.createUserService()));
-        postCommands.put(UriPath.ADMIN_CREATE_TOUR, new PostCreateTourCommand(serviceFactory.createTourService(), serviceFactory.createCountryService()));
+        postCommands.put(UriPath.ADMIN_CREATE_TOUR, new PostCreateTourCommand(serviceFactory.createTourService()));
         postCommands.put(UriPath.ADMIN_USERS, new PostBlockUnblockUserCommand(serviceFactory.createUserService()));
         postCommands.put(UriPath.USER_BUY_TOUR, new PostBuyTourCommand(serviceFactory.createOrderService()));
         postCommands.put(UriPath.MANAGER_CHANGE_TOUR_BURNING_STATE, new PostChangeBurningStateCommand(serviceFactory.createTourService()));
         postCommands.put(UriPath.ADMIN_DELETE_TOUR, new PostDeleteTourCommand(serviceFactory.createTourService(), serviceFactory.createOrderService()));
+        postCommands.put(UriPath.ADMIN_UPDATE_TOUR, new PostUpdateTourCommand(serviceFactory.createTourService()));
     }
 
     @Override

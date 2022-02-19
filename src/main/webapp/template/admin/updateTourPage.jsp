@@ -14,21 +14,17 @@
     <link rel="stylesheet" href="<c:url value="/static/css/styles.css" />">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-6 mt-4 mb-4 p-3 justify-content-center tour-creation-block">
-            <form id="tour-form" autocomplete="off" class="form" action="" method="post">
-                <h3 class="text-center mt-2"><fmt:message key="createTourPage.title" />:</h3>
+            <form id="tour-form" autocomplete="off" class="form" action="/tour/update?tourId=${param.tourId}" method="post">
+                <h3 class="text-center mt-2">Update tour</h3>
 
-                <c:if test="${requestScope.nameIsEmptyException}">
-                    <p class="text-center error-message"><fmt:message key="createTourPage.exception.nameIsEmptyException" /></p>
-                </c:if>
-
-                <c:if test="${requestScope.nameIsReserved}">
-                    <p class="text-center error-message"><fmt:message key="createTourPage.exception.nameIsReserved" /></p>
+                <c:if test="${param.success != null}">
+                    <h3 class="text-center text-success">Tour has been successfully updated</h3>
                 </c:if>
 
                 <c:if test="${requestScope.priceIsNotValidException}">
@@ -85,8 +81,8 @@
 
                 <div class="row justify-content-center">
                     <div class="text-center col-10">
-                        <label for="name"><fmt:message key="createTourPage.name" />:</label><br>
-                        <input type="text" value="${requestScope.tourDto.name}" name="name" id="name" class="form-control">
+                        <input type="text" value="${requestScope.tourDto.name}" name="name" hidden>
+                        <h3>${requestScope.tourDto.name}</h3>
                     </div>
 
                     <div class="text-center col-4">
@@ -188,7 +184,7 @@
 
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">
-                        <fmt:message key="createTourPage.button.create" />
+                        Update
                     </button>
                 </div>
 

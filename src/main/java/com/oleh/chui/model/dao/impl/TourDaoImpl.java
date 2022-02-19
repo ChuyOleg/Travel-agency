@@ -99,9 +99,20 @@ public class TourDaoImpl implements TourDao {
         Connection connection = ConnectionPoolHolder.getConnection();
 
         try (PreparedStatement statement = connection.prepareStatement(TourQueries.UPDATE)) {
-            statement.setString(1, entity.getName());
-            statement.setBigDecimal(2, entity.getPrice());
-            statement.setLong(3, entity.getId());
+            statement.setBigDecimal(1, entity.getPrice());
+            statement.setString(2, entity.getCity().getCity());
+            statement.setString(3, entity.getCity().getCountry().getCountry());
+            statement.setString(4, entity.getDescription());
+            statement.setInt(5, entity.getMaxDiscount());
+            statement.setDouble(6, entity.getDiscountStep());
+            statement.setString(7, entity.getTourType().getValue().name());
+            statement.setString(8, entity.getHotelType().getValue().name());
+            statement.setInt(9, entity.getPersonNumber());
+            statement.setDate(10, Date.valueOf(entity.getStartDate()));
+            statement.setDate(11, Date.valueOf(entity.getEndDate()));
+            statement.setInt(12, entity.getNightsNumber());
+            statement.setBoolean(13, entity.isBurning());
+            statement.setLong(14, entity.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {

@@ -28,21 +28,35 @@ public class TourInfoMapper {
     }
 
     public void insertTourDtoIntoRequest(TourDto tourDto, HttpServletRequest req) {
-        req.setAttribute("name", tourDto.getName());
-        req.setAttribute("price", tourDto.getPrice());
-        req.setAttribute("country", tourDto.getCountry());
-        req.setAttribute("city", tourDto.getCity());
-        req.setAttribute("description", tourDto.getDescription());
-        req.setAttribute("maxDiscount", tourDto.getMaxDiscount());
-        req.setAttribute("discountStep", tourDto.getDiscountStep());
-        req.setAttribute("tourType", tourDto.getTourType());
-        req.setAttribute("hotelType", tourDto.getHotelType());
-        req.setAttribute("personNumber", tourDto.getPersonNumber());
-        req.setAttribute("startDate", tourDto.getStartDate());
-        req.setAttribute("endDate", tourDto.getEndDate());
-        req.setAttribute("isBurning", tourDto.isBurning());
-        req.setAttribute("tourTypeList", TourType.TourTypeEnum.values());
-        req.setAttribute("hotelTypeList", HotelType.HotelTypeEnum.values());
+        req.setAttribute("tourDto", tourDto);
+    }
+
+    public void insertTourIntoRequest(Tour tour, HttpServletRequest req) {
+        TourDto tourDto = new TourDto(
+                tour.getName(),
+                tour.getPrice().toString(),
+                tour.getCity().getCountry().getCountry(),
+                tour.getCity().getCity(),
+                tour.getDescription(),
+                String.valueOf(tour.getMaxDiscount()),
+                String.valueOf(tour.getDiscountStep()),
+                tour.getTourType().getValue().name(),
+                tour.getHotelType().getValue().name(),
+                String.valueOf(tour.getPersonNumber()),
+                tour.getStartDate().toString(),
+                tour.getEndDate().toString(),
+                tour.isBurning() ? "on" : ""
+        );
+
+        insertTourDtoIntoRequest(tourDto, req);
+    }
+
+    public void insertTourAndHotelTypesIntoRequest(HttpServletRequest req) {
+        TourType.TourTypeEnum[] tourTypeEnums = TourType.TourTypeEnum.values();
+        HotelType.HotelTypeEnum[] hotelTypeEnums = HotelType.HotelTypeEnum.values();
+
+        req.setAttribute("tourTypeList", tourTypeEnums);
+        req.setAttribute("hotelTypeList", hotelTypeEnums);
     }
 
 }

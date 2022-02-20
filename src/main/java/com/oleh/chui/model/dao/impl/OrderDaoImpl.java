@@ -83,9 +83,22 @@ public class OrderDaoImpl implements OrderDao {
         }
     }
 
-    // TODO: implement
     @Override
     public void update(Order entity) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(OrderQueries.UPDATE)) {
+            statement.setDate(1, Date.valueOf(entity.getCreationDate()));
+            statement.setBigDecimal(2, entity.getFinalPrice());
+            statement.setLong(3, entity.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to update Order", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
     }
 
     @Override

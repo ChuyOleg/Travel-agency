@@ -24,7 +24,6 @@ public class UserQueries {
             " WHERE role = 'USER'" +
             " ORDER BY username";
 
-    // TODO: THINK WHAT FIELDS HAVE TO BE CHANGED
     public static final String UPDATE =
             "UPDATE users SET" +
             " first_name = ?," +

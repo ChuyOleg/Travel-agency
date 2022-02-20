@@ -86,19 +86,25 @@
                             <button type="submit" class="btn btn-primary pe-4 ps-4">Make burning</button>
                         </c:if>
                     </form>
+
+                    <form class="text-center" method="get" action="/tour/changeDiscount">
+                        <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
+
+                        <button type="submit" class="btn btn-primary">Change discount</button>
+                    </form>
                 </c:if>
 
                 <c:if test="${sessionScope.role.equals('ADMIN')}">
-                    <form class="text-center" method="post" action="/tour/delete">
-                        <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
-
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-
                     <form class="text-center" method="get" action="/tour/update">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
                         <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+
+                    <form class="text-center" method="post" action="/tour/delete">
+                        <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
+
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </c:if>
 

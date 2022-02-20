@@ -74,16 +74,16 @@ public class TourValidator {
         return false;
     }
 
-    public static boolean validateDiscountInfo(String maxDiscountString, String discountStepString, HttpServletRequest req) {
+    public static boolean validateDiscountInfo(TourDto tourDto, HttpServletRequest req) {
         try {
-            checkForValidMaxDiscount(maxDiscountString);
-            checkForValidDiscountStep(discountStepString);
+            checkForValidMaxDiscount(tourDto.getMaxDiscount());
+            checkForValidDiscountStep(tourDto.getDiscountStep());
             return true;
         } catch (MaxDiscountIsNotValidException e) {
-            logger.warn("<discount updating> max discount value is not valid ({})", maxDiscountString);
+            logger.warn("<discount updating> max discount value is not valid ({})", tourDto.getMaxDiscount());
             req.setAttribute("maxDiscountIsNotValidException", true);
         } catch (DiscountStepIsNotValidException e) {
-            logger.warn("<discount updating> discount step is not valid ({})", discountStepString);
+            logger.warn("<discount updating> discount step is not valid ({})", tourDto.getDiscountStep());
             req.setAttribute("discountStepIsNotValidException", true);
         }
 

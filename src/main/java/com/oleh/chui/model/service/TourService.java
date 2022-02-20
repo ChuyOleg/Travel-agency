@@ -68,6 +68,14 @@ public class TourService {
         logger.info("Tour (id = {}) has been updated", id);
     }
 
+    public void changeDiscount(TourDto tourDto, Long id) {
+        int maxDiscount = Integer.parseInt(tourDto.getMaxDiscount());
+        double discountStep = Double.parseDouble(tourDto.getDiscountStep());
+
+        tourDao.updateDiscountInfo(maxDiscount, discountStep, id);
+        logger.info("Discount info of tour (id = {}) has been updated", id);
+    }
+
     public void changeBurningState(Long id) {
         tourDao.changeBurningStateById(id);
     }

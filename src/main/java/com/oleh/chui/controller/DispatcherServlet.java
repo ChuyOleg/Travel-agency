@@ -3,10 +3,7 @@ package com.oleh.chui.controller;
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.command.impl.*;
 import com.oleh.chui.controller.command.impl.admin.*;
-import com.oleh.chui.controller.command.impl.manager.GetUserPageCommand;
-import com.oleh.chui.controller.command.impl.manager.GetUsersCommand;
-import com.oleh.chui.controller.command.impl.manager.PostChangeBurningStateCommand;
-import com.oleh.chui.controller.command.impl.manager.PostChangeOrderStatusCommand;
+import com.oleh.chui.controller.command.impl.manager.*;
 import com.oleh.chui.controller.command.impl.user.GetAccountPageCommand;
 import com.oleh.chui.controller.command.impl.user.PostBuyTourCommand;
 import com.oleh.chui.controller.util.UriPath;
@@ -57,6 +54,7 @@ public class DispatcherServlet extends HttpServlet {
         getCommands.put(UriPath.ADMIN_UPDATE_TOUR, new GetUpdateTourCommand(serviceFactory.createTourService()));
         getCommands.put(UriPath.USER_ACCOUNT, new GetAccountPageCommand(serviceFactory.createUserService(), serviceFactory.createOrderService()));
         getCommands.put(UriPath.MANAGER_USER_PAGE, new GetUserPageCommand(serviceFactory.createUserService(), serviceFactory.createOrderService()));
+        getCommands.put(UriPath.MANAGER_CHANGE_DISCOUNT, new GetChangeDiscountCommand(serviceFactory.createTourService()));
     }
 
     private void putPostCommands(ServiceFactory serviceFactory) {
@@ -69,6 +67,7 @@ public class DispatcherServlet extends HttpServlet {
         postCommands.put(UriPath.ADMIN_DELETE_TOUR, new PostDeleteTourCommand(serviceFactory.createTourService(), serviceFactory.createOrderService()));
         postCommands.put(UriPath.ADMIN_UPDATE_TOUR, new PostUpdateTourCommand(serviceFactory.createTourService()));
         postCommands.put(UriPath.MANAGER_CHANGE_ORDER_STATUS, new PostChangeOrderStatusCommand(serviceFactory.createOrderService()));
+        postCommands.put(UriPath.MANAGER_CHANGE_DISCOUNT, new PostChangeDiscountCommand(serviceFactory.createTourService()));
     }
 
     @Override

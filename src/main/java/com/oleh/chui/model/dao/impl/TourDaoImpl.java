@@ -225,6 +225,24 @@ public class TourDaoImpl implements TourDao {
         }
     }
 
+    @Override
+    public void updateDiscountInfo(int maxDiscount, double discountStep, Long id) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(TourQueries.UPDATE_DISCOUNT_INFO)) {
+            statement.setInt(1, maxDiscount);
+            statement.setDouble(2, discountStep);
+            statement.setLong(3, id);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to update discount", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
     private int setFilerParametersIntoStatementAndGetIndex(Map<String, String> filterFieldMap, PreparedStatement statement) throws SQLException {
         int indexCounter = 1;
         for (Map.Entry<String, String> entry : filterFieldMap.entrySet()) {

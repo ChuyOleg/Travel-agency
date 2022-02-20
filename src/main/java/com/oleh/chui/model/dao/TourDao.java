@@ -16,4 +16,6 @@ public interface TourDao extends GenericDao<Tour> {
 
     void changeBurningStateById(Long id);
 
+    void updateDiscountInfo(int maxDiscount, double discountStep, Long id);
+
 }

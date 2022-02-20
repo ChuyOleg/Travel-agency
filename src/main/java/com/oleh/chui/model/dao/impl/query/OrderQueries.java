@@ -50,8 +50,11 @@ public class OrderQueries {
     public static final String IS_EXISTED_BY_TOUR_ID =
             "SELECT count(*) FROM orders WHERE tour_id = ?";
 
-    // TODO: Update object in java When update object in DB !!! THINK
-    public static final String UPDATE = "";
+    public static final String UPDATE =
+            "UPDATE orders SET" +
+            " creation_date = ?," +
+            " final_price = ?" +
+            " WHERE order_id = ?";
 
     public static final String CHANGE_STATUS =
             "UPDATE orders SET" +

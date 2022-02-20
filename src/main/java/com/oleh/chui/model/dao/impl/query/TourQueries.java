@@ -57,6 +57,12 @@ public class TourQueries {
             " is_burning = ? " +
             " WHERE tour_id = ?";
 
+    public static final String UPDATE_DISCOUNT_INFO =
+            "UPDATE tours SET" +
+            " max_discount = ?," +
+            " discount_step = ?" +
+            " WHERE tour_id = ?";
+
     public static final String DELETE = "DELETE FROM tours WHERE tour_id = ?";
 
     public static final String CHANGE_BURNING_STATUS_BY_ID =

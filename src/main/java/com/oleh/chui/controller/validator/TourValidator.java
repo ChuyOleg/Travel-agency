@@ -74,6 +74,22 @@ public class TourValidator {
         return false;
     }
 
+    public static boolean validateDiscountInfo(String maxDiscountString, String discountStepString, HttpServletRequest req) {
+        try {
+            checkForValidMaxDiscount(maxDiscountString);
+            checkForValidDiscountStep(discountStepString);
+            return true;
+        } catch (MaxDiscountIsNotValidException e) {
+            logger.warn("<discount updating> max discount value is not valid ({})", maxDiscountString);
+            req.setAttribute("maxDiscountIsNotValidException", true);
+        } catch (DiscountStepIsNotValidException e) {
+            logger.warn("<discount updating> discount step is not valid ({})", discountStepString);
+            req.setAttribute("discountStepIsNotValidException", true);
+        }
+
+        return false;
+    }
+
     private static void checkForNameIsNotEmpty(String name) throws NameIsEmptyException {
         if (FieldValidator.fieldIsEmpty(name)) throw new NameIsEmptyException();
     }

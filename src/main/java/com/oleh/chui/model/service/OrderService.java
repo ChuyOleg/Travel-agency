@@ -39,6 +39,12 @@ public class OrderService {
         return orderDao.isExistedByTourId(tourId);
     }
 
+    public void changeStatus(String newStatus, Long orderId) {
+        Status.StatusEnum statusEnum = Status.StatusEnum.valueOf(newStatus);
+
+        orderDao.changeStatus(statusEnum, orderId);
+    }
+
     public void createOrder(Long userId, Long tourId) {
         Optional<User> userOptional = userService.findById(userId);
         Optional<Tour> tourOptional = tourService.findById(tourId);

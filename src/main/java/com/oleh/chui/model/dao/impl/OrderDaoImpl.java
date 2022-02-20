@@ -4,6 +4,7 @@ import com.oleh.chui.model.dao.OrderDao;
 import com.oleh.chui.model.dao.impl.query.OrderQueries;
 import com.oleh.chui.model.dao.mapper.OrderMapper;
 import com.oleh.chui.model.entity.Order;
+import com.oleh.chui.model.entity.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -176,7 +177,7 @@ public class OrderDaoImpl implements OrderDao {
     public int findByUserIdCount(Long userId) {
         Connection connection = ConnectionPoolHolder.getConnection();
 
-        try(PreparedStatement statement = connection.prepareStatement(OrderQueries.FIND_BY_USER_ID_COUNT)) {
+        try (PreparedStatement statement = connection.prepareStatement(OrderQueries.FIND_BY_USER_ID_COUNT)) {
             statement.setLong(1, userId);
 
             ResultSet resultSet = statement.executeQuery();
@@ -188,6 +189,23 @@ public class OrderDaoImpl implements OrderDao {
             }
         } catch (SQLException e) {
             logger.error("{}, when trying to find count of orders by user_id=({})", e.getMessage(), userId);
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public void changeStatus(Status.StatusEnum newStatus, Long orderId) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(OrderQueries.CHANGE_STATUS)) {
+            statement.setString(1, newStatus.name());
+            statement.setLong(2, orderId);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("{}, when trying to change status ({}) by order_id ({})", e.getMessage(), newStatus, orderId);
             throw new RuntimeException(e);
         } finally {
             ConnectionPoolHolder.closeConnection(connection);

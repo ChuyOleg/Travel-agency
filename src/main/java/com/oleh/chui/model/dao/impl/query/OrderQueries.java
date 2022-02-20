@@ -53,6 +53,11 @@ public class OrderQueries {
     // TODO: Update object in java When update object in DB !!! THINK
     public static final String UPDATE = "";
 
+    public static final String CHANGE_STATUS =
+            "UPDATE orders SET" +
+            " status_id = (SELECT status_id FROM status WHERE status = ?)" +
+            " WHERE order_id = ?";
+
     public static final String DELETE = "DELETE FROM orders WHERE order_id = ?";
 
 }

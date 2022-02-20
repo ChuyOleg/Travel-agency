@@ -1,4 +1,4 @@
-package com.oleh.chui.controller.command.impl.admin;
+package com.oleh.chui.controller.command.impl.manager;
 
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.util.JspFilePath;
@@ -25,6 +25,6 @@ public class GetUsersCommand implements Command {
 
         request.setAttribute("userList", userList);
 
-        return JspFilePath.ADMIN_USERS;
+        return JspFilePath.MANAGER_USERS;
     }
 }

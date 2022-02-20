@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="/WEB-INF/tld/myTagLib.tld" prefix="myTg"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tf" %>
 
 <fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="messages" />
@@ -16,9 +17,11 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+
+<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../" />
+
 <div class="container">
     <div class="row">
-
         <h2 class="text-center">Catalog</h2>
 
         <c:if test="${requestScope.invalidPersonNumber}">
@@ -35,7 +38,7 @@
 
         <div class="col-5 col-lg-3">
 
-            <div class="filter-block pe-4 ps-4">
+            <div class="filter-block pe-4 ps-4 mb-5">
                 <form class="row filter-form" autocomplete="off" method="get" action="/catalog">
                     <input name="page" value="1" hidden>
 
@@ -153,6 +156,8 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="partial/footer.jspx" />
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/pagination.js"></script>
 </body>

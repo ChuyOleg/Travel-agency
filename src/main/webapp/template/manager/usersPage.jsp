@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tf" %>
 
 <fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="messages" />
@@ -15,6 +16,9 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+
+<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../" />
+
 <div class="container">
 
 
@@ -70,6 +74,8 @@
 
         </c:forEach>
 </div>
+
+<jsp:include page="../partial/footer.jspx" />
 
 </body>
 </html>

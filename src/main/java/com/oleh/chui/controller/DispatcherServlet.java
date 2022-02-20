@@ -47,6 +47,7 @@ public class DispatcherServlet extends HttpServlet {
     private void putGetCommands(ServiceFactory serviceFactory) {
         getCommands.put(UriPath.LOGIN, new GetLogInCommand());
         getCommands.put(UriPath.REGISTRATION, new GetRegistrationCommand());
+        getCommands.put(UriPath.LOGOUT, new GetLogOutCommand());
         getCommands.put(UriPath.CATALOG, new GetCatalogCommand(serviceFactory.createTourService()));
         getCommands.put(UriPath.ADMIN_CREATE_TOUR, new GetCreateTourCommand());
         getCommands.put(UriPath.ADMIN_USERS, new GetUsersCommand(serviceFactory.createUserService()));

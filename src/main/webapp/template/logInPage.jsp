@@ -16,16 +16,13 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+<jsp:include page="partial/languageButtons.jspx" />
 
 <div id="login">
     <div class="container">
         <div id="login-row" class="row justify-content-center align-items-center mt-4">
             <div class="login-form mt-5 p-4 col-lg-6 col-10">
                 <form action="" method="post">
-                    <div class="text-center">
-                        <jsp:include page="partial/languageButtons.jspx" />
-                    </div>
-
                     <h3 class="text-center mt-4"><fmt:message key="loginPage.title" /></h3>
 
                     <div class="form-text text-center mt-4 mb-2">
@@ -58,5 +55,8 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="partial/footer.jspx" />
+
 </body>
 </html>

@@ -8,6 +8,7 @@ public class UriPath {
 
     public static final String LOGIN = "/login";
     public static final String REGISTRATION = "/registration";
+    public static final String LOGOUT = "/logout";
     public static final String CATALOG = "/catalog";
     public static final String TOUR_DETAILS = "/tour/details";
 

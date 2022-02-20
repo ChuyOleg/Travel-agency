@@ -40,14 +40,6 @@ public class TourService {
         return (int) Math.ceil((double) toursNumber / pageSize);
     }
 
-    public void checkTourNameIsReserved(String name) throws TourNameIsReservedException {
-        Optional<Tour> optionalTour = tourDao.findByName(name);
-
-        if (optionalTour.isPresent()) {
-            throw new TourNameIsReservedException();
-        }
-    }
-
     public void create(TourDto tourDto) throws TourNameIsReservedException, CityNotExistException, CountryNotExistException {
         checkTourNameIsReserved(tourDto.getName());
         countryService.checkCountryAndCityExist(tourDto.getCountry(), tourDto.getCity());
@@ -78,10 +70,20 @@ public class TourService {
 
     public void changeBurningState(Long id) {
         tourDao.changeBurningStateById(id);
+        logger.info("Burning state of tour (id = {}) has been changed", id);
     }
 
     public void deleteTour(Long id) {
         tourDao.delete(id);
+        logger.info("Tour (id = {}) has been deleted", id);
+    }
+
+    private void checkTourNameIsReserved(String name) throws TourNameIsReservedException {
+        Optional<Tour> optionalTour = tourDao.findByName(name);
+
+        if (optionalTour.isPresent()) {
+            throw new TourNameIsReservedException();
+        }
     }
 
 }

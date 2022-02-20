@@ -28,6 +28,6 @@ public class PostBlockUnblockUserCommand implements Command {
             userService.unblockById(userId);
         }
 
-        return UriPath.REDIRECT + UriPath.ADMIN_USERS;
+        return UriPath.REDIRECT + UriPath.MANAGER_USERS;
     }
 }

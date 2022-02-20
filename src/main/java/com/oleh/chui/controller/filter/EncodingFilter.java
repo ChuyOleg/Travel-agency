@@ -4,15 +4,21 @@ import javax.servlet.*;
 import java.io.IOException;
 
 public class EncodingFilter implements Filter {
+
+    private final String HTML_CONTENT_TYPE = "text/html";
+    private final String UTF_8 = "UTF-8";
+
     @Override
     public void init(FilterConfig filterConfig) {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        servletResponse.setContentType("text/html");
-        servletResponse.setCharacterEncoding("UTF-8");
-        servletRequest.setCharacterEncoding("UTF-8");
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+
+        servletResponse.setContentType(HTML_CONTENT_TYPE);
+        servletResponse.setCharacterEncoding(UTF_8);
+        servletRequest.setCharacterEncoding(UTF_8);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

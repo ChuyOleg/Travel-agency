@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../"/>
+<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../"/>
 
 <div class="container">
     <div class="row">
@@ -69,7 +69,7 @@
                 </div>
 
                 <c:if test="${sessionScope.role.equals('USER') && !requestScope.tourIsBought}">
-                    <form class="text-center" method="post" action="/tour/buy">
+                    <form class="text-center" method="post" action="/User/tour/buy">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
                         <button class="btn btn-primary pe-4 ps-4">Buy</button>
                     </form>
@@ -80,7 +80,7 @@
                 </c:if>
 
                 <c:if test="${sessionScope.role.equals('MANAGER') || sessionScope.role.equals('ADMIN')}">
-                    <form class="text-center" method="post" action="/tour/changeBurningState">
+                    <form class="text-center" method="post" action="/Manager/tour/changeBurningState">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
                         <c:if test="${requestScope.tour.burning}">
@@ -91,7 +91,7 @@
                         </c:if>
                     </form>
 
-                    <form class="text-center" method="get" action="/tour/changeDiscount">
+                    <form class="text-center" method="get" action="/Manager/tour/changeDiscount">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
                         <button type="submit" class="btn btn-primary">Change discount</button>
@@ -99,13 +99,13 @@
                 </c:if>
 
                 <c:if test="${sessionScope.role.equals('ADMIN')}">
-                    <form class="text-center" method="get" action="/tour/update">
+                    <form class="text-center" method="get" action="/Admin/tour/update">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
 
-                    <form class="text-center" method="post" action="/tour/delete">
+                    <form class="text-center" method="post" action="/Admin/tour/delete">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -117,7 +117,7 @@
     </div>
 </div>
 
-<jsp:include page="partial/footer.jspx" />
+<jsp:include page="../partial/footer.jspx" />
 
 </body>
 </html>

@@ -18,7 +18,7 @@ public class CountryMapper {
         this.cityMapper = cityMapper;
     }
 
-    public Country extractFromResultSet(ResultSet rs) throws SQLException {
+    public Country extractWithoutRelationsFromResultSet(ResultSet rs) throws SQLException {
         return new Country(
                 rs.getLong(Fields.COUNTRY_ID),
                 rs.getString(Fields.COUNTRY),
@@ -28,7 +28,7 @@ public class CountryMapper {
 
     public Country extractWithRelationsFromResultSet(Country country, ResultSet rs) throws SQLException {
         if (country == null) {
-            country = extractFromResultSet(rs);
+            country = extractWithoutRelationsFromResultSet(rs);
         }
 
         City city = cityMapper.extractWithoutRelationsFromResultSet(rs);

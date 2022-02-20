@@ -41,7 +41,7 @@
                 <div class="user-field col-1"><c:out value="${user.money}$" /></div>
 
                 <c:if test="${sessionScope.role.equals('ADMIN')}">
-                    <form class="text-center col-1" action="/user" method="get">
+                    <form class="text-center col-1" action="/Manager/user" method="get">
                         <input type="text" name="userId" value="${user.id}" hidden>
 
                         <button type="submit" class="btn btn-primary form-control">Account</button>
@@ -62,7 +62,7 @@
                 </c:if>
 
                 <c:if test="${sessionScope.role.equals('MANAGER')}">
-                    <form class="text-center col-2" action="/user" method="get">
+                    <form class="text-center col-2" action="/Manager/user" method="get">
                         <input type="text" name="userId" value="${user.id}" hidden>
 
                         <button type="submit" class="btn btn-primary form-control">Account</button>

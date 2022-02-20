@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.oleh.chui.controller.validator.alias.UserExceptionNamesForRequest.*;
 import static com.oleh.chui.controller.validator.restriction.UserRestriction.*;
 
 public class UserValidator {
@@ -32,28 +33,28 @@ public class UserValidator {
             return true;
         } catch (UsernameSizeOutOfBoundsException e) {
             logger.warn("Username size out of bounds ({})", userDto.getUsername());
-            request.setAttribute("usernameSizeOutOfBoundsException", true);
+            request.setAttribute(USERNAME_SIZE_OUT_OF_BOUNDS, true);
         } catch (FirstNameSizeOutOfBoundsException e) {
             logger.warn("First name size out of bounds ({})", userDto.getFirstName());
-            request.setAttribute("firstNameSizeOutOfBoundsException", true);
+            request.setAttribute(FIRST_NAME_SIZE_OUT_OF_BOUNDS, true);
         } catch (LastNameSizeOutOfBoundsException e) {
             logger.warn("Last name size out of bounds ({})", userDto.getLastName());
-            request.setAttribute("lastNameSizeOutOfBoundsException", true);
+            request.setAttribute(LAST_NAME_SIZE_OUT_OF_BOUNDS, true);
         } catch (EmailSizeOutOfBoundsException e) {
             logger.warn("Email size out of bounds ({})", userDto.getEmail());
-            request.setAttribute("emailSizeOutOfBoundsException", true);
+            request.setAttribute(EMAIL_SIZE_OUT_OF_BOUNDS, true);
         } catch (EmailNotMatchTemplateException e) {
             logger.warn("Email not match template ({})", userDto.getEmail());
-            request.setAttribute("emailNotMatchTemplateException", true);
+            request.setAttribute(EMAIL_NOT_MATCH_TEMPLATE, true);
         } catch (PasswordSizeOutOfBoundsException e) {
             logger.warn("Password size out of bounds ({})", userDto.getPassword());
-            request.setAttribute("passwordSizeOutOfBoundsException", true);
+            request.setAttribute(PASSWORD_SIZE_OUT_OF_BOUNDS, true);
         } catch (PasswordNotMatchTemplateException e) {
             logger.warn("Password not match template ({})", userDto.getPassword());
-            request.setAttribute("passwordNotMatchTemplateException", true);
+            request.setAttribute(PASSWORD_NOT_MATCH_TEMPLATE, true);
         } catch (PasswordsNotMatchException e) {
             logger.warn("Passwords not match");
-            request.setAttribute("passwordsNotMatchException", true);
+            request.setAttribute(PASSWORDS_NOT_MATCH, true);
         }
 
         return false;

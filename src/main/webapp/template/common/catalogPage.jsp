@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../" />
+<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../" />
 
 <div class="container">
     <div class="row">
@@ -157,7 +157,7 @@
     </div>
 </div>
 
-<jsp:include page="partial/footer.jspx" />
+<jsp:include page="../partial/footer.jspx" />
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/pagination.js"></script>
 </body>

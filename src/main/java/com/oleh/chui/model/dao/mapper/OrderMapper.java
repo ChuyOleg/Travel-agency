@@ -12,7 +12,7 @@ public class OrderMapper {
     private final UserMapper userMapper = new UserMapper();
     private final StatusMapper statusMapper = new StatusMapper();
 
-    public Order extractFromResultSet(ResultSet rs) throws SQLException {
+    public Order extractWithRelationsFromResultSet(ResultSet rs) throws SQLException {
         return Order.builder()
                 .id(rs.getLong(Fields.ORDER_ID))
                 .user(userMapper.extractFromResultSet(rs))

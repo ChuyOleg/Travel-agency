@@ -16,7 +16,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<jsp:include page="partial/languageButtons.jspx" />
+<jsp:include page="../partial/languageButtons.jspx" />
 
 <div id="login">
     <div class="container">
@@ -56,7 +56,7 @@
     </div>
 </div>
 
-<jsp:include page="partial/footer.jspx" />
+<jsp:include page="../partial/footer.jspx" />
 
 </body>
 </html>

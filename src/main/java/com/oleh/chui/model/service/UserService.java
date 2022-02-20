@@ -43,9 +43,11 @@ public class UserService {
 
     public void blockById(Long id) {
         userDao.blockById(id);
+        logger.info("User (id = {}) has been blocked", id);
     }
 
     public void unblockById(Long id) {
         userDao.unblockById(id);
+        logger.info("User (id = {}) has been unblocked", id);
     }
 }

@@ -47,13 +47,13 @@ public class GetCatalogCommand implements Command {
         String minPrice = filterParameters.get("minPrice");
         String maxPrice = filterParameters.get("maxPrice");
 
-        if (!FieldValidator.fieldIsEmpty(personNumber) && !FieldValidator.fieldIsValidInteger(personNumber)) {
+        if (!FieldValidator.fieldIsEmpty(personNumber) && FieldValidator.fieldIsNotValidInteger(personNumber)) {
             req.setAttribute("invalidPersonNumber", true);
             return false;
-        } else if (!FieldValidator.fieldIsEmpty(minPrice) && !FieldValidator.fieldIsValidBigDecimal(minPrice)) {
+        } else if (!FieldValidator.fieldIsEmpty(minPrice) && FieldValidator.fieldIsNotValidBigDecimal(minPrice)) {
             req.setAttribute("invalidMinPrice", true);
             return false;
-        } else if (!FieldValidator.fieldIsEmpty(maxPrice) && !FieldValidator.fieldIsValidBigDecimal(maxPrice)) {
+        } else if (!FieldValidator.fieldIsEmpty(maxPrice) && FieldValidator.fieldIsNotValidBigDecimal(maxPrice)) {
             req.setAttribute("invalidMaxPrice", true);
             return false;
         }

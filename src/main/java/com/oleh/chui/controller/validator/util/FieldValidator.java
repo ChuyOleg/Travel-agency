@@ -1,8 +1,6 @@
 package com.oleh.chui.controller.validator.util;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 public class FieldValidator {
 
@@ -12,13 +10,13 @@ public class FieldValidator {
         return field == null || field.trim().isEmpty();
     }
 
-    public static boolean fieldIsValidInteger(String field) {
+    public static boolean fieldIsNotValidInteger(String field) {
         try {
             Integer.parseInt(field);
         } catch (NumberFormatException e) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public static boolean fieldIsValidDouble(String field) {
@@ -30,13 +28,13 @@ public class FieldValidator {
         return true;
     }
 
-    public static boolean fieldIsValidBigDecimal(String field) {
+    public static boolean fieldIsNotValidBigDecimal(String field) {
         try {
             new BigDecimal(field);
         } catch (NumberFormatException e) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 }

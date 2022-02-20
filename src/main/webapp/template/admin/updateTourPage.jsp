@@ -24,7 +24,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-6 mt-4 mb-4 p-3 justify-content-center tour-creation-block">
-            <form id="tour-form" autocomplete="off" class="form" action="/tour/update?tourId=${param.tourId}" method="post">
+            <form id="tour-form" autocomplete="off" class="form" action="/Admin/tour/update?tourId=${param.tourId}" method="post">
                 <h3 class="text-center mt-2">Update tour</h3>
 
                 <c:if test="${param.success != null}">

@@ -34,7 +34,6 @@ public class UserDaoImpl implements UserDao {
             statement.setString(6, entity.getRole().getValue().name());
 
             statement.executeUpdate();
-
         } catch (SQLException e) {
             logger.error("{}, when trying to create new User", e.getMessage());
             throw new RuntimeException(e);

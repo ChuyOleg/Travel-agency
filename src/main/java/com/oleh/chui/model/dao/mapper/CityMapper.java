@@ -28,7 +28,7 @@ public class CityMapper {
         return new City(
                 rs.getLong(Fields.CITY_ID),
                 rs.getString(Fields.CITY),
-                countryMapper.extractFromResultSet(rs)
+                countryMapper.extractWithoutRelationsFromResultSet(rs)
         );
     }
 

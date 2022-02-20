@@ -43,6 +43,7 @@ public class OrderService {
         Status.StatusEnum statusEnum = Status.StatusEnum.valueOf(newStatus);
 
         orderDao.changeStatus(statusEnum, orderId);
+        logger.info("status of order (id = {}) has been changed to {}", orderId, newStatus);
     }
 
     public void createOrder(Long userId, Long tourId) {
@@ -62,6 +63,10 @@ public class OrderService {
                     .build();
 
             orderDao.create(order);
+            logger.info("Has been created new Order (userId = {}, tourId = {})", userId, tourId);
+        } else {
+            logger.warn("An error occurred when trying to create new Order (userId = {}, tourId = {})", userId, tourId);
+            throw new RuntimeException();
         }
     }
 

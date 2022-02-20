@@ -48,7 +48,7 @@ public class OrderDaoImpl implements OrderDao {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return Optional.of(orderMapper.extractFromResultSet(resultSet));
+                return Optional.of(orderMapper.extractWithRelationsFromResultSet(resultSet));
             } else {
                 return Optional.empty();
             }
@@ -69,7 +69,7 @@ public class OrderDaoImpl implements OrderDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                Order order = orderMapper.extractFromResultSet(resultSet);
+                Order order = orderMapper.extractWithRelationsFromResultSet(resultSet);
 
                 orders.add(order);
             }
@@ -172,7 +172,7 @@ public class OrderDaoImpl implements OrderDao {
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Order order = orderMapper.extractFromResultSet(resultSet);
+                Order order = orderMapper.extractWithRelationsFromResultSet(resultSet);
 
                 orders.add(order);
             }

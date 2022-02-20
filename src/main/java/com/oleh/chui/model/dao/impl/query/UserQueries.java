@@ -9,18 +9,21 @@ public class UserQueries {
             "(username, password, first_name, last_name, email, role_id)" +
             " VALUES(?, ?, ?, ?, ?, (SELECT role_id FROM roles WHERE role = ?))";
 
-    public static final String FIND_BY_ID =
-            "SELECT * FROM users u" +
-            " JOIN roles USING (role_id)" +
-            " WHERE u.user_id = ?";
-
     public static final String FIND_ALL =
             "SELECT * FROM users u" +
             " JOIN roles USING (role_id)";
 
+    public static final String FIND_BY_ID =
+            FIND_ALL + " WHERE u.user_id = ?";
+
+    public static final String FIND_BY_USERNAME =
+            FIND_ALL + " WHERE username = ?";
+
+    public static final String FIND_BY_USERNAME_AND_PASSWORD =
+            FIND_ALL + " WHERE username = ? AND password = ?";
+
     public static final String FIND_ALL_USERS =
-            "SELECT * FROM users u" +
-            " JOIN roles USING (role_id)" +
+            FIND_ALL +
             " WHERE role = 'USER'" +
             " ORDER BY username";
 
@@ -43,13 +46,5 @@ public class UserQueries {
 
     public static final String DELETE =
             "DELETE FROM users WHERE user_id = ?";
-
-    public static final String FIND_BY_USERNAME =
-            "SELECT * FROM users WHERE username = ?";
-
-    public static final String FIND_BY_USERNAME_AND_PASSWORD =
-            "SELECT * FROM users" +
-            " JOIN roles USING (role_id)" +
-            " WHERE username = ? AND password = ?";
 
 }

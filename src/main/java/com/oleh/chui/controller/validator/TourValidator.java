@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.oleh.chui.controller.validator.alias.TourExceptionNamesForRequest.*;
 import static com.oleh.chui.controller.validator.restriction.TourRestriction.*;
 
 public class TourValidator {
@@ -35,40 +36,40 @@ public class TourValidator {
             return true;
         } catch (NameIsEmptyException e) {
             logger.warn("<tour creating> name is empty");
-            request.setAttribute("nameIsEmptyException", true);
+            request.setAttribute(NAME_IS_EMPTY, true);
         } catch (PriceIsNotValidException e) {
             logger.warn("<tour creating> price is not valid ({})", tourDto.getPrice());
-            request.setAttribute("priceIsNotValidException", true);
+            request.setAttribute(PRICE_IS_NOT_VALID, true);
         } catch (CountryIsEmptyException e) {
             logger.warn("<tour creating> country is empty");
-            request.setAttribute("countryIsEmptyException", true);
+            request.setAttribute(COUNTRY_IS_EMPTY, true);
         } catch (CityIsEmptyException e) {
             logger.warn("<tour creating> city is empty");
-            request.setAttribute("cityIsEmptyException", true);
+            request.setAttribute(CITY_IS_EMPTY, true);
         } catch (DescriptionIsEmptyException e) {
             logger.warn("<tour creating> description is empty");
-            request.setAttribute("descriptionIsEmptyException", true);
+            request.setAttribute(DESCRIPTION_IS_EMPTY, true);
         } catch (MaxDiscountIsNotValidException e) {
             logger.warn("<tour creating> max discount value is not valid ({})", tourDto.getMaxDiscount());
-            request.setAttribute("maxDiscountIsNotValidException", true);
+            request.setAttribute(MAX_DISCOUNT_IS_NOT_VALID, true);
         } catch (DiscountStepIsNotValidException e) {
             logger.warn("<tour creating> discount step is not valid ({})", tourDto.getDiscountStep());
-            request.setAttribute("discountStepIsNotValidException", true);
+            request.setAttribute(DISCOUNT_STEP_IS_NOT_VALID, true);
         } catch (TourTypeIsEmptyException e) {
             logger.warn("<tour creating> tour type is empty");
-            request.setAttribute("tourTypeIsEmptyException", true);
+            request.setAttribute(TOUR_TYPE_IS_EMPTY, true);
         } catch (HotelTypeIsEmptyException e) {
             logger.warn("<tour creating> hotel type is empty");
-            request.setAttribute("hotelTypeIsEmptyException", true);
+            request.setAttribute(HOTEL_TYPE_IS_EMPTY, true);
         } catch (PersonNumberIsNotValidException e) {
             logger.warn("<tour creating> person number is not valid ({})", tourDto.getPersonNumber());
-            request.setAttribute("personNumberIsNotValidException", true);
+            request.setAttribute(PERSON_NUMBER_IS_NOT_VALID, true);
         } catch (StartDateIsNotValidException e) {
             logger.warn("<tour creating> start date is not valid ({})", tourDto.getStartDate());
-            request.setAttribute("startDateIsNotValidException", true);
+            request.setAttribute(START_DATE_IS_NOT_VALID, true);
         } catch (EndDateIsNotValidException e) {
             logger.warn("<tour creating> end date is not valid ({})", tourDto.getEndDate());
-            request.setAttribute("endDateIsNotValidException", true);
+            request.setAttribute(END_DATE_IS_NOT_VALID, true);
         }
 
         return false;
@@ -81,10 +82,10 @@ public class TourValidator {
             return true;
         } catch (MaxDiscountIsNotValidException e) {
             logger.warn("<discount updating> max discount value is not valid ({})", tourDto.getMaxDiscount());
-            req.setAttribute("maxDiscountIsNotValidException", true);
+            req.setAttribute(MAX_DISCOUNT_IS_NOT_VALID, true);
         } catch (DiscountStepIsNotValidException e) {
             logger.warn("<discount updating> discount step is not valid ({})", tourDto.getDiscountStep());
-            req.setAttribute("discountStepIsNotValidException", true);
+            req.setAttribute(DISCOUNT_STEP_IS_NOT_VALID, true);
         }
 
         return false;
@@ -95,7 +96,7 @@ public class TourValidator {
     }
 
     private static void checkForValidPrice(String priceString) throws PriceIsNotValidException {
-        if (FieldValidator.fieldIsEmpty(priceString) || !FieldValidator.fieldIsValidBigDecimal(priceString)) {
+        if (FieldValidator.fieldIsEmpty(priceString) || FieldValidator.fieldIsNotValidBigDecimal(priceString)) {
             throw new PriceIsNotValidException();
         }
 
@@ -118,7 +119,7 @@ public class TourValidator {
     }
 
     private static void checkForValidMaxDiscount(String maxDiscountString) throws MaxDiscountIsNotValidException {
-        if (FieldValidator.fieldIsEmpty(maxDiscountString) || !FieldValidator.fieldIsValidInteger(maxDiscountString)) {
+        if (FieldValidator.fieldIsEmpty(maxDiscountString) || FieldValidator.fieldIsNotValidInteger(maxDiscountString)) {
             throw new MaxDiscountIsNotValidException();
         }
 
@@ -152,7 +153,7 @@ public class TourValidator {
     }
 
     private static void checkForValidPersonNumber(String personNumberString) throws PersonNumberIsNotValidException {
-        if (FieldValidator.fieldIsEmpty(personNumberString) || !FieldValidator.fieldIsValidInteger(personNumberString)) {
+        if (FieldValidator.fieldIsEmpty(personNumberString) || FieldValidator.fieldIsNotValidInteger(personNumberString)) {
             throw new PersonNumberIsNotValidException();
         }
 

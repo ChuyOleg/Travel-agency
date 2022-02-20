@@ -17,6 +17,10 @@ import java.util.Optional;
 
 public class TourDaoImpl implements TourDao {
 
+    private static final String MIN_PRICE_KEY = "minPrice";
+    private static final String MAX_PRICE_KEY = "maxPrice";
+    private static final String PERSON_NUMBER_KEY = "personNumber";
+
     private final TourMapper tourMapper = new TourMapper();
     private final Logger logger = LogManager.getLogger(TourDaoImpl.class);
 
@@ -193,7 +197,7 @@ public class TourDaoImpl implements TourDao {
         String FIND_ALL_WITH_FILTERS_COUNT = TourQueryFilterBuilder.buildTourQueryFilterForFindCount(filterFieldMap);
 
         try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_WITH_FILTERS_COUNT)) {
-            setFilerParametersIntoStatementAndGetIndex(filterFieldMap, statement);
+            setFilterParametersIntoStatementAndGetIndex(filterFieldMap, statement);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -243,12 +247,12 @@ public class TourDaoImpl implements TourDao {
         }
     }
 
-    private int setFilerParametersIntoStatementAndGetIndex(Map<String, String> filterFieldMap, PreparedStatement statement) throws SQLException {
+    private int setFilterParametersIntoStatementAndGetIndex(Map<String, String> filterFieldMap, PreparedStatement statement) throws SQLException {
         int indexCounter = 1;
         for (Map.Entry<String, String> entry : filterFieldMap.entrySet()) {
-            if (entry.getKey().equals("minPrice") || entry.getKey().equals("maxPrice")) {
+            if (entry.getKey().equals(MIN_PRICE_KEY) || entry.getKey().equals(MAX_PRICE_KEY)) {
                 statement.setBigDecimal(indexCounter++, BigDecimal.valueOf(Double.parseDouble(entry.getValue())));
-            } else if (entry.getKey().equals("personNumber")) {
+            } else if (entry.getKey().equals(PERSON_NUMBER_KEY)) {
                 statement.setInt(indexCounter++, Integer.parseInt(entry.getValue()));
             }
         }
@@ -256,7 +260,7 @@ public class TourDaoImpl implements TourDao {
     }
 
     private void setFilterAndPaginationParametersIntoStatement(Map<String, String> filterFieldMap, int limit, int offSet, PreparedStatement statement) throws SQLException {
-        int indexCounter = setFilerParametersIntoStatementAndGetIndex(filterFieldMap, statement);
+        int indexCounter = setFilterParametersIntoStatementAndGetIndex(filterFieldMap, statement);
         statement.setInt(indexCounter++, limit);
         statement.setInt(indexCounter, offSet);
     }

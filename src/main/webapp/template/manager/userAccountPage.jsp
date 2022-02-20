@@ -82,7 +82,7 @@
 
                 <c:if test="${order.status.value.name().equals('REGISTERED')}">
                     <div class="row justify-content-center">
-                        <form class="text-center col-3" method="post" action="/order/changeStatus">
+                        <form class="text-center col-3" method="post" action="/Manager/order/changeStatus">
                             <input type="text" name="orderId" value="${order.id}" hidden>
                             <input type="text" name="userId" value="${requestScope.user.id}" hidden>
                             <input type="text" name="newStatus" value="PAID" hidden>
@@ -90,7 +90,7 @@
                             <button class="btn btn-success form-control" type="submit">Confirm</button>
                         </form>
 
-                        <form class="text-center col-3" method="post" action="/order/changeStatus">
+                        <form class="text-center col-3" method="post" action="/Manager/order/changeStatus">
                             <input type="text" name="orderId" value="${order.id}" hidden>
                             <input type="text" name="userId" value="${requestScope.user.id}" hidden>
                             <input type="text" name="newStatus" value="CANCELED" hidden>

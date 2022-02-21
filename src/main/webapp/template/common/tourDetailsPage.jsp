@@ -59,7 +59,6 @@
 
                     <div class="row justify-content-center mt-4 mb-2">
                         <div class="col-8 tour-date"><c:out value="${requestScope.tour.startDate}  :  ${requestScope.tour.endDate}" /></div>
-                        <div class="tour-nights"><c:out value="${requestScope.tour.nightsNumber} nights" /></div>
                     </div>
 
                     <c:if test="${requestScope.finalPrice != null}">

@@ -7,7 +7,6 @@
 <fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="messages" />
 
-
 <html>
 <head>
     <title>Title</title>
@@ -19,16 +18,16 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../" />
+<tf:chooseHeader role="${sessionScope.role}"/>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-6 mt-4 mb-4 p-3 justify-content-center tour-creation-block">
             <form id="tour-form" autocomplete="off" class="form" action="/Manager/tour/changeDiscount?tourId=${param.tourId}" method="post">
-                <h3 class="text-center mt-2">Change discount of the tour</h3>
+                <h3 class="text-center mt-2"><fmt:message key="changeDiscountPage.title" /></h3>
 
                 <c:if test="${param.success != null}">
-                    <h3 class="text-center text-success">Discount has been successfully updated</h3>
+                    <h3 class="text-center text-success"><fmt:message key="changeDiscountPage.successMessage" /></h3>
                 </c:if>
 
                 <c:if test="${requestScope.maxDiscountIsNotValidException}">
@@ -45,38 +44,38 @@
                     </div>
 
                     <div class="text-center col-4">
-                        <label for="price">Price:</label>
+                        <label for="price"><fmt:message key="tour.info.price" />:</label>
                         <p id="price">${requestScope.tourDto.price}$</p>
                     </div>
                 </div>
 
                 <div class="row justify-content-center align-items-center">
                     <div class="col-4 text-center">
-                        <label for="country"><fmt:message key="createTourPage.country" />:</label><br>
+                        <label for="country"><fmt:message key="tour.info.country" />:</label><br>
                         <p id="country">${requestScope.tourDto.country}</p>
                     </div>
 
                     <div class="col-4 text-center">
-                        <label for="city"><fmt:message key="createTourPage.city" />:</label><br>
+                        <label for="city"><fmt:message key="tour.info.city" />:</label><br>
                         <p id="city">${requestScope.tourDto.city}</p>
                     </div>
                 </div>
 
                 <div class="row justify-content-center">
                     <div class="col-3 text-center">
-                        <label for="maxDiscount"><fmt:message key="createTourPage.maxDiscount" />:</label><br>
+                        <label for="maxDiscount"><fmt:message key="tour.info.maxDiscount" />:</label><br>
                         <input type="text" value="${requestScope.tourDto.maxDiscount}" name="maxDiscount" id="maxDiscount" class="form-control">
                     </div>
 
                     <div class="col-3 text-center">
-                        <label for="discountStep"><fmt:message key="createTourPage.discountStep" />:</label><br>
+                        <label for="discountStep"><fmt:message key="tour.info.discountStep" />:</label><br>
                         <input type="text" value="${requestScope.tourDto.discountStep}" name="discountStep" id="discountStep" class="form-control">
                     </div>
                 </div>
 
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">
-                        Update discount
+                        <fmt:message key="updateDiscountButton" />
                     </button>
                 </div>
 
@@ -85,7 +84,7 @@
     </div>
 </div>
 
-<jsp:include page="../partial/footer.jspx" />
+<%@include file="../partial/footer.jspf" %>
 
 </body>
 </html>

@@ -32,6 +32,8 @@ public class DispatcherServlet extends HttpServlet {
 
     // TODO: documentation
 
+    // TODO: script for filling DB;
+
     private final Map<String, Command> getCommands = new ConcurrentHashMap<>();
     private final Map<String, Command> postCommands = new ConcurrentHashMap<>();
     private static final String COMMAND_NOT_FOUND = "Command not found";

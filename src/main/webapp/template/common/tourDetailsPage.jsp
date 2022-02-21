@@ -18,19 +18,19 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../"/>
+<tf:chooseHeader role="${sessionScope.role}"/>
 
 <div class="container">
     <div class="row">
 
-        <h2 class="text-center">Tour details</h2>
+        <h2 class="text-center"><fmt:message key="tourDetailsPage.title" /></h2>
 
         <c:if test="${requestScope.tourIsBought}">
-            <h3 class="text-center mt-4">You have already bought this tour</h3>
+            <h3 class="text-center mt-4"><fmt:message key="tourDetailsPage.alreadyBoughtMessage" /></h3>
         </c:if>
 
         <c:if test="${sessionScope.role.equals('ADMIN') && param.error != null}">
-            <p class="text-center error-message mt-4">Cannot delete tour, it is already ordered</p>
+            <p class="text-center error-message mt-4"><fmt:message key="tourDetailsPage.cannotDeleteMessage" /></p>
         </c:if>
 
         <div class="col-10 col-lg-10 offset-1">
@@ -40,19 +40,19 @@
                     <h3 class="text-center tour-name pt-2 pb-2"><c:out value="${requestScope.tour.name}" /></h3>
 
                     <div class="row justify-content-center">
-                        <div class="col-2">Country</div>
-                        <div class="col-2">City</div>
-                        <div class="col-1">Price</div>
-                        <div class="col-3">Tour type</div>
-                        <div class="col-2">Hotel stars</div>
-                        <div class="col-2">Persons</div>
+                        <div class="col-2"><fmt:message key="tour.info.country" /></div>
+                        <div class="col-2"><fmt:message key="tour.info.city" /></div>
+                        <div class="col-1"><fmt:message key="tour.info.price" /></div>
+                        <div class="col-3"><fmt:message key="tour.info.tourType" /></div>
+                        <div class="col-2"><fmt:message key="catalogPage.hotelStars" /></div>
+                        <div class="col-2"><fmt:message key="tour.info.persons" /></div>
                     </div>
 
                     <div class="row">
                         <div class="col-2"><c:out value="${requestScope.tour.city.country.country}" /></div>
                         <div class="col-2"><c:out value="${requestScope.tour.city.city}" /></div>
                         <div class="col-1"><c:out value="${requestScope.tour.price}$" /></div>
-                        <div class="col-3"><c:out value="${requestScope.tour.tourType.value}" /></div>
+                        <div class="col-3"><fmt:message key="tourType.${requestScope.tour.tourType.value}" /></div>
                         <div class="col-2"><myTg:stars hotelType="${requestScope.tour.hotelType.value}" /></div>
                         <div class="col-2"><c:out value="${requestScope.tour.personNumber}" /></div>
                     </div>
@@ -63,7 +63,7 @@
                     </div>
 
                     <c:if test="${requestScope.finalPrice != null}">
-                        <h3 class="mb-3">Your price -> ${requestScope.finalPrice}$</h3>
+                        <h3 class="mb-3"><fmt:message key="tourDetailsPage.yourPrice" /> -> ${requestScope.finalPrice}$</h3>
                     </c:if>
 
                 </div>
@@ -71,12 +71,12 @@
                 <c:if test="${sessionScope.role.equals('USER') && !requestScope.tourIsBought}">
                     <form class="text-center" method="post" action="/User/tour/buy">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
-                        <button class="btn btn-primary pe-4 ps-4">Buy</button>
+                        <button class="btn btn-primary pe-4 ps-4"><fmt:message key="buyButton" /></button>
                     </form>
                 </c:if>
 
                 <c:if test="${sessionScope.role.equals('UNKNOWN')}">
-                    <h3 class="text-center mt-3">Login to buy tour</h3>
+                    <h3 class="text-center mt-3"><fmt:message key="tourDetailsPage.loginToBuyMessage" /></h3>
                 </c:if>
 
                 <c:if test="${sessionScope.role.equals('MANAGER') || sessionScope.role.equals('ADMIN')}">
@@ -84,17 +84,17 @@
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
                         <c:if test="${requestScope.tour.burning}">
-                            <button type="submit" class="btn btn-primary pe-4 ps-4">Make non-burning</button>
+                            <button type="submit" class="btn btn-primary pe-4 ps-4"><fmt:message key="makeNonBurningButton" /></button>
                         </c:if>
                         <c:if test="${!requestScope.tour.burning}">
-                            <button type="submit" class="btn btn-primary pe-4 ps-4">Make burning</button>
+                            <button type="submit" class="btn btn-primary pe-4 ps-4"><fmt:message key="makeBurningButton" /></button>
                         </c:if>
                     </form>
 
                     <form class="text-center" method="get" action="/Manager/tour/changeDiscount">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
-                        <button type="submit" class="btn btn-primary">Change discount</button>
+                        <button type="submit" class="btn btn-primary"><fmt:message key="changeDiscountButton" /></button>
                     </form>
                 </c:if>
 
@@ -102,13 +102,13 @@
                     <form class="text-center" method="get" action="/Admin/tour/update">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary"><fmt:message key="updateButton" /></button>
                     </form>
 
                     <form class="text-center" method="post" action="/Admin/tour/delete">
                         <input type="text" name="tourId" value="${requestScope.tour.id}" hidden>
 
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger"><fmt:message key="deleteButton" /></button>
                     </form>
                 </c:if>
 
@@ -117,7 +117,7 @@
     </div>
 </div>
 
-<jsp:include page="../partial/footer.jspx" />
+<%@include file="../partial/footer.jspf" %>
 
 </body>
 </html>

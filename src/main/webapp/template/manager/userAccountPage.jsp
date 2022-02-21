@@ -18,23 +18,23 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../" />
+<tf:chooseHeader role="${sessionScope.role}"/>
 
 <div class="container">
 
     <div class="text-center mt-4">
-        <h3>User: ${requestScope.user.username} (id=${requestScope.user.id})</h3>
+        <h3><fmt:message key="userAccountPage.user" />: ${requestScope.user.username} (id=${requestScope.user.id})</h3>
     </div>
 
     <div class="row justify-content-center mt-4">
         <div class="col-3 text-center user-info-cell p-2">
-            Full name
+            <fmt:message key="user.info.fullName" />
         </div>
         <div class="col-3 text-center user-info-cell p-2">
-            Email
+            <fmt:message key="user.info.email" />
         </div>
         <div class="col-2 text-center user-info-cell p-2">
-            Balance
+            <fmt:message key="user.info.balance" />
         </div>
     </div>
 
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <h3 class="text-center mt-5 mb-3">Tours</h3>
+    <h3 class="text-center mt-5 mb-3"><fmt:message key="userAccountPage.tours" /></h3>
 
     <div class="row">
         <c:forEach var="order" items="${requestScope.orderList}">
@@ -59,11 +59,11 @@
                     <h3 class="text-center tour-name pt-2 pb-2"><c:out value="${order.tour.name}" /></h3>
 
                     <div class="row justify-content-center">
-                        <div class="col-2">Country</div>
-                        <div class="col-2">City</div>
-                        <div class="col-2">Final price</div>
-                        <div class="col-3">Registration date</div>
-                        <div class="col-3">Status</div>
+                        <div class="col-2"><fmt:message key="tour.info.country" /></div>
+                        <div class="col-2"><fmt:message key="tour.info.city" /></div>
+                        <div class="col-2"><fmt:message key="order.info.finalPrice" /></div>
+                        <div class="col-3"><fmt:message key="order.info.registrationDate" /></div>
+                        <div class="col-3"><fmt:message key="order.info.status" /></div>
                     </div>
 
                     <div class="row">
@@ -71,7 +71,7 @@
                         <div class="col-2"><c:out value="${order.tour.city.city}" /></div>
                         <div class="col-2"><c:out value="${order.finalPrice}$" /></div>
                         <div class="col-3"><c:out value="${order.creationDate}" /></div>
-                        <div class="col-3"><c:out value="${order.status.value}" /></div>
+                        <div class="col-3"><fmt:message key="orderStatus.${order.status.value.name()}" /></div>
                     </div>
 
                     <div class="row justify-content-center mt-4 mb-2">
@@ -87,7 +87,7 @@
                             <input type="text" name="userId" value="${requestScope.user.id}" hidden>
                             <input type="text" name="newStatus" value="PAID" hidden>
 
-                            <button class="btn btn-success form-control" type="submit">Confirm</button>
+                            <button class="btn btn-success form-control" type="submit"><fmt:message key="confirmButton" /></button>
                         </form>
 
                         <form class="text-center col-3" method="post" action="/Manager/order/changeStatus">
@@ -95,7 +95,7 @@
                             <input type="text" name="userId" value="${requestScope.user.id}" hidden>
                             <input type="text" name="newStatus" value="CANCELED" hidden>
 
-                            <button class="btn btn-danger form-control" type="submit">Cancel</button>
+                            <button class="btn btn-danger form-control" type="submit"><fmt:message key="cancelButton" /></button>
                         </form>
                     </div>
                 </c:if>
@@ -106,7 +106,7 @@
 
 </div>
 
-<jsp:include page="../partial/footer.jspx" />
+<%@include file="../partial/footer.jspf" %>
 
 </body>
 </html>

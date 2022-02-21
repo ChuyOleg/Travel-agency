@@ -1,24 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="messages" />
 
 <%@ attribute name="role" required="true" %>
-<%@ attribute name="pathToWebAppFolder" required="true" %>
 
 <c:choose>
 
     <c:when test="${role.equals('UNKNOWN')}">
-        <jsp:include page="${pathToWebAppFolder}template/partial/guestHeader.jspx" />
+        <%@include file="../../template/partial/guestHeader.jspf" %>
     </c:when>
 
     <c:when test="${role.equals('USER')}">
-        <jsp:include page="${pathToWebAppFolder}template/partial/userHeader.jspx" />
+        <%@include file="../../template/partial/userHeader.jspf" %>
     </c:when>
 
     <c:when test="${role.equals('MANAGER')}">
-        <jsp:include page="${pathToWebAppFolder}template/partial/managerHeader.jspx" />
+        <%@include file="../../template/partial/managerHeader.jspf" %>
     </c:when>
 
     <c:when test="${role.equals('ADMIN')}">
-        <jsp:include page="${pathToWebAppFolder}template/partial/adminHeader.jspx" />
+        <%@include file="../../template/partial/adminHeader.jspf" %>
     </c:when>
 
 </c:choose>

@@ -18,16 +18,16 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../"/>
+<tf:chooseHeader role="${sessionScope.role}"/>
 
 <div class="container">
     <div class="row text-center">
-        <p class="error-message">Warning</p>
-        <p class="error-message">Forbidden</p>
+        <p class="error-message"><fmt:message key="errorPage.warning" /></p>
+        <p class="error-message"><fmt:message key="errorPage.forbidden" /></p>
     </div>
 </div>
 
-<jsp:include page="../../template/partial/footer.jspx" />
+<%@include file="../../template/partial/footer.jspf" %>
 
 </body>
 </html>

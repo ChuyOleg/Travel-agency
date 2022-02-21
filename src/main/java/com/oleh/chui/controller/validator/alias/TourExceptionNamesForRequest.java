@@ -15,6 +15,6 @@ public class TourExceptionNamesForRequest {
     public static final String HOTEL_TYPE_IS_EMPTY = "hotelTypeIsEmptyException";
     public static final String PERSON_NUMBER_IS_NOT_VALID = "personNumberIsNotValidException";
     public static final String START_DATE_IS_NOT_VALID = "startDateIsNotValidException";
-    public static final String END_DATE_IS_NOT_VALID = "startDateIsNotValidException";
+    public static final String END_DATE_IS_NOT_VALID = "endDateIsNotValidException";
 
 }

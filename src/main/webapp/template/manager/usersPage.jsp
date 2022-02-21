@@ -17,19 +17,17 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../" />
+<tf:chooseHeader role="${sessionScope.role}"/>
 
 <div class="container">
 
-
         <div class="row user-block-header text-center mt-5 mb-3">
-            <h2 class="mb-5">Users</h2>
+            <h2 class="mb-5"><fmt:message key="usersPage.title" /></h2>
 
-            <div class="col-3 pt-2 pb-2">Username</div>
-            <div class="col-3 pt-2 pb-2">Full name</div>
-            <div class="col-3 pt-2 pb-2">Email</div>
-            <div class="col-1 pt-2 pb-2">Balance</div>
-            <div class="col-2 pt-2 pb-2">Action</div>
+            <div class="col-3 pt-2 pb-2"><fmt:message key="user.info.username" /></div>
+            <div class="col-3 pt-2 pb-2"><fmt:message key="user.info.fullName" /></div>
+            <div class="col-3 pt-2 pb-2"><fmt:message key="user.info.email" /></div>
+            <div class="col-3 pt-2 pb-2"><fmt:message key="usersPage.action" /></div>
         </div>
 
         <c:forEach var="user" items="${requestScope.userList}">
@@ -38,44 +36,42 @@
                 <div class="user-field col-3"><c:out value="${user.username}" /></div>
                 <div class="user-field col-3"><c:out value="${user.firstName} ${user.lastName}" /></div>
                 <div class="user-field col-3"><c:out value="${user.email}" /></div>
-                <div class="user-field col-1"><c:out value="${user.money}$" /></div>
 
                 <c:if test="${sessionScope.role.equals('ADMIN')}">
                     <form class="text-center col-1" action="/Manager/user" method="get">
                         <input type="text" name="userId" value="${user.id}" hidden>
 
-                        <button type="submit" class="btn btn-primary form-control">Account</button>
+                        <button type="submit" class="btn btn-primary form-control"><fmt:message key="accountButton" /></button>
                     </form>
 
-                    <form class="text-center col-1" action="" method="post">
+                    <form class="text-center col-2" action="" method="post">
                         <input type="text" name="id" value="${user.id}" hidden>
                         <input type="text" name="isBlocked" value="${user.blocked}" hidden>
 
                         <c:if test="${user.blocked}">
-                            <button type="submit" class="btn btn-primary blocked-user form-control">Unblock</button>
+                            <button type="submit" class="btn btn-primary blocked-user form-control"><fmt:message key="unblockButton" /></button>
                         </c:if>
                         <c:if test="${!user.blocked}">
-                            <button type="submit" class="btn btn-primary notBlocked form-control">Block</button>
+                            <button type="submit" class="btn btn-primary notBlocked form-control"><fmt:message key="blockButton" /></button>
                         </c:if>
                     </form>
 
                 </c:if>
 
                 <c:if test="${sessionScope.role.equals('MANAGER')}">
-                    <form class="text-center col-2" action="/Manager/user" method="get">
+                    <form class="text-center col-3" action="/Manager/user" method="get">
                         <input type="text" name="userId" value="${user.id}" hidden>
 
-                        <button type="submit" class="btn btn-primary form-control">Account</button>
+                        <button type="submit" class="btn btn-primary form-control"><fmt:message key="accountButton" /></button>
                     </form>
                 </c:if>
-
 
             </div>
 
         </c:forEach>
 </div>
 
-<jsp:include page="../partial/footer.jspx" />
+<%@include file="../partial/footer.jspf" %>
 
 </body>
 </html>

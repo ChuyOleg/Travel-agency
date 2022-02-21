@@ -1,0 +1,10 @@
+<div class="language-dropdown-wrapper">
+    <span class="language-header"><fmt:message key="header.language" /></span>
+    <div class="language-buttons">
+        <a class="btn language-button" id="englishLanguageButton">.</a>
+        <a class="btn language-button" id="ukrainianLanguageButton">.</a>
+    </div>
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/language.js"></script>
+</div>
+

@@ -211,32 +211,46 @@ a {
     background: skyblue;
 }
 
-.login-block, .logout-block {
+.login-logout-block {
     position: absolute;
     top: 0;
     right: 0;
     background: skyblue;
 }
 
-.login-block a, .logout-block a {
+.login-logout-block a {
     display: inline-block;
     font-weight: bold;
     height: 50px;
     line-height: 46px;
     width: 100px;
     border: 2px solid black;
-    background: #c3ffac;
     color: black;
     vertical-align: middle;
 }
 
-.login-block a:hover, .logout-block a:hover {
+.login-logout-block a:hover {
     display: inline-block;
     height: 50px;
     width: 100px;
     border: 2px solid black;
-    background: limegreen;
     color: black;
+}
+
+.login-block a {
+    background: #c3ffac;
+}
+
+.login-block a:hover {
+    background: limegreen;
+}
+
+.logout-block a {
+    background: #ffafa3;
+}
+
+.logout-block a:hover {
+    background: red;
 }
 
 /******************************************/

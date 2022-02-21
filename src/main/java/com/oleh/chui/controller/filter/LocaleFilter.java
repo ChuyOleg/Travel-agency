@@ -7,8 +7,7 @@ import java.util.Locale;
 
 public class LocaleFilter implements Filter {
 
-    private final String LANG = "lang";
-
+    private static final String LANG = "lang";
 
     @Override
     public void init(FilterConfig filterConfig) {

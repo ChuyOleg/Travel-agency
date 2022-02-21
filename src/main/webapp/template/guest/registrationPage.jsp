@@ -15,12 +15,12 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<jsp:include page="../partial/languageButtons.jspx" />
 
+<%@include file="../partial/languageButtons.jspf" %>
 
 <div id="registration">
     <div class="container">
-        <div id="registration-row" class="row justify-content-center align-items-center mt-4">
+        <div id="registration-row" class="row justify-content-center align-items-center mt-4 mb-5">
             <div class="col-10 col-lg-6 p-4 registration-form">
                 <form action="${pageContext.request.contextPath}/registration" method="post" autocomplete="off">
                     <h3 class="text-center mt-3"><fmt:message key="registrationPage.title" /></h3>
@@ -95,7 +95,7 @@
     </div>
 </div>
 
-<jsp:include page="../partial/footer.jspx" />
+<%@include file="../partial/footer.jspf" %>
 
 </body>
 </html>

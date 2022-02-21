@@ -18,23 +18,23 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../" />
+<tf:chooseHeader role="${sessionScope.role}"/>
 
     <div class="container">
 
         <div class="text-center mt-4">
-            <h3>Hello, ${requestScope.user.username}</h3>
+            <h3><fmt:message key="accountPage.greeting" />, ${requestScope.user.username}</h3>
         </div>
 
         <div class="row justify-content-center mt-4">
             <div class="col-3 text-center user-info-cell p-2">
-                Full name
+                <fmt:message key="user.info.fullName" />
             </div>
             <div class="col-3 text-center user-info-cell p-2">
-                Email
+                <fmt:message key="user.info.email" />
             </div>
             <div class="col-2 text-center user-info-cell p-2">
-                Balance
+                <fmt:message key="user.info.balance" />
             </div>
         </div>
 
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <h3 class="text-center mt-5 mb-3">Your tours</h3>
+        <h3 class="text-center mt-5 mb-3"><fmt:message key="accountPage.yourTours" /></h3>
 
         <div class="row">
             <c:forEach var="order" items="${requestScope.orderList}">
@@ -59,11 +59,11 @@
                         <h3 class="text-center tour-name pt-2 pb-2"><c:out value="${order.tour.name}" /></h3>
 
                         <div class="row justify-content-center">
-                            <div class="col-2">Country</div>
-                            <div class="col-2">City</div>
-                            <div class="col-2">Final price</div>
-                            <div class="col-3">Registration date</div>
-                            <div class="col-3">Status</div>
+                            <div class="col-2"><fmt:message key="tour.info.country" /></div>
+                            <div class="col-2"><fmt:message key="tour.info.city" /></div>
+                            <div class="col-2"><fmt:message key="order.info.finalPrice" /></div>
+                            <div class="col-3"><fmt:message key="order.info.registrationDate" /></div>
+                            <div class="col-3"><fmt:message key="order.info.status" /></div>
                         </div>
 
                         <div class="row">
@@ -71,7 +71,7 @@
                             <div class="col-2"><c:out value="${order.tour.city.city}" /></div>
                             <div class="col-2"><c:out value="${order.finalPrice}$" /></div>
                             <div class="col-3"><c:out value="${order.creationDate}" /></div>
-                            <div class="col-3"><c:out value="${order.status.value}" /></div>
+                            <div class="col-3"><fmt:message key="orderStatus.${order.status.value.name()}" /></div>
                         </div>
 
                         <div class="row justify-content-center mt-4 mb-2">
@@ -82,7 +82,7 @@
 
                     <form class="text-center" method="get" action="/tour/details">
                         <input type="text" name="id" value="${order.tour.id}" hidden>
-                        <button class="btn btn-primary" type="submit">See details</button>
+                        <button class="btn btn-primary" type="submit"><fmt:message key="seeDetailsButton" /></button>
                     </form>
                 </div>
             </c:forEach>
@@ -90,7 +90,7 @@
 
     </div>
 
-    <jsp:include page="../partial/footer.jspx" />
+<%@include file="../partial/footer.jspf" %>
 
 </body>
 </html>

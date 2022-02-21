@@ -1,0 +1,21 @@
+<div class="container-fluid mb-3">
+
+    <%@include file="../partial/languageButtons.jspf" %>
+
+    <div class="header-wrapper">
+        <div class="header row justify-content-center">
+            <div class="header-block text-center col-2">
+                <a href="/catalog"><fmt:message key="header.catalog" /></a>
+            </div>
+            <div class="header-block text-center col-2">
+                <a href="/Manager/users"><fmt:message key="header.users" /></a>
+            </div>
+        </div>
+
+
+        <div class="login-logout-block logout-block text-center">
+            <a href="/logout" class="align-middle"><fmt:message key="header.logout" /></a>
+        </div>
+    </div>
+</div>
+

@@ -7,7 +7,6 @@
 <fmt:setLocale value="${sessionScope.lang}" />
 <fmt:setBundle basename="messages" />
 
-
 <html>
 <head>
     <title>Title</title>
@@ -19,16 +18,16 @@
 </head>
 <body>
 
-<tf:chooseHeader role="${sessionScope.role}" pathToWebAppFolder="../../" />
+<tf:chooseHeader role="${sessionScope.role}"/>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-6 mt-4 mb-4 p-3 justify-content-center tour-creation-block">
             <form id="tour-form" autocomplete="off" class="form" action="/Admin/tour/update?tourId=${param.tourId}" method="post">
-                <h3 class="text-center mt-2">Update tour</h3>
+                <h3 class="text-center mt-2"><fmt:message key="updateTourPage.title" /></h3>
 
                 <c:if test="${param.success != null}">
-                    <h3 class="text-center text-success">Tour has been successfully updated</h3>
+                    <h3 class="text-center text-success"><fmt:message key="updateTourPage.success" /></h3>
                 </c:if>
 
                 <c:if test="${requestScope.priceIsNotValidException}">
@@ -90,59 +89,59 @@
                     </div>
 
                     <div class="text-center col-4">
-                        <label for="price"><fmt:message key="createTourPage.price" />:</label><br>
+                        <label for="price"><fmt:message key="tour.info.price" />:</label><br>
                         <input type="text" value="${requestScope.tourDto.price}" name="price" id="price" class="form-control">
                     </div>
                 </div>
 
                 <div class="row justify-content-center align-items-center">
                     <div class="col-4 text-center">
-                        <label for="country"><fmt:message key="createTourPage.country" />:</label><br>
+                        <label for="country"><fmt:message key="tour.info.country" />:</label><br>
                         <input type="text" value="${requestScope.tourDto.country}" name="country" id="country" class="form-control">
                     </div>
 
                     <div class="col-4 text-center">
-                        <label for="city"><fmt:message key="createTourPage.city" />:</label><br>
+                        <label for="city"><fmt:message key="tour.info.city" />:</label><br>
                         <input type="text" value="${requestScope.tourDto.city}" name="city" id="city" class="form-control">
                     </div>
                 </div>
 
                 <div class="text-center">
-                    <label for="description"><fmt:message key="createTourPage.description" />:</label><br>
+                    <label for="description"><fmt:message key="tour.info.description" />:</label><br>
                     <textarea name="description" id="description" class="form-control"><c:out value="${requestScope.tourDto.description}" />
                         </textarea>
                 </div>
 
                 <div class="row justify-content-center">
                     <div class="col-3 text-center">
-                        <label for="maxDiscount"><fmt:message key="createTourPage.maxDiscount" />:</label><br>
+                        <label for="maxDiscount"><fmt:message key="tour.info.maxDiscount" />:</label><br>
                         <input type="text" value="${requestScope.tourDto.maxDiscount}" name="maxDiscount" id="maxDiscount" class="form-control">
                     </div>
 
                     <div class="col-3 text-center">
-                        <label for="discountStep"><fmt:message key="createTourPage.discountStep" />:</label><br>
+                        <label for="discountStep"><fmt:message key="tour.info.discountStep" />:</label><br>
                         <input type="text" value="${requestScope.tourDto.discountStep}" name="discountStep" id="discountStep" class="form-control">
                     </div>
                 </div>
 
                 <div class="row justify-content-center">
                     <div class="col-3 text-center">
-                        <label for="tourType"><fmt:message key="createTourPage.tourType" />:</label><br>
+                        <label for="tourType"><fmt:message key="tour.info.tourType" />:</label><br>
                         <select class="form-select" name="tourType" id="tourType">
                             <option value="" hidden></option>
                             <c:forEach var="tourType" items="${requestScope.tourTypeList}">
                                 <c:if test="${requestScope.tourDto.tourType.equals(tourType.name())}" >
-                                    <option selected value="${tourType}"><c:out value="${tourType}" /></option>
+                                    <option selected value="${tourType}"><fmt:message key="tourType.${tourType}" /></option>
                                 </c:if>
                                 <c:if test="${!requestScope.tourDto.tourType.equals(tourType.name())}" >
-                                    <option value="${tourType}"><c:out value="${tourType}" /></option>
+                                    <option value="${tourType}"><fmt:message key="tourType.${tourType}" /></option>
                                 </c:if>
                             </c:forEach>
                         </select>
                     </div>
 
                     <div class="col-3 text-center">
-                        <label for="hotelType"><fmt:message key="createTourPage.hotelType" />:</label><br>
+                        <label for="hotelType"><fmt:message key="tour.info.hotelType" />:</label><br>
                         <select class="form-select" name="hotelType" id="hotelType">
                             <option value="" hidden></option>
                             <c:forEach var="hotelType" items="${requestScope.hotelTypeList}">
@@ -159,25 +158,25 @@
 
                 <div class="row justify-content-center">
                     <div class="col-3">
-                        <label for="personNumber"><fmt:message key="createTourPage.personNumber" />:</label><br>
+                        <label for="personNumber"><fmt:message key="tour.info.personNumber" />:</label><br>
                         <input type="text" value="${requestScope.tourDto.personNumber}" name="personNumber" id="personNumber" class="form-control">
                     </div>
                 </div>
 
                 <div class="row justify-content-center mt-2">
                     <div class="text-center col-4">
-                        <label for="startDate"><fmt:message key="createTourPage.startDate" />:</label><br>
+                        <label for="startDate"><fmt:message key="tour.info.startDate" />:</label><br>
                         <input type="date" value="${requestScope.tourDto.startDate}" name="startDate" id="startDate" class="form-control">
                     </div>
 
                     <div class="text-center col-4">
-                        <label for="endDate"><fmt:message key="createTourPage.endDate" />:</label><br>
+                        <label for="endDate"><fmt:message key="tour.info.endDate" />:</label><br>
                         <input type="date" value="${requestScope.tourDto.endDate}" name="endDate" id="endDate" class="form-control">
                     </div>
                 </div>
 
                 <div class="text-center mt-2">
-                    <label for="isBurning"><fmt:message key="createTourPage.isBurning" />:</label><br>
+                    <label for="isBurning"><fmt:message key="tour.info.isBurning" />:</label><br>
                     <c:if test="${requestScope.tourDto.isBurning().equals('on')}">
                         <input type="checkbox" checked name="isBurning" id="isBurning">
                     </c:if>
@@ -188,7 +187,7 @@
 
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">
-                        Update
+                        <fmt:message key="updateButton"/>
                     </button>
                 </div>
 
@@ -197,7 +196,7 @@
     </div>
 </div>
 
-<jsp:include page="../partial/footer.jspx" />
+<%@include file="../partial/footer.jspf" %>
 
 </body>
 </html>

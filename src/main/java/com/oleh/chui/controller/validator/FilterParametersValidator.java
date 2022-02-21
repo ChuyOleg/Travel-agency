@@ -43,19 +43,19 @@ public class FilterParametersValidator {
     }
 
     private static void checkForValidPersonNumber(String personNumber) throws InvalidPersonNumberException {
-        if (FieldValidator.fieldIsEmpty(personNumber) || FieldValidator.fieldIsNotValidInteger(personNumber)) {
+        if (!FieldValidator.fieldIsEmpty(personNumber) && FieldValidator.fieldIsNotValidInteger(personNumber)) {
             throw new InvalidPersonNumberException();
         }
     }
 
     private static void checkForValidMinPrice(String minPrice) throws InvalidMinPriceException {
-        if (FieldValidator.fieldIsEmpty(minPrice) || FieldValidator.fieldIsNotValidBigDecimal(minPrice)) {
+        if (!FieldValidator.fieldIsEmpty(minPrice) && FieldValidator.fieldIsNotValidBigDecimal(minPrice)) {
             throw new InvalidMinPriceException();
         }
     }
 
     private static void checkForValidMaxPrice(String maxPrice) throws InvalidMaxPriceException {
-        if (FieldValidator.fieldIsEmpty(maxPrice) || FieldValidator.fieldIsNotValidBigDecimal(maxPrice)) {
+        if (!FieldValidator.fieldIsEmpty(maxPrice) && FieldValidator.fieldIsNotValidBigDecimal(maxPrice)) {
             throw new InvalidMaxPriceException();
         }
     }

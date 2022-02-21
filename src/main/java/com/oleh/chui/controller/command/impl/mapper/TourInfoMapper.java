@@ -9,26 +9,45 @@ import javax.servlet.http.HttpServletRequest;
 
 public class TourInfoMapper {
 
+    private static final String NAME = "name";
+    private static final String PRICE = "price";
+    private static final String COUNTRY = "country";
+    private static final String CITY = "city";
+    private static final String DESCRIPTION = "description";
+    private static final String MAX_DISCOUNT = "maxDiscount";
+    private static final String DISCOUNT_STEP = "discountStep";
+    private static final String TOUR_TYPE = "tourType";
+    private static final String HOTEL_TYPE = "hotelType";
+    private static final String PERSON_NUMBER = "personNumber";
+    private static final String START_DATE = "startDate";
+    private static final String END_DATE = "endDate";
+    private static final String IS_BURNING = "isBurning";
+    private static final String TOUR_DTO = "tourDto";
+    private static final String ON = "on";
+    private static final String EMPTY_LINE = "";
+    private static final String TOUR_TYPE_LIST = "tourTypeList";
+    private static final String HOTEL_TYPE_LIST = "hotelTypeList";
+
     public TourDto fetchTourDtoFromRequest(HttpServletRequest req) {
         return new TourDto(
-                req.getParameter("name"),
-                req.getParameter("price"),
-                req.getParameter("country"),
-                req.getParameter("city"),
-                req.getParameter("description"),
-                req.getParameter("maxDiscount"),
-                req.getParameter("discountStep"),
-                req.getParameter("tourType"),
-                req.getParameter("hotelType"),
-                req.getParameter("personNumber"),
-                req.getParameter("startDate"),
-                req.getParameter("endDate"),
-                req.getParameter("isBurning")
+                req.getParameter(NAME),
+                req.getParameter(PRICE),
+                req.getParameter(COUNTRY),
+                req.getParameter(CITY),
+                req.getParameter(DESCRIPTION),
+                req.getParameter(MAX_DISCOUNT),
+                req.getParameter(DISCOUNT_STEP),
+                req.getParameter(TOUR_TYPE),
+                req.getParameter(HOTEL_TYPE),
+                req.getParameter(PERSON_NUMBER),
+                req.getParameter(START_DATE),
+                req.getParameter(END_DATE),
+                req.getParameter(IS_BURNING)
         );
     }
 
     public void insertTourDtoIntoRequest(TourDto tourDto, HttpServletRequest req) {
-        req.setAttribute("tourDto", tourDto);
+        req.setAttribute(TOUR_DTO, tourDto);
     }
 
     public void insertTourIntoRequest(Tour tour, HttpServletRequest req) {
@@ -45,7 +64,7 @@ public class TourInfoMapper {
                 String.valueOf(tour.getPersonNumber()),
                 tour.getStartDate().toString(),
                 tour.getEndDate().toString(),
-                tour.isBurning() ? "on" : ""
+                tour.isBurning() ? ON : EMPTY_LINE
         );
 
         insertTourDtoIntoRequest(tourDto, req);
@@ -55,8 +74,8 @@ public class TourInfoMapper {
         TourType.TourTypeEnum[] tourTypeEnums = TourType.TourTypeEnum.values();
         HotelType.HotelTypeEnum[] hotelTypeEnums = HotelType.HotelTypeEnum.values();
 
-        req.setAttribute("tourTypeList", tourTypeEnums);
-        req.setAttribute("hotelTypeList", hotelTypeEnums);
+        req.setAttribute(TOUR_TYPE_LIST, tourTypeEnums);
+        req.setAttribute(HOTEL_TYPE_LIST, hotelTypeEnums);
     }
 
 }

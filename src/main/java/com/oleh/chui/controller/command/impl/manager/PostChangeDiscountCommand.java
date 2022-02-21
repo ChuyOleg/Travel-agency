@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 
 public class PostChangeDiscountCommand implements Command {
 
-    private final String URL_ID_PARAMETER = "?tourId=";
-    private final String URL_SUCCESS_PARAMETER = "&success";
+    private static final String URL_ID_PARAMETER = "?tourId=";
+    private static final String URL_SUCCESS_PARAMETER = "&success";
+    private static final String TOUR_ID = "tourId";
 
     private final TourInfoMapper tourInfoMapper = new TourInfoMapper();
     private final TourService tourService;
@@ -24,7 +25,7 @@ public class PostChangeDiscountCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long tourId = Long.valueOf(request.getParameter("tourId"));
+        Long tourId = Long.valueOf(request.getParameter(TOUR_ID));
 
         TourDto tourDto = tourInfoMapper.fetchTourDtoFromRequest(request);
 

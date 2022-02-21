@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class PostChangeBurningStateCommand implements Command {
 
-    private final String URL_ID_PARAMETER = "?id=";
+    private static final String URL_ID_PARAMETER = "?id=";
+    private static final String TOUR_ID = "tourId";
 
     private final TourService tourService;
 
@@ -18,7 +19,7 @@ public class PostChangeBurningStateCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long tourId = Long.valueOf(request.getParameter("tourId"));
+        Long tourId = Long.valueOf(request.getParameter(TOUR_ID));
 
         tourService.changeBurningState(tourId);
 

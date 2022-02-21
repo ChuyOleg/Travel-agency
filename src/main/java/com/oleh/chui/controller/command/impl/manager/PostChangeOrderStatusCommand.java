@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 
 public class PostChangeOrderStatusCommand implements Command {
 
-    private final String URL_USER_ID_PARAMETER = "?userId=";
+    private static final String URL_USER_ID_PARAMETER = "?userId=";
+    private static final String ORDER_ID = "orderId";
+    private static final String USER_ID = "userId";
+    private static final String NEW_STATUS = "newStatus";
 
     private final OrderService orderService;
 
@@ -18,9 +21,9 @@ public class PostChangeOrderStatusCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long orderId = Long.valueOf(request.getParameter("orderId"));
-        Long userId = Long.valueOf(request.getParameter("userId"));
-        String newStatus = request.getParameter("newStatus");
+        Long orderId = Long.valueOf(request.getParameter(ORDER_ID));
+        long userId = Long.parseLong(request.getParameter(USER_ID));
+        String newStatus = request.getParameter(NEW_STATUS);
 
         orderService.changeStatus(newStatus, orderId);
 

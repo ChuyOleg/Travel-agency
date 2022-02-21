@@ -11,6 +11,8 @@ import java.util.Optional;
 
 public class GetUpdateTourCommand implements Command {
 
+    private static final String TOUR_ID = "tourId";
+
     private final TourInfoMapper tourInfoMapper = new TourInfoMapper();
     private final TourService tourService;
 
@@ -20,7 +22,7 @@ public class GetUpdateTourCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long tourId = Long.valueOf(request.getParameter("tourId"));
+        Long tourId = Long.valueOf(request.getParameter(TOUR_ID));
 
         Optional<Tour> tourOptional = tourService.findById(tourId);
 

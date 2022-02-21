@@ -13,6 +13,10 @@ import java.util.Optional;
 
 public class GetUserPageCommand implements Command {
 
+    private static final String USER_ID = "userId";
+    private static final String USER = "user";
+    private static final String ORDER_List = "orderList";
+
     private final UserService userService;
     private final OrderService orderService;
 
@@ -23,14 +27,14 @@ public class GetUserPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long userId = Long.valueOf(request.getParameter("userId"));
+        Long userId = Long.valueOf(request.getParameter(USER_ID));
 
         Optional<User> userOptional = userService.findById(userId);
         List<Order> orderList = orderService.findAllByUserId(userId);
 
         userOptional.ifPresent(user -> {
-            request.setAttribute("user", user);
-            request.setAttribute("orderList", orderList);
+            request.setAttribute(USER, user);
+            request.setAttribute(ORDER_List, orderList);
         });
 
         return JspFilePath.MANAGER_USER_PAGE;

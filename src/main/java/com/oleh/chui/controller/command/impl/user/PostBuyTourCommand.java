@@ -9,6 +9,9 @@ import javax.servlet.http.HttpSession;
 
 public class PostBuyTourCommand implements Command {
 
+    private static final String USER_ID = "userId";
+    private static final String TOUR_ID = "tourId";
+
     private final OrderService orderService;
 
     public PostBuyTourCommand(OrderService orderService) {
@@ -19,8 +22,8 @@ public class PostBuyTourCommand implements Command {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        Long userId = (Long) session.getAttribute("userId");
-        Long tourId = Long.valueOf(request.getParameter("tourId"));
+        Long userId = (Long) session.getAttribute(USER_ID);
+        Long tourId = Long.valueOf(request.getParameter(TOUR_ID));
 
         orderService.createOrder(userId, tourId);
 

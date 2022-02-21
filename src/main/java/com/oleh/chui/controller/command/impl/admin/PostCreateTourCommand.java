@@ -10,14 +10,15 @@ import com.oleh.chui.model.exception.city.CityNotExistException;
 import com.oleh.chui.model.exception.country.CountryNotExistException;
 import com.oleh.chui.model.exception.tour.TourNameIsReservedException;
 import com.oleh.chui.model.service.TourService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class PostCreateTourCommand implements Command {
 
-    private final Logger logger = LogManager.getLogger(PostCreateTourCommand.class);
+    private static final String NAME_IS_RESERVED = "nameIsReserved";
+    private static final String CITY_IS_UNDEFINED = "cityIsUndefined";
+    private static final String COUNTRY_IS_UNDEFINED = "countryIsUndefined";
+
     private final TourInfoMapper tourInfoMapper = new TourInfoMapper();
     private final TourService tourService;
 
@@ -36,11 +37,11 @@ public class PostCreateTourCommand implements Command {
                 tourService.create(tourDto);
                 return UriPath.REDIRECT + UriPath.CATALOG;
             } catch (TourNameIsReservedException e) {
-                request.setAttribute("nameIsReserved", true);
+                request.setAttribute(NAME_IS_RESERVED, true);
             } catch (CityNotExistException e) {
-                request.setAttribute("cityIsUndefined", true);
+                request.setAttribute(CITY_IS_UNDEFINED, true);
             } catch (CountryNotExistException e) {
-                request.setAttribute("countryIsUndefined", true);
+                request.setAttribute(COUNTRY_IS_UNDEFINED, true);
             }
         }
 

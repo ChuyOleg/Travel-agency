@@ -15,8 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 
 public class PostUpdateTourCommand implements Command {
 
-    private final String URL_ID_PARAMETER = "?tourId=";
-    private final String URL_SUCCESS_PARAMETER = "&success";
+    private static final String URL_ID_PARAMETER = "?tourId=";
+    private static final String URL_SUCCESS_PARAMETER = "&success";
+    private static final String TOUR_ID = "tourId";
+    private static final String NAME_IS_RESERVED = "nameIsReserved";
+    private static final String CITY_IS_UNDEFINED = "cityIsUndefined";
+    private static final String COUNTRY_IS_UNDEFINED = "countryIsUndefined";
 
     private final TourInfoMapper tourInfoMapper = new TourInfoMapper();
     private final TourService tourService;
@@ -27,7 +31,7 @@ public class PostUpdateTourCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long tourId = Long.valueOf(request.getParameter("tourId"));
+        Long tourId = Long.valueOf(request.getParameter(TOUR_ID));
 
         TourDto tourDto = tourInfoMapper.fetchTourDtoFromRequest(request);
 
@@ -38,11 +42,11 @@ public class PostUpdateTourCommand implements Command {
                 tourService.update(tourDto, tourId);
                 return UriPath.REDIRECT + UriPath.ADMIN_UPDATE_TOUR + URL_ID_PARAMETER + tourId + URL_SUCCESS_PARAMETER;
             } catch (TourNameIsReservedException e) {
-                request.setAttribute("nameIsReserved", true);
+                request.setAttribute(NAME_IS_RESERVED, true);
             } catch (CityNotExistException e) {
-                request.setAttribute("cityIsUndefined", true);
+                request.setAttribute(CITY_IS_UNDEFINED, true);
             } catch (CountryNotExistException e) {
-                request.setAttribute("countryIsUndefined", true);
+                request.setAttribute(COUNTRY_IS_UNDEFINED, true);
             }
         }
 

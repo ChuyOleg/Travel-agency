@@ -3,6 +3,9 @@ package com.oleh.chui.model.service;
 import com.oleh.chui.model.dao.UserDao;
 import com.oleh.chui.model.dto.UserDto;
 import com.oleh.chui.model.entity.User;
+import com.oleh.chui.model.exception.user.AuthenticationException;
+import com.oleh.chui.model.exception.user.IsBlockedException;
+import com.oleh.chui.model.exception.user.UsernameIsReservedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,11 +29,26 @@ public class UserService {
         return userDao.findAllUsers();
     }
 
-    public boolean usernameIsReserved(String username) {
-        return userDao.usernameIsReserved(username);
+    public User doAuthentication(String username, String password) throws AuthenticationException, IsBlockedException {
+        Optional<User> userOptional = findByUsernameAndPassword(username, password);
+
+        if (userOptional.isPresent()) {
+            if (!userOptional.get().isBlocked()) {
+                return userOptional.get();
+            } else {
+                logger.warn("User ({}) is blocked", username);
+                throw new IsBlockedException();
+            }
+        } else {
+            logger.warn("User ({}) incorrect credentials during authentication", username);
+            throw new AuthenticationException();
+        }
+
     }
 
-    public void registerNewAccount(UserDto userDto) {
+    public void registerNewAccount(UserDto userDto) throws UsernameIsReservedException {
+        checkUsernameIsUnique(userDto.getUsername());
+
         User user = new User(userDto);
 
         userDao.create(user);
@@ -50,4 +68,9 @@ public class UserService {
         userDao.unblockById(id);
         logger.info("User (id = {}) has been unblocked", id);
     }
+
+    private void checkUsernameIsUnique(String username) throws UsernameIsReservedException {
+        if (userDao.usernameIsReserved(username)) throw new UsernameIsReservedException();
+    }
+
 }

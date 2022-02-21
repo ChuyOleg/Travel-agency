@@ -1,4 +1,4 @@
-package com.oleh.chui.controller.command.impl;
+package com.oleh.chui.controller.command.impl.common;
 
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.util.JspFilePath;
@@ -14,6 +14,13 @@ import java.util.Optional;
 
 public class GetTourDetailsCommand implements Command {
 
+    private static final String ID = "id";
+    private static final String ROLE = "role";
+    private static final String TOUR = "tour";
+    private static final String USER_ID = "userId";
+    private static final String TOUR_IS_BOUGHT = "tourIsBought";
+    private static final String FINAL_PRICE = "finalPrice";
+
     private final OrderService orderService;
     private final TourService tourService;
 
@@ -25,21 +32,21 @@ public class GetTourDetailsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Long tourId = Long.valueOf(request.getParameter("id"));
-        Role.RoleEnum role = Role.RoleEnum.valueOf(((String) session.getAttribute("role")));
+        Long tourId = Long.valueOf(request.getParameter(ID));
+        Role.RoleEnum role = Role.RoleEnum.valueOf(((String) session.getAttribute(ROLE)));
 
         Optional<Tour> tourOptional = tourService.findById(tourId);
 
         tourOptional.ifPresent(tour -> {
-            request.setAttribute("tour", tour);
+            request.setAttribute(TOUR, tour);
             if (role.equals(Role.RoleEnum.USER)) {
-                Long activeUserId = (Long) session.getAttribute("userId");
+                Long activeUserId = (Long) session.getAttribute(USER_ID);
 
                 if (orderService.isExistedByUserIdAndTourId(activeUserId, tourId)) {
-                    request.setAttribute("tourIsBought", true);
+                    request.setAttribute(TOUR_IS_BOUGHT, true);
                 } else {
                     BigDecimal finalPrice = orderService.calculateFinalPrice(activeUserId, tour);
-                    request.setAttribute("finalPrice", finalPrice);
+                    request.setAttribute(FINAL_PRICE, finalPrice);
                 }
             }
         });

@@ -10,14 +10,21 @@ import java.util.Map;
 
 public class CatalogMapper {
 
+    private static final String MIN_PRICE = "minPrice";
+    private static final String MAX_PRICE = "maxPrice";
+    private static final String PERSON_NUMBER = "personNumber";
+    private static final String PAGE = "page";
+    private static final String ACTIVE_PAGE_NUMBER = "activePageNumber";
+    private static final Integer START_PAGE_NUMBER = 1;
+
     private final TourInfoMapper tourInfoMapper = new TourInfoMapper();
 
     public Map<String, String> fetchFilterParametersFromRequest(HttpServletRequest req) {
         Map<String, String> filterParameters = new HashMap<>();
 
-        if (!FieldValidator.fieldIsEmpty(req.getParameter("minPrice"))) filterParameters.put("minPrice", req.getParameter("minPrice"));
-        if (!FieldValidator.fieldIsEmpty(req.getParameter("maxPrice"))) filterParameters.put("maxPrice", req.getParameter("maxPrice"));
-        if (!FieldValidator.fieldIsEmpty(req.getParameter("personNumber"))) filterParameters.put("personNumber", req.getParameter("personNumber"));
+        if (!FieldValidator.fieldIsEmpty(req.getParameter(MIN_PRICE))) filterParameters.put(MIN_PRICE, req.getParameter(MIN_PRICE));
+        if (!FieldValidator.fieldIsEmpty(req.getParameter(MAX_PRICE))) filterParameters.put(MAX_PRICE, req.getParameter(MAX_PRICE));
+        if (!FieldValidator.fieldIsEmpty(req.getParameter(PERSON_NUMBER))) filterParameters.put(PERSON_NUMBER, req.getParameter(PERSON_NUMBER));
 
         for (TourType.TourTypeEnum tourTypeEnum : TourType.TourTypeEnum.values()) {
             String tourTypeisChecked = req.getParameter(tourTypeEnum.name());
@@ -37,12 +44,12 @@ public class CatalogMapper {
     }
 
     public void insertInfoIntoRequest(Map<String, String> filterParameters, HttpServletRequest req) {
-        String pageNumber = req.getParameter("page");
+        String pageNumber = req.getParameter(PAGE);
 
         if (pageNumber != null && !pageNumber.isEmpty()) {
-            req.setAttribute("activePageNumber", Integer.parseInt(pageNumber));
+            req.setAttribute(ACTIVE_PAGE_NUMBER, Integer.parseInt(pageNumber));
         } else {
-            req.setAttribute("activePageNumber", 1);
+            req.setAttribute(ACTIVE_PAGE_NUMBER, START_PAGE_NUMBER);
         }
 
         for (Map.Entry<String, String> entry : filterParameters.entrySet()) {

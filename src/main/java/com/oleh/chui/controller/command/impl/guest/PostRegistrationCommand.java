@@ -1,4 +1,4 @@
-package com.oleh.chui.controller.command.impl;
+package com.oleh.chui.controller.command.impl.guest;
 
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.command.impl.mapper.UserInfoMapper;
@@ -6,15 +6,15 @@ import com.oleh.chui.controller.util.JspFilePath;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.controller.validator.UserValidator;
 import com.oleh.chui.model.dto.UserDto;
+import com.oleh.chui.model.exception.user.UsernameIsReservedException;
 import com.oleh.chui.model.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class PostRegistrationCommand implements Command {
 
-    private final Logger logger = LogManager.getLogger(PostRegistrationCommand.class);
+    private static final String USERNAME_IS_RESERVED_EXCEPTION = "usernameIsReserved";
+
     private final UserInfoMapper userInfoMapper = new UserInfoMapper();
     private final UserService userService;
 
@@ -29,13 +29,12 @@ public class PostRegistrationCommand implements Command {
         boolean userDtoIsValid = UserValidator.validate(userDto, request);
 
         if (userDtoIsValid) {
-            boolean usernameIsReserved = userService.usernameIsReserved(userDto.getUsername());
-
-            if (usernameIsReserved) {
-                request.setAttribute("usernameIsReserved", true);
-            } else {
+            try {
                 userService.registerNewAccount(userDto);
+
                 return UriPath.REDIRECT + UriPath.LOGIN;
+            } catch (UsernameIsReservedException e) {
+                request.setAttribute(USERNAME_IS_RESERVED_EXCEPTION, true);
             }
         }
 

@@ -14,6 +14,10 @@ import java.util.Optional;
 
 public class GetAccountPageCommand implements Command {
 
+    private static final String USER_ID = "userId";
+    private static final String USER = "user";
+    private static final String ORDER_LIST = "orderList";
+
     private final UserService userService;
     private final OrderService orderService;
 
@@ -25,14 +29,14 @@ public class GetAccountPageCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
+        Long userId = (Long) session.getAttribute(USER_ID);
 
         Optional<User> userOptional = userService.findById(userId);
         List<Order> orderList = orderService.findAllByUserId(userId);
 
         userOptional.ifPresent(user -> {
-            request.setAttribute("user", user);
-            request.setAttribute("orderList", orderList);
+            request.setAttribute(USER, user);
+            request.setAttribute(ORDER_LIST, orderList);
         });
 
         return JspFilePath.USER_ACCOUNT;

@@ -1,8 +1,14 @@
 package com.oleh.chui.controller;
 
 import com.oleh.chui.controller.command.Command;
-import com.oleh.chui.controller.command.impl.*;
 import com.oleh.chui.controller.command.impl.admin.*;
+import com.oleh.chui.controller.command.impl.common.GetCatalogCommand;
+import com.oleh.chui.controller.command.impl.common.GetLogOutCommand;
+import com.oleh.chui.controller.command.impl.common.GetTourDetailsCommand;
+import com.oleh.chui.controller.command.impl.guest.GetLogInCommand;
+import com.oleh.chui.controller.command.impl.guest.GetRegistrationCommand;
+import com.oleh.chui.controller.command.impl.guest.PostLogInCommand;
+import com.oleh.chui.controller.command.impl.guest.PostRegistrationCommand;
 import com.oleh.chui.controller.command.impl.manager.*;
 import com.oleh.chui.controller.command.impl.user.GetAccountPageCommand;
 import com.oleh.chui.controller.command.impl.user.PostBuyTourCommand;
@@ -22,17 +28,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DispatcherServlet extends HttpServlet {
 
-    // TODO: transfer business logic from controllers to services
+    // TODO: add tests
 
-    // TODO: controller mappers change logic (instead parameter set just object)
-
-    // TODO: think about FilterValidator instead of GetCatalogCommand.validateFields
-
-    // TODO: think about SessionListener
+    // TODO: documentation
 
     private final Map<String, Command> getCommands = new ConcurrentHashMap<>();
     private final Map<String, Command> postCommands = new ConcurrentHashMap<>();
-    private final String COMMAND_NOT_FOUND = "Command not found";
+    private static final String COMMAND_NOT_FOUND = "Command not found";
     Logger logger = LogManager.getLogger(DispatcherServlet.class);
 
     @Override

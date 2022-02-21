@@ -3,14 +3,16 @@ package com.oleh.chui.controller.command.impl.admin;
 import com.oleh.chui.controller.command.Command;
 import com.oleh.chui.controller.util.UriPath;
 import com.oleh.chui.model.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class PostBlockUnblockUserCommand implements Command {
 
-    private final Logger logger = LogManager.getLogger(PostBlockUnblockUserCommand.class);
+    private static final String ID = "id";
+    private static final String IS_BLOCKED = "isBlocked";
+    private static final String FALSE = "false";
+    private static final String TRUE = "true";
+
     private final UserService userService;
 
     public PostBlockUnblockUserCommand(UserService userService) {
@@ -19,12 +21,12 @@ public class PostBlockUnblockUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Long userId = Long.valueOf(request.getParameter("id"));
-        String isBlocked = request.getParameter("isBlocked");
+        Long userId = Long.valueOf(request.getParameter(ID));
+        String isBlocked = request.getParameter(IS_BLOCKED);
 
-        if (isBlocked.equals("false")) {
+        if (isBlocked.equals(FALSE)) {
             userService.blockById(userId);
-        } else if (isBlocked.equals("true")) {
+        } else if (isBlocked.equals(TRUE)) {
             userService.unblockById(userId);
         }
 

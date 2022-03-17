@@ -14,7 +14,7 @@ public class GetLogOutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         request.getSession().setAttribute(USER_ID, null);
-        request.getSession().setAttribute(ROLE, Role.RoleEnum.UNKNOWN);
+        request.getSession().setAttribute(ROLE, Role.RoleEnum.UNKNOWN.name());
 
         return UriPath.REDIRECT + UriPath.LOGIN;
     }

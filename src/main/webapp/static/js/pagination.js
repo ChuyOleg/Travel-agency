@@ -1,6 +1,6 @@
 "use strict";
 
-const QUESTION_MARK = "?";
+const QUESTION_MARK_SYMBOL = "?";
 const PAGE_URL_ARGUMENT_NAME = "page";
 
 const pageNumber = document.getElementById("pageNumber");
@@ -8,7 +8,7 @@ const pageNumber = document.getElementById("pageNumber");
 const prevPageButton = document.getElementById("prevPageButton");
 const nextPageButton = document.getElementById("nextPageButton");
 
-const callback = addition => () => {
+const paginationCallback = addition => () => {
     const URI = window.location.pathname;
     const ACTIVE_PAGE_NUMBER = parseInt(pageNumber.innerText);
     const SEARCH_PARAMS = new URLSearchParams(window.location.search);
@@ -17,9 +17,9 @@ const callback = addition => () => {
 
     const NEW_PARAMETERS = SEARCH_PARAMS.toString();
 
-    window.location.href = URI + QUESTION_MARK + NEW_PARAMETERS;
+    window.location.href = URI + QUESTION_MARK_SYMBOL + NEW_PARAMETERS;
 }
 
-prevPageButton.addEventListener("click", callback(-1));
+prevPageButton.addEventListener("click", paginationCallback(-1));
 
-nextPageButton.addEventListener("click", callback(1));
+nextPageButton.addEventListener("click", paginationCallback(1));

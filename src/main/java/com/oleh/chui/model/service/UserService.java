@@ -6,6 +6,7 @@ import com.oleh.chui.model.entity.User;
 import com.oleh.chui.model.exception.user.AuthenticationException;
 import com.oleh.chui.model.exception.user.IsBlockedException;
 import com.oleh.chui.model.exception.user.UsernameIsReservedException;
+import com.oleh.chui.model.service.util.PasswordEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,9 +16,11 @@ import java.util.Optional;
 public class UserService {
 
     private final Logger logger = LogManager.getLogger(UserService.class);
+    private final PasswordEncoder passwordEncoder;
     private final UserDao userDao;
 
-    public UserService(UserDao userDao) {
+    public UserService(PasswordEncoder passwordEncoder, UserDao userDao) {
+        this.passwordEncoder = passwordEncoder;
         this.userDao = userDao;
     }
 
@@ -30,6 +33,7 @@ public class UserService {
     }
 
     public User doAuthentication(String username, String password) throws AuthenticationException, IsBlockedException {
+        password = passwordEncoder.encode(password);
         Optional<User> userOptional = findByUsernameAndPassword(username, password);
 
         if (userOptional.isPresent()) {
@@ -50,6 +54,7 @@ public class UserService {
         checkUsernameIsUnique(userDto.getUsername());
 
         User user = new User(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         userDao.create(user);
         logger.info("New account {} has been created", user);

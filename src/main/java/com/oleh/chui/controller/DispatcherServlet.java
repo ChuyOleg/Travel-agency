@@ -28,8 +28,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DispatcherServlet extends HttpServlet {
 
-    // TODO: add tests
-
     // TODO: documentation
 
     // TODO: script for filling DB;

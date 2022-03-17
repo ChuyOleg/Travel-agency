@@ -6,6 +6,8 @@ import com.oleh.chui.model.entity.User;
 import com.oleh.chui.model.exception.user.AuthenticationException;
 import com.oleh.chui.model.exception.user.IsBlockedException;
 import com.oleh.chui.model.exception.user.UsernameIsReservedException;
+import com.oleh.chui.model.service.util.PBKDF2PasswordEncoder;
+import com.oleh.chui.model.service.util.PasswordEncoder;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -16,7 +18,8 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
 
     UserDao userDao = mock(UserDao.class);
-    UserService userService = new UserService(userDao);
+    PasswordEncoder passwordEncoder = new PBKDF2PasswordEncoder();
+    UserService userService = new UserService(passwordEncoder, userDao);
 
     private static final String USERNAME = "Oleh";
     private static final String PASSWORD = "SUPER_PASSWORD_31";
@@ -47,14 +50,16 @@ class UserServiceTest {
 
     @Test
     void testDoAuthenticationShouldNotThrowException() {
-        when(userDao.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(Optional.of(UNBLOCKED_USER));
+        String encodedPassword = passwordEncoder.encode(PASSWORD);
+        when(userDao.findByUsernameAndPassword(USERNAME, encodedPassword)).thenReturn(Optional.of(UNBLOCKED_USER));
 
         assertDoesNotThrow(() -> userService.doAuthentication(USERNAME, PASSWORD));
     }
 
     @Test
     void testDoAuthenticationShouldThrowIsBlockedException() {
-        when(userDao.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(Optional.of(BLOCKED_USER));
+        String encodedPassword = passwordEncoder.encode(PASSWORD);
+        when(userDao.findByUsernameAndPassword(USERNAME, encodedPassword)).thenReturn(Optional.of(BLOCKED_USER));
 
         assertThrows(
                 IsBlockedException.class,
@@ -64,7 +69,8 @@ class UserServiceTest {
 
     @Test
     void testDoAuthenticationShouldThrowAuthenticationException() {
-        when(userDao.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(Optional.empty());
+        String encodedPassword = passwordEncoder.encode(PASSWORD);
+        when(userDao.findByUsernameAndPassword(USERNAME, encodedPassword)).thenReturn(Optional.empty());
 
         assertThrows(
                 AuthenticationException.class,

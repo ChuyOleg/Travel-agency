@@ -1,12 +1,16 @@
 package com.oleh.chui.model.service;
 
 import com.oleh.chui.model.dao.DaoFactory;
+import com.oleh.chui.model.service.util.PBKDF2PasswordEncoder;
 
 public class ServiceFactoryImpl extends ServiceFactory {
 
     @Override
     public UserService createUserService() {
-        return new UserService(DaoFactory.getInstance().createUserDao());
+        return new UserService(
+                new PBKDF2PasswordEncoder(),
+                DaoFactory.getInstance().createUserDao()
+        );
     }
 
     @Override

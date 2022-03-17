@@ -14,6 +14,14 @@ import java.util.Properties;
 public class ConnectionPoolHolder {
 
     private static final String DB_PROPERTIES_PATH = "C:/Users/User/IdeaProjects/epamPractice/Travel-agency/src/main/resources/db.properties";
+    private static final String DB_URL_KEY = "db.url";
+    private static final String DB_USERNAME_KEY = "db.username";
+    private static final String DB_PASSWORD_KEY = "db.password";
+    private static final String DB_MIN_IDLE_KEY = "db.min.idle";
+    private static final String DB_MAX_IDLE_KEY = "db.max.idle";
+    private static final String DB_MAX_OPEN_PREPARED_STATEMENT_KEY = "db.max.open.prepared.statement";
+    private static final String DB_DRIVER_CLASS_NAME_KEY = "db.driver.class.name";
+
     private static volatile DataSource dataSource;
     private static final Logger logger = LogManager.getLogger(ConnectionPoolHolder.class);
 
@@ -27,14 +35,13 @@ public class ConnectionPoolHolder {
                         Properties p = new Properties();
                         p.load(reader);
                         BasicDataSource ds = new BasicDataSource();
-                        ds.setUrl(p.getProperty("db.url"));
-                        ds.setUsername(p.getProperty("db.username"));
-                        ds.setPassword(p.getProperty("db.password"));
-                        ds.setMinIdle(Integer.parseInt(p.getProperty("db.min.idle")));
-                        ds.setMaxIdle(Integer.parseInt(p.getProperty("db.max.idle")));
-                        ds.setMaxOpenPreparedStatements(Integer.parseInt(
-                                p.getProperty("db.max.open.prepared.statement")));
-                        ds.setDriverClassName(p.getProperty("db.driver.class.name"));
+                        ds.setUrl(p.getProperty(DB_URL_KEY));
+                        ds.setUsername(p.getProperty(DB_USERNAME_KEY));
+                        ds.setPassword(p.getProperty(DB_PASSWORD_KEY));
+                        ds.setMinIdle(Integer.parseInt(p.getProperty(DB_MIN_IDLE_KEY)));
+                        ds.setMaxIdle(Integer.parseInt(p.getProperty(DB_MAX_IDLE_KEY)));
+                        ds.setMaxOpenPreparedStatements(Integer.parseInt(p.getProperty(DB_MAX_OPEN_PREPARED_STATEMENT_KEY)));
+                        ds.setDriverClassName(p.getProperty(DB_DRIVER_CLASS_NAME_KEY));
                         dataSource = ds;
                     } catch (IOException e) {
                         logger.fatal("Error during connecting to DB " + e.getMessage());

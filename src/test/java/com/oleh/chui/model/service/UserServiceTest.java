@@ -49,7 +49,7 @@ class UserServiceTest {
     );
 
     @Test
-    void testDoAuthenticationShouldNotThrowException() {
+    void checkDoAuthenticationShouldNotThrowException() {
         String encodedPassword = passwordEncoder.encode(PASSWORD);
         when(userDao.findByUsernameAndPassword(USERNAME, encodedPassword)).thenReturn(Optional.of(UNBLOCKED_USER));
 
@@ -57,7 +57,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testDoAuthenticationShouldThrowIsBlockedException() {
+    void checkDoAuthenticationShouldThrowIsBlockedException() {
         String encodedPassword = passwordEncoder.encode(PASSWORD);
         when(userDao.findByUsernameAndPassword(USERNAME, encodedPassword)).thenReturn(Optional.of(BLOCKED_USER));
 
@@ -68,7 +68,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testDoAuthenticationShouldThrowAuthenticationException() {
+    void checkDoAuthenticationShouldThrowAuthenticationException() {
         String encodedPassword = passwordEncoder.encode(PASSWORD);
         when(userDao.findByUsernameAndPassword(USERNAME, encodedPassword)).thenReturn(Optional.empty());
 
@@ -98,7 +98,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testFindByUsernameAndPassword() {
+    void checkFindByUsernameAndPassword() {
         when(userService.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(Optional.of(UNBLOCKED_USER));
         when(userService.findByUsernameAndPassword(USERNAME, FAKE_PASSWORD)).thenReturn(Optional.empty());
 

@@ -13,7 +13,12 @@ import java.util.Properties;
 
 public class ConnectionPoolHolder {
 
+//    My PC
     private static final String DB_PROPERTIES_PATH = "C:/Users/User/IdeaProjects/epamPractice/Travel-agency/src/main/resources/db.properties";
+
+//    Docker
+//    private static final String DB_PROPERTIES_PATH = "/usr/local/tomcat/webapps/travel_agency/db.properties";
+
     private static final String DB_URL_KEY = "db.url";
     private static final String DB_USERNAME_KEY = "db.username";
     private static final String DB_PASSWORD_KEY = "db.password";

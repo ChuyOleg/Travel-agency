@@ -8,6 +8,11 @@ import com.oleh.chui.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * Returns Users page.
+ *
+ * @author Oleh Chui
+ */
 public class GetUsersCommand implements Command {
 
     private static final String USER_LIST = "userList";

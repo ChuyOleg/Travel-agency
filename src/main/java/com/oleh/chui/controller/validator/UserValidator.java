@@ -14,12 +14,24 @@ import java.util.regex.Pattern;
 import static com.oleh.chui.controller.validator.alias.UserExceptionNamesForRequest.*;
 import static com.oleh.chui.controller.validator.restriction.UserRestriction.*;
 
+/**
+ * Validate UserDto
+ *
+ * @author Oleh Chui
+ */
 public class UserValidator {
 
     private static final Logger logger = LogManager.getLogger(UserValidator.class);
 
     private UserValidator() {}
 
+    /**
+     * Validate all fields of UserDto and process exceptions
+     *
+     * @param userDto An instance of UserDto class that should be validated
+     * @param request An instance of HttpServletRequest
+     * @return A boolean representing is UserDto valid or not
+     */
     public static boolean validate(UserDto userDto, HttpServletRequest request) {
         try {
             checkForUsernameSize(userDto.getUsername());

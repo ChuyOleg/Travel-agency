@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Returns Catalog page.
+ *
+ * @author Oleh Chui
+ */
 public class GetCatalogCommand implements Command {
 
     private final CatalogMapper catalogMapper = new CatalogMapper();
@@ -26,6 +31,12 @@ public class GetCatalogCommand implements Command {
         this.tourService = tourService;
     }
 
+    /**
+     * Process rendering of catalog with filtration or without;
+     *
+     * @param request An instance of HttpServletRequest class
+     * @return String representing Path to JSP file.
+     */
     @Override
     public String execute(HttpServletRequest request) {
         Map<String, String> filterParameters = catalogMapper.fetchFilterParametersFromRequest(request);

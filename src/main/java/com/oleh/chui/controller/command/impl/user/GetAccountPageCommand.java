@@ -12,6 +12,11 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Returns Account page and info related with active User.
+ *
+ * @author Oleh Chui
+ */
 public class GetAccountPageCommand implements Command {
 
     private static final String USER_ID = "userId";

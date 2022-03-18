@@ -23,7 +23,7 @@
     <div class="container">
         <div id="login-row" class="row justify-content-center align-items-center mt-4">
             <div class="login-form mt-5 p-4 col-lg-6 col-10">
-                <form action="" method="post">
+                <form action="" method="post" autocomplete="off">
                     <h3 class="text-center mt-4"><fmt:message key="loginPage.title" /></h3>
 
                     <div class="form-text text-center mt-4 mb-2">

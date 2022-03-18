@@ -9,6 +9,11 @@ import com.oleh.chui.model.service.TourService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
+/**
+ * Returns Update_Tour page.
+ *
+ * @author Oleh Chui
+ */
 public class GetUpdateTourCommand implements Command {
 
     private static final String TOUR_ID = "tourId";

@@ -10,6 +10,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
+/**
+ * Representing of PBKDF2 Password Encoder.
+ *
+ * @author Oleh Chui
+ */
 public class PBKDF2PasswordEncoder implements PasswordEncoder {
 
     private static final int ITERATION_COUNT = 65536;
@@ -20,6 +25,12 @@ public class PBKDF2PasswordEncoder implements PasswordEncoder {
 
     private static final Logger logger = LogManager.getLogger(PBKDF2PasswordEncoder.class);
 
+    /**
+     * Encodes password using PBKDF2WithHmacSHA1 algorithm.
+     *
+     * @param password String representing password that must be encoded.
+     * @return String representing result of encoding password.
+     */
     @Override
     public String encode(String password) {
         try {
@@ -32,6 +43,12 @@ public class PBKDF2PasswordEncoder implements PasswordEncoder {
         }
     }
 
+    /**
+     * Transforms byte[] to String.
+     *
+     * @param bytes Array of bytes.
+     * @return String representing result of transformation byte[] to String.
+     */
     private static String bytesToHex(byte[] bytes) {
         byte[] hexChars = new byte[bytes.length * 2];
         for (int j = 0; j < bytes.length; j++) {

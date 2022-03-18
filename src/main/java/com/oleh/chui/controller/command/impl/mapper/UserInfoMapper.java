@@ -4,6 +4,12 @@ import com.oleh.chui.model.dto.UserDto;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Manages of fetching and inserting parameters related with User info
+ * from or into Request.
+ *
+ * @author Oleh Chui
+ */
 public class UserInfoMapper {
 
     private static final String USERNAME = "username";

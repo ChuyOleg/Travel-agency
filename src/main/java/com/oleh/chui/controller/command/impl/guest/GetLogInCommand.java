@@ -5,6 +5,11 @@ import com.oleh.chui.controller.util.JspFilePath;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Returns Login page.
+ *
+ * @author Oleh Chui
+ */
 public class GetLogInCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {

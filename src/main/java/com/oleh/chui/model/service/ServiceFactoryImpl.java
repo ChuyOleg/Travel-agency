@@ -3,6 +3,11 @@ package com.oleh.chui.model.service;
 import com.oleh.chui.model.dao.DaoFactory;
 import com.oleh.chui.model.service.util.PBKDF2PasswordEncoder;
 
+/**
+ * Manages creating all available services.
+ *
+ * @author Oleh Chui
+ */
 public class ServiceFactoryImpl extends ServiceFactory {
 
     @Override

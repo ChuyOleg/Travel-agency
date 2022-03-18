@@ -13,6 +13,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Manages business logic related with Tour.
+ *
+ * @author Oleh Chui
+ */
 public class TourService {
 
     private final Logger logger = LogManager.getLogger(TourService.class);
@@ -40,6 +45,16 @@ public class TourService {
         return (int) Math.ceil((double) toursNumber / pageSize);
     }
 
+    /**
+     * Checks if name of the tour is free and country and city are existed.
+     * Creates Tour from TourDto.
+     * Invokes method for creating Tour in DAO layer.
+     *
+     * @param tourDto TourDto instance.
+     * @throws TourNameIsReservedException Indicates that name of the tour is reserved.
+     * @throws CityNotExistException Indicates that city of the tour does not exist.
+     * @throws CountryNotExistException Indicates that country of the tour does not exist.
+     */
     public void create(TourDto tourDto) throws TourNameIsReservedException, CityNotExistException, CountryNotExistException {
         checkTourNameIsReserved(tourDto.getName());
         countryService.checkCountryAndCityExist(tourDto.getCountry(), tourDto.getCity());
@@ -50,6 +65,15 @@ public class TourService {
         logger.info("Tour ({}) has been created", tourDto.getName());
     }
 
+    /**
+     * Process updating Tour information.
+     *
+     * @param tourDto TourDto that contains updated information.
+     * @param id Long representing id of Tour that should be updated.
+     * @throws TourNameIsReservedException Indicates that name of the tour is reserved.
+     * @throws CityNotExistException Indicates that city of the tour does not exist.
+     * @throws CountryNotExistException Indicates that country of the tour does not exist.
+     */
     public void update(TourDto tourDto, Long id) throws TourNameIsReservedException, CityNotExistException, CountryNotExistException {
         countryService.checkCountryAndCityExist(tourDto.getCountry(), tourDto.getCity());
 

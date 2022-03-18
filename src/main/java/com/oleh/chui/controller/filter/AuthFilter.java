@@ -12,10 +12,15 @@ import java.io.IOException;
 
 import static com.oleh.chui.controller.util.UriPath.*;
 
+/**
+ * Does authorization checking.
+ *
+ * @author Oleh Chui
+ */
 public class AuthFilter implements Filter {
 
-    private final String ROLE_ATTRIBUTE = "role";
-    private final String USER_ID_ATTRIBUTE = "userId";
+    private static final String ROLE_ATTRIBUTE = "role";
+    private static final String USER_ID_ATTRIBUTE = "userId";
 
     private final Logger logger = LogManager.getLogger(AuthFilter.class);
 
@@ -23,6 +28,11 @@ public class AuthFilter implements Filter {
     public void init(FilterConfig filterConfig) {
     }
 
+    /**
+     * Does nothing if user has access.
+     * Redirects to Login page if user is guest and access is denied.
+     * Send 403 Error if user is [USER, MANAGER, ADMIN] and access is denied.
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;

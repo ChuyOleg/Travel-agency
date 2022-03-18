@@ -7,6 +7,12 @@ import com.oleh.chui.model.entity.TourType;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Manages of fetching and inserting parameters related with Tour info
+ * from or into Request
+ *
+ * @author Oleh Chui
+ */
 public class TourInfoMapper {
 
     private static final String NAME = "name";

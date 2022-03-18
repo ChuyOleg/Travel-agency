@@ -6,6 +6,11 @@ import com.oleh.chui.model.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Manages of changing status of the selected Order.
+ *
+ * @author Oleh Chui
+ */
 public class PostChangeOrderStatusCommand implements Command {
 
     private static final String URL_USER_ID_PARAMETER = "?userId=";

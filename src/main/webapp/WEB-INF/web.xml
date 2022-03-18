@@ -32,6 +32,11 @@
     <url-pattern>*.js</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>/favicon.ico</url-pattern>
+  </servlet-mapping>
+  
 <!--  Filter config-->
 
   <filter>

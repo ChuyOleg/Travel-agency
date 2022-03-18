@@ -6,6 +6,11 @@ import com.oleh.chui.model.entity.Role;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Process logout from system.
+ *
+ * @author Oleh Chui
+ */
 public class GetLogOutCommand implements Command {
 
     private static final String USER_ID = "userId";

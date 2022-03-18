@@ -14,7 +14,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Manages business logic related with Order.
+ *
+ * @author Oleh Chui
+ */
 public class OrderService {
+
+    private static final int MAX_PERCENTAGE = 100;
 
     private final Logger logger = LogManager.getLogger(OrderService.class);
     private final UserService userService;
@@ -39,6 +46,12 @@ public class OrderService {
         return orderDao.isExistedByTourId(tourId);
     }
 
+    /**
+     * Process changing status of the Order to the opposite.
+     *
+     * @param newStatus String representing new status of Order.
+     * @param orderId Long representing id of selected Order.
+     */
     public void changeStatus(String newStatus, Long orderId) {
         Status.StatusEnum statusEnum = Status.StatusEnum.valueOf(newStatus);
 
@@ -46,6 +59,12 @@ public class OrderService {
         logger.info("status of order (id = {}) has been changed to {}", orderId, newStatus);
     }
 
+    /**
+     * Process creating Order.
+     *
+     * @param userId Long representing id of selected User.
+     * @param tourId Long representing id of selected Tour.
+     */
     public void createOrder(Long userId, Long tourId) {
         Optional<User> userOptional = userService.findById(userId);
         Optional<Tour> tourOptional = tourService.findById(tourId);
@@ -70,8 +89,18 @@ public class OrderService {
         }
     }
 
+    /**
+     * Calculates FINAL_PRICE based on formula:
+     * FINAL_DISCOUNT = DISCOUNT_STEP * ORDERS_COUNT.
+     * FINAL_DISCOUNT = TOUR_MAX_DISCOUNT if FINAL_DISCOUNT > TOUR_MAX_DISCOUNT
+     *
+     * FINAL_PRICE = TOUR_PRICE * (100 - FINAL_DISCOUNT) / 100.
+     *
+     * @param userId Long representing id of selected User.
+     * @param tour Tour instance.
+     * @return BigDecimal representing final price.
+     */
     public BigDecimal calculateFinalPrice(Long userId, Tour tour) {
-        final int MAX_PERCENTAGE = 100;
         int ordersCount = findByUserIdCount(userId);
 
         double totalDiscount = tour.getDiscountStep() * ordersCount;

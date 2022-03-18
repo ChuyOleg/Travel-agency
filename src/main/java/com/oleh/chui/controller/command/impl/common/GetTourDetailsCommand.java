@@ -12,6 +12,11 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+/**
+ * Returns Tour_Detail page.
+ *
+ * @author Oleh Chui
+ */
 public class GetTourDetailsCommand implements Command {
 
     private static final String ID = "id";
@@ -29,6 +34,13 @@ public class GetTourDetailsCommand implements Command {
         this.tourService = tourService;
     }
 
+    /**
+     * Process getting Tour by id
+     * and calculating final price is needed.
+     *
+     * @param request An instance of HttpServletRequest class.
+     * @return String representing Path to JSP file.
+     */
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();

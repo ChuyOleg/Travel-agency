@@ -6,6 +6,11 @@ import com.oleh.chui.controller.util.JspFilePath;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Returns Create_Tour page.
+ *
+ * @author Oleh Chui
+ */
 public class GetCreateTourCommand implements Command {
 
     private final TourInfoMapper tourInfoMapper = new TourInfoMapper();

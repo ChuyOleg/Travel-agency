@@ -5,6 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Locale;
 
+/**
+ * Manages value of the attribute 'locale' of Session instance
+ *
+ * @author Oleh Chui
+ */
 public class LocaleFilter implements Filter {
 
     private static final String LANG = "lang";

@@ -13,6 +13,11 @@ import com.oleh.chui.model.service.TourService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Process creating tour.
+ *
+ * @author Oleh Chui
+ */
 public class PostCreateTourCommand implements Command {
 
     private static final String NAME_IS_RESERVED = "nameIsReserved";

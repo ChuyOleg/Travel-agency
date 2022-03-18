@@ -10,6 +10,11 @@ import com.oleh.chui.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Manages the login into system.
+ *
+ * @author Oleh Chui
+ */
 public class PostLogInCommand implements Command {
 
     private static final String USERNAME = "username";
@@ -25,6 +30,13 @@ public class PostLogInCommand implements Command {
         this.userService = userService;
     }
 
+    /**
+     * Does authentication;
+     *
+     * @param request An instance of HttpServletRequest class.
+     * @return String representing URI to Catalog page (if login success) or
+     *         path to Login Jsp file (if login error).
+     */
     @Override
     public String execute(HttpServletRequest request) {
         String username = request.getParameter(USERNAME);

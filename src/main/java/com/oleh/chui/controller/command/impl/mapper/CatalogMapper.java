@@ -8,6 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages of fetching and inserting parameters related with Catalog page
+ * from or into Request.
+ *
+ * @author Oleh Chui
+ */
 public class CatalogMapper {
 
     private static final String MIN_PRICE = "minPrice";

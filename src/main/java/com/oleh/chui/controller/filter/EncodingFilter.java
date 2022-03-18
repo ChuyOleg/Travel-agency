@@ -3,10 +3,16 @@ package com.oleh.chui.controller.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * Sets headers for responses and request
+ * related with coding and content-type
+ *
+ * @author Oleh Chui
+ */
 public class EncodingFilter implements Filter {
 
-    private final String HTML_CONTENT_TYPE = "text/html";
-    private final String UTF_8 = "UTF-8";
+    private static final String HTML_CONTENT_TYPE = "text/html";
+    private static final String UTF_8 = "UTF-8";
 
     @Override
     public void init(FilterConfig filterConfig) {

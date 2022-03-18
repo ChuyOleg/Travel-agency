@@ -9,6 +9,11 @@ import com.oleh.chui.model.service.TourService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
+/**
+ * Returns Change_Discount page with info about discount of selected Tour.
+ *
+ * @author Oleh Chui
+ */
 public class GetChangeDiscountCommand implements Command {
 
     private static final String TOUR_ID = "tourId";

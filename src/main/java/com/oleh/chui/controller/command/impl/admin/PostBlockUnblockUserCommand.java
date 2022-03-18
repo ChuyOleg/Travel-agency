@@ -6,6 +6,11 @@ import com.oleh.chui.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Process blocking and unblocking User.
+ *
+ * @author Oleh Chui
+ */
 public class PostBlockUnblockUserCommand implements Command {
 
     private static final String ID = "id";

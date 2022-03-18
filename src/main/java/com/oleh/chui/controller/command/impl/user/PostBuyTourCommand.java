@@ -7,6 +7,11 @@ import com.oleh.chui.model.service.OrderService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Process buying of tour
+ *
+ * @author Oleh Chui
+ */
 public class PostBuyTourCommand implements Command {
 
     private static final String USER_ID = "userId";
@@ -18,6 +23,12 @@ public class PostBuyTourCommand implements Command {
         this.orderService = orderService;
     }
 
+    /**
+     * Creates new order based on active User and selected Tour.
+     *
+     * @param request An instance of HttpServletRequest class.
+     * @return String representing redirecting to Catalog page.
+     */
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();

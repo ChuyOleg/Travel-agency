@@ -11,6 +11,11 @@ import com.oleh.chui.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Manages registration in the system.
+ *
+ * @author Oleh Chui
+ */
 public class PostRegistrationCommand implements Command {
 
     private static final String USERNAME_IS_RESERVED_EXCEPTION = "usernameIsReserved";
@@ -22,6 +27,13 @@ public class PostRegistrationCommand implements Command {
         this.userService = userService;
     }
 
+    /**
+     * Creates new account.
+     *
+     * @param request An instance of HttpServletRequest class.
+     * @return String representing Uri to Login (if registration is success) or
+     *         Path to Registration JSP file (if registration is failed).
+     */
     @Override
     public String execute(HttpServletRequest request) {
         UserDto userDto = userInfoMapper.fetchUserDtoFromRequest(request);

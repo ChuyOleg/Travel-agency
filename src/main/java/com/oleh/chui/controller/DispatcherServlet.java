@@ -26,17 +26,24 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Manages interaction between client and server
+ * (invokes necessary command for request based on URI)
+ *
+ * @author Oleh Chui
+ */
 public class DispatcherServlet extends HttpServlet {
-
-    // TODO: documentation
-
-    // TODO: script for filling DB;
 
     private final Map<String, Command> getCommands = new ConcurrentHashMap<>();
     private final Map<String, Command> postCommands = new ConcurrentHashMap<>();
     private static final String COMMAND_NOT_FOUND = "Command not found";
     Logger logger = LogManager.getLogger(DispatcherServlet.class);
 
+    /**
+     *  Creates instance of ServiceFactory,
+     *  inits all commands by invoking putGetCommands() and putPostCommands() methods
+     *
+     */
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -46,6 +53,12 @@ public class DispatcherServlet extends HttpServlet {
         logger.info("Dispatcher servlet has been initialized");
     }
 
+    /**
+     * Init Get commands and put them into private constant getCommands
+     * linking every command to appropriate URI
+     *
+     * @param serviceFactory An instance of ServiceFactory class
+     */
     private void putGetCommands(ServiceFactory serviceFactory) {
         getCommands.put(UriPath.LOGIN, new GetLogInCommand());
         getCommands.put(UriPath.REGISTRATION, new GetRegistrationCommand());
@@ -60,6 +73,12 @@ public class DispatcherServlet extends HttpServlet {
         getCommands.put(UriPath.MANAGER_CHANGE_DISCOUNT, new GetChangeDiscountCommand(serviceFactory.createTourService()));
     }
 
+    /**
+     * Init Post commands and put them into private constant postCommands
+     * linking every command to appropriate URI
+     *
+     * @param serviceFactory An instance of ServiceFactory class
+     */
     private void putPostCommands(ServiceFactory serviceFactory) {
         postCommands.put(UriPath.LOGIN, new PostLogInCommand(serviceFactory.createUserService()));
         postCommands.put(UriPath.REGISTRATION, new PostRegistrationCommand(serviceFactory.createUserService()));
@@ -83,6 +102,12 @@ public class DispatcherServlet extends HttpServlet {
         processRequest(req, resp, postCommands);
     }
 
+    /**
+     * Invokes command based on URI
+     * or send 404 Error if command hasn't been found
+     *
+     * @param commands Map<String, Command> of (GET or POST) commands already initialized
+     */
     private void processRequest(HttpServletRequest req, HttpServletResponse resp, Map<String, Command> commands) throws IOException, ServletException {
         final String URI = req.getRequestURI();
 
@@ -103,6 +128,14 @@ public class DispatcherServlet extends HttpServlet {
         renderPage(req, resp, result);
     }
 
+    /**
+     * Makes redirect if {@param pagePath} starts with 'redirect:'.
+     * Render JSP file on other cases.
+     *
+     * @param req An instance of HttpServletRequest class
+     * @param resp An instance of HttpServletResponse class
+     * @param pagePath A string representing URI (for redirecting) or Jsp file path (for rendering)
+     */
     private void renderPage(HttpServletRequest req, HttpServletResponse resp, String pagePath) throws ServletException, IOException {
         if (pagePath.startsWith(UriPath.REDIRECT)) {
             resp.sendRedirect(pagePath.replace(UriPath.REDIRECT, ""));

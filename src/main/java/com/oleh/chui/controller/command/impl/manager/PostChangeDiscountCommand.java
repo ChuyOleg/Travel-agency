@@ -10,6 +10,11 @@ import com.oleh.chui.model.service.TourService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Manages of changing discount of selected Tour.
+ *
+ * @author Oleh Chui
+ */
 public class PostChangeDiscountCommand implements Command {
 
     private static final String URL_ID_PARAMETER = "?tourId=";

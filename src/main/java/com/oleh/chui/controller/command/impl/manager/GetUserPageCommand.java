@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Returns Account page of selected User.
+ *
+ * @author Oleh Chui
+ */
 public class GetUserPageCommand implements Command {
 
     private static final String USER_ID = "userId";

@@ -13,6 +13,11 @@ import com.oleh.chui.model.service.TourService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Process updating tour.
+ *
+ * @author Oleh Chui
+ */
 public class PostUpdateTourCommand implements Command {
 
     private static final String URL_ID_PARAMETER = "?tourId=";

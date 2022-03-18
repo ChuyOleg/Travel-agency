@@ -13,6 +13,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Manages business logic related with User.
+ *
+ * @author Oleh Chui
+ */
 public class UserService {
 
     private final Logger logger = LogManager.getLogger(UserService.class);
@@ -32,6 +37,15 @@ public class UserService {
         return userDao.findAllUsers();
     }
 
+    /**
+     * Process authentication.
+     *
+     * @param username String representing username.
+     * @param password String representing not encoded password.
+     * @return User instance representing that authentication has been done successful.
+     * @throws AuthenticationException Indicates that credentials are incorrect.
+     * @throws IsBlockedException Indicates that User is blocked.
+     */
     public User doAuthentication(String username, String password) throws AuthenticationException, IsBlockedException {
         password = passwordEncoder.encode(password);
         Optional<User> userOptional = findByUsernameAndPassword(username, password);
@@ -50,6 +64,12 @@ public class UserService {
 
     }
 
+    /**
+     * Process creating new user account.
+     *
+     * @param userDto UserDto instance.
+     * @throws UsernameIsReservedException Indicates that username is reserved.
+     */
     public void registerNewAccount(UserDto userDto) throws UsernameIsReservedException {
         checkUsernameIsUnique(userDto.getUsername());
 

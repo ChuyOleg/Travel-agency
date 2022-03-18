@@ -7,11 +7,21 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.stream.IntStream;
 
+/**
+ * Custom tag for rendering stars instead of HOTEL_TYPE value.
+ *
+ * @author Oleh Chui
+ */
 public class HotelStarsHandler extends TagSupport {
 
     private final String STAR_UNICODE = "&#11088;";
     private String hotelType;
 
+    /**
+     * Prints n* stars based on value of HotelType enum.
+     *
+     * @return Int value for skipping body.
+     */
     @Override
     public int doStartTag() {
         StringBuilder stars = new StringBuilder();

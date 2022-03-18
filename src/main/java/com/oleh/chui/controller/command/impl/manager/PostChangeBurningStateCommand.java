@@ -6,6 +6,11 @@ import com.oleh.chui.model.service.TourService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Changes burning state to the opposite of selected Tour.
+ *
+ * @author Oleh Chui
+ */
 public class PostChangeBurningStateCommand implements Command {
 
     private static final String URL_ID_PARAMETER = "?id=";

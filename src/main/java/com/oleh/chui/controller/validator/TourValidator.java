@@ -13,12 +13,25 @@ import java.time.LocalDate;
 import static com.oleh.chui.controller.validator.alias.TourExceptionNamesForRequest.*;
 import static com.oleh.chui.controller.validator.restriction.TourRestriction.*;
 
+/**
+ * Validate TourDto
+ *
+ * @author Oleh Chui
+ */
 public class TourValidator {
 
     private static final Logger logger = LogManager.getLogger(TourValidator.class);
 
     private TourValidator() {}
 
+    /**
+     * Validate all fields of TourDto except 'burning'
+     * and process exceptions
+     *
+     * @param tourDto An instance of TourDto class that should be validated
+     * @param request An instance of HttpServletRequest class
+     * @return A boolean representing is TourDto valid or not
+     */
     public static boolean validate(TourDto tourDto, HttpServletRequest request) {
         try {
             checkForNameIsNotEmpty(tourDto.getName());
@@ -75,6 +88,14 @@ public class TourValidator {
         return false;
     }
 
+    /**
+     * Validate only discount information [maxDiscount and discountStep]
+     * of the instance of the TourDto class
+     *
+     * @param tourDto An instance of TourDto class that should be validated
+     * @param req An instance of HttpServletRequest class
+     * @return A boolean representing is discount information valid or not
+     */
     public static boolean validateDiscountInfo(TourDto tourDto, HttpServletRequest req) {
         try {
             checkForValidMaxDiscount(tourDto.getMaxDiscount());

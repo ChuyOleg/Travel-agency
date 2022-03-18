@@ -12,6 +12,12 @@ import java.util.Map;
 
 import static com.oleh.chui.controller.validator.alias.CatalogFilterExceptionNamesForRequest.*;
 
+/**
+ * Validate parameters [personNumber, minPrice, maxPrice]
+ * for filtration on the Catalog page
+ *
+ * @author Oleh Chui
+ */
 public class FilterParametersValidator {
 
     private static final String PERSON_NUMBER = "personNumber";
@@ -22,6 +28,14 @@ public class FilterParametersValidator {
 
     private FilterParametersValidator() {}
 
+    /**
+     * Validate [personNumber, minPrice, maxPrice]
+     * and process exceptions in one place
+     *
+     * @param filterParameters A Map<String, String> containing filter parameters
+     * @param request An instance of HttpServletRequest class
+     * @return A boolean representing are filterParameters valid or not
+     */
     public static boolean validate(Map<String, String> filterParameters, HttpServletRequest request) {
         try {
             checkForValidPersonNumber(filterParameters.get(PERSON_NUMBER));

@@ -8,7 +8,6 @@ import com.oleh.chui.model.entity.TourType;
 import com.oleh.chui.model.exception.tour.TourNameIsReservedException;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,17 +38,6 @@ class TourServiceTest {
     );
 
     private static final Tour TOUR = new Tour(TOUR_DTO);
-
-    @Test
-    void checkGetPagesNumberReturnCorrectResult() {
-        when(tourDao.findFilteredToursQuantity(new HashMap<>())).thenReturn(25);
-
-        assertEquals(5, tourService.getPagesNumber(new HashMap<>(), 5));
-        assertEquals(3, tourService.getPagesNumber(new HashMap<>(), 10));
-        assertEquals(13, tourService.getPagesNumber(new HashMap<>(), 2));
-        assertEquals(4, tourService.getPagesNumber(new HashMap<>(), 7));
-
-    }
 
     @Test
     void checkCreateShouldWorkWithoutException() {

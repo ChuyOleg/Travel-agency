@@ -5,11 +5,10 @@ import com.oleh.chui.controller.command.impl.mapper.CatalogMapper;
 import com.oleh.chui.controller.util.JspFilePath;
 import com.oleh.chui.controller.validator.FilterParametersValidator;
 import com.oleh.chui.controller.validator.util.FieldValidator;
-import com.oleh.chui.model.entity.Tour;
 import com.oleh.chui.model.service.TourService;
+import com.oleh.chui.model.service.util.pagination.PaginationInfo;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,7 +20,6 @@ public class GetCatalogCommand implements Command {
 
     private final CatalogMapper catalogMapper = new CatalogMapper();
     private final TourService tourService;
-    private static final Integer PAGE_SIZE = 4;
     private static final Integer START_PAGE_NUMBER = 1;
     private static final String PAGES_NUMBER = "pagesNumber";
     private static final String TOUR_LIST = "tourList";
@@ -46,11 +44,10 @@ public class GetCatalogCommand implements Command {
         if (fieldsAreValid) {
             int activePageNumber = getActivePageNumber(request);
 
-            List<Tour> tourList = tourService.findAllUsingFiltersAndPagination(filterParameters, PAGE_SIZE, activePageNumber);
-            int pagesNumber = tourService.getPagesNumber(filterParameters, PAGE_SIZE);
+            PaginationInfo paginationResultData = tourService.getPaginationResultData(filterParameters, activePageNumber);
 
-            request.setAttribute(PAGES_NUMBER, pagesNumber);
-            request.setAttribute(TOUR_LIST, tourList);
+            request.setAttribute(PAGES_NUMBER, paginationResultData.getPagesCount());
+            request.setAttribute(TOUR_LIST, paginationResultData.getTourListPage());
         }
 
         catalogMapper.insertInfoIntoRequest(filterParameters, request);

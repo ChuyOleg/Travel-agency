@@ -6,10 +6,10 @@ import com.oleh.chui.model.entity.Tour;
 import com.oleh.chui.model.exception.city.CityNotExistException;
 import com.oleh.chui.model.exception.country.CountryNotExistException;
 import com.oleh.chui.model.exception.tour.TourNameIsReservedException;
+import com.oleh.chui.model.service.util.pagination.PaginationInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,6 +24,8 @@ public class TourService {
     private final CountryService countryService;
     private final TourDao tourDao;
 
+    private static final int PAGE_SIZE = 4;
+
     public TourService(CountryService countryService, TourDao tourDao) {
         this.countryService = countryService;
         this.tourDao = tourDao;
@@ -33,16 +35,15 @@ public class TourService {
         return tourDao.findById(id);
     }
 
-    public List<Tour> findAllUsingFiltersAndPagination(Map<String, String> filterParameters, int pageSize, int pageNum) {
-        int offSet = pageSize * (pageNum - 1);
+    public PaginationInfo getPaginationResultData(Map<String, String> filterParameters, int pageNum) {
+        int offSet = PAGE_SIZE * (pageNum - 1);
 
-        return tourDao.findAllUsingFilterAndPagination(filterParameters, pageSize, offSet);
-    }
+        PaginationInfo paginationResultData = tourDao.getPaginationResultData(filterParameters, PAGE_SIZE, offSet);
 
-    public int getPagesNumber(Map<String, String> filterParameters, int pageSize) {
-        int toursNumber = tourDao.findFilteredToursQuantity(filterParameters);
+        int pagesCount = (int) Math.ceil((double) paginationResultData.getToursCount()  / PAGE_SIZE);
+        paginationResultData.setPagesCount(pagesCount);
 
-        return (int) Math.ceil((double) toursNumber / pageSize);
+        return paginationResultData;
     }
 
     /**

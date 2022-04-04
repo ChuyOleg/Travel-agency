@@ -5,6 +5,7 @@ import com.oleh.chui.model.dao.impl.query.TourQueries;
 import com.oleh.chui.model.dao.impl.query.TourQueryFilterBuilder;
 import com.oleh.chui.model.dao.mapper.TourMapper;
 import com.oleh.chui.model.entity.*;
+import com.oleh.chui.model.service.util.pagination.PaginationInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -166,54 +167,6 @@ public class TourDaoImpl implements TourDao {
     }
 
     @Override
-    public List<Tour> findAllUsingFilterAndPagination(Map<String, String> filterFieldMap, int limit, int offSet) {
-        Connection connection = ConnectionPoolHolder.getConnection();
-        String QUERY_WITH_FILTERS = TourQueryFilterBuilder.buildTourQueryFilterForFindAll(filterFieldMap);
-        String QUERY_WITH_FILTERS_AND_PAGINATION = QUERY_WITH_FILTERS + TourQueries.LIMIT_OFFSET;
-
-        try (PreparedStatement statement = connection.prepareStatement(QUERY_WITH_FILTERS_AND_PAGINATION)) {
-            List<Tour> tourList = new ArrayList<>();
-            setFilterAndPaginationParametersIntoStatement(filterFieldMap, limit, offSet, statement);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Tour tour = tourMapper.extractFromResultSet(resultSet);
-                tourList.add(tour);
-            }
-
-            return tourList;
-        } catch (SQLException e) {
-            logger.error("{}, when trying to find all tours using filters", e.getMessage());
-            throw new RuntimeException(e);
-        } finally {
-            ConnectionPoolHolder.closeConnection(connection);
-        }
-    }
-
-    @Override
-    public int findFilteredToursQuantity(Map<String, String> filterFieldMap) {
-        Connection connection = ConnectionPoolHolder.getConnection();
-        String FIND_ALL_WITH_FILTERS_COUNT = TourQueryFilterBuilder.buildTourQueryFilterForFindCount(filterFieldMap);
-
-        try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_WITH_FILTERS_COUNT)) {
-            setFilterParametersIntoStatementAndGetIndex(filterFieldMap, statement);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return resultSet.getInt("count");
-            } else {
-                return 0;
-            }
-        } catch (SQLException e) {
-            logger.error("{}, when trying to find tours quantity", e.getMessage());
-            throw new RuntimeException(e);
-        } finally {
-            ConnectionPoolHolder.closeConnection(connection);
-        }
-    }
-
-    @Override
     public void changeBurningStateById(Long id) {
         Connection connection = ConnectionPoolHolder.getConnection();
 
@@ -247,6 +200,70 @@ public class TourDaoImpl implements TourDao {
         }
     }
 
+    public PaginationInfo getPaginationResultData(Map<String, String> filterFieldMap, int limit, int offset) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+        setTransactionSettingForReadOnly(connection);
+
+        try {
+            PaginationInfo paginationInfo = new PaginationInfo();
+
+            List<Tour> tourList = findAllUsingFilterAndPagination(filterFieldMap, limit, offset, connection);
+            int toursQuantity = findFilteredToursQuantity(filterFieldMap, connection);
+
+            paginationInfo.setTourListPage(tourList);
+            paginationInfo.setToursCount(toursQuantity);
+
+            commit(connection);
+            return paginationInfo;
+        } catch (Exception e) {
+            rollback(connection);
+            logger.error("{}, when trying to get pagination result data", e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionPoolHolder.closeConnection(connection);
+        }
+    }
+
+    private List<Tour> findAllUsingFilterAndPagination(Map<String, String> filterFieldMap, int limit, int offSet, Connection connection) throws Exception {
+        String QUERY_WITH_FILTERS = TourQueryFilterBuilder.buildTourQueryFilterForFindAll(filterFieldMap);
+        String QUERY_WITH_FILTERS_AND_PAGINATION = QUERY_WITH_FILTERS + TourQueries.LIMIT_OFFSET;
+
+        try (PreparedStatement statement = connection.prepareStatement(QUERY_WITH_FILTERS_AND_PAGINATION)) {
+            List<Tour> tourList = new ArrayList<>();
+            setFilterAndPaginationParametersIntoStatement(filterFieldMap, limit, offSet, statement);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Tour tour = tourMapper.extractFromResultSet(resultSet);
+                tourList.add(tour);
+            }
+
+            return tourList;
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find all tours using filters", e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+    private int findFilteredToursQuantity(Map<String, String> filterFieldMap, Connection connection) throws Exception {
+        String FIND_ALL_WITH_FILTERS_COUNT = TourQueryFilterBuilder.buildTourQueryFilterForFindCount(filterFieldMap);
+
+        try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_WITH_FILTERS_COUNT)) {
+            setFilterParametersIntoStatementAndGetIndex(filterFieldMap, statement);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            logger.error("{}, when trying to find tours quantity", e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
     private int setFilterParametersIntoStatementAndGetIndex(Map<String, String> filterFieldMap, PreparedStatement statement) throws SQLException {
         int indexCounter = 1;
         for (Map.Entry<String, String> entry : filterFieldMap.entrySet()) {
@@ -263,6 +280,35 @@ public class TourDaoImpl implements TourDao {
         int indexCounter = setFilterParametersIntoStatementAndGetIndex(filterFieldMap, statement);
         statement.setInt(indexCounter++, limit);
         statement.setInt(indexCounter, offSet);
+    }
+
+    private void setTransactionSettingForReadOnly(Connection connection) {
+        try {
+            connection.setAutoCommit(false);
+            connection.setReadOnly(true);
+            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+        } catch (SQLException e) {
+            logger.error("{}, when trying to set transaction settings for pagination query", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void commit(Connection connection) {
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            logger.error("{}, error when trying to commit connection", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void rollback(Connection connection) {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            logger.error("{}, error when trying to rollback connection", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
 }
